@@ -68,11 +68,11 @@ export class ArticleRepo implements IArticleRepo {
     }
   }
 
-  public async articleTranslationCreateOne({ language, articleId = null, title, content_html, content_json }) {
+  public async articleTranslationCreateOne({ language, articleId = null, title, contentJson, contentHtml }) {
     const mySQL = new MySQL();
     try {
       const articleCreateQuery = 'CALL article_translation_create_one(?, ?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(articleCreateQuery, [language, articleId, title, content_html, content_json]);
+      const [[results]] = await mySQL.query(articleCreateQuery, [language, articleId, title, JSON.stringify(contentJson), contentHtml]);
 
       return results;
     } catch (err) {
@@ -82,11 +82,11 @@ export class ArticleRepo implements IArticleRepo {
     }
   }
 
-  public async articleUpdateOne({ articleId, language, title, content_html, content_json }) {
+  public async articleUpdateOne({ articleId, language, title, contentJson, contentHtml }) {
     const mySQL = new MySQL();
     try {
       const articleUpdateQuery = 'CALL article_update_one(?, ?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(articleUpdateQuery, [articleId, language, title, content_html, content_json]);
+      const [[results]] = await mySQL.query(articleUpdateQuery, [articleId, language, title, JSON.stringify(contentJson), contentHtml]);
 
       return results;
     } catch (err) {

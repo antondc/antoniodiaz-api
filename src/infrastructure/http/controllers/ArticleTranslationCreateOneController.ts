@@ -18,7 +18,7 @@ export class ArticleTranslationCreateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { articleId, language = DEFAULT_LANGUAGE } = req.params;
-    const { title, content_json, content_html } = req.body;
+    const { title, contentJson, contentHtml } = req.body;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
@@ -28,8 +28,8 @@ export class ArticleTranslationCreateOneController extends BaseController {
       language,
       session,
       title,
-      content_json,
-      content_html,
+      contentJson,
+      contentHtml,
     };
 
     const response = await this.useCase.execute(articleTranslationCreateRequest);

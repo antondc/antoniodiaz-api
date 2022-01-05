@@ -1,9 +1,7 @@
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleCreateOneRequest';
 import { IArticleCreateOneResponse } from '@domain/article/useCases/interfaces/IArticleCreateOneResponse';
-import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
-import { Article } from '../entities/Article';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 
 export interface IArticleCreateOneUseCase {
@@ -20,8 +18,8 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
   }
 
   public async execute(articleCreateOneRequest: IArticleCreateOneRequest): Promise<IArticleCreateOneResponse> {
-    const { session, language, title, content_html, content_json } = articleCreateOneRequest;
-    if (!title || !content_html || !content_json) throw new RequestError('Unprocessable Entity', 422);
+    const { session, language, title, contentHtml, contentJson } = articleCreateOneRequest;
+    if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);
@@ -30,8 +28,8 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       articleId: articleCreated?.articleId,
       language,
       title,
-      content_html,
-      content_json,
+      contentHtml,
+      contentJson,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);
 

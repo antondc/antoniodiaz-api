@@ -20,8 +20,8 @@ export class ArticleTranslationCreateOneUseCase implements IArticleTranslationCr
   }
 
   public async execute(articleTranslationCreateOneRequest: IArticleTranslationCreateOneRequest): Promise<IArticleTranslationCreateOneResponse> {
-    const { session, articleId, language, title, content_html, content_json } = articleTranslationCreateOneRequest;
-    if (!title || !content_html || !content_json) throw new RequestError('Unprocessable Entity', 422);
+    const { session, articleId, language, title, contentHtml, contentJson } = articleTranslationCreateOneRequest;
+    if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
 
     const articleTranslationExists = await this.articleRepo.articleGetOne({ sessionId: session?.id, articleId, language });
     if (!!articleTranslationExists) throw new RequestError('409 Conflict', 409);
@@ -36,8 +36,8 @@ export class ArticleTranslationCreateOneUseCase implements IArticleTranslationCr
       articleId,
       language,
       title,
-      content_html,
-      content_json,
+      contentHtml,
+      contentJson,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);
 

@@ -6,7 +6,7 @@ CREATE PROCEDURE article_translation_create_one(
   IN $LANGUAGE      TEXT,
   IN $ARTICLE_ID    INT,
   IN $TITLE         TEXT,
-  IN $CONTENT_JSON  TEXT,
+  IN $CONTENT_JSON  JSON,
   IN $CONTENT_HTML  TEXT
 )
 

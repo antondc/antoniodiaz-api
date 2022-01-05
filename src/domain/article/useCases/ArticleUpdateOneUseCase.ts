@@ -16,13 +16,13 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   }
 
   public async execute(articleUpdateRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
-    const { session, language, articleId, title, content_json, content_html } = articleUpdateRequest;
+    const { session, language, articleId, title, contentJson, contentHtml } = articleUpdateRequest;
 
     const articleExists = await this.articleRepo.articleGetOne({ sessionId: session?.id, articleId, language });
     if (!articleExists) throw new RequestError('Article does not exist', 404);
     if (articleExists?.userId !== session?.id) throw new RequestError('Article update failed', 500);
 
-    await this.articleRepo.articleUpdateOne({ articleId, language, title, content_json, content_html });
+    await this.articleRepo.articleUpdateOne({ articleId, language, title, contentJson, contentHtml });
 
     const articleData = await this.articleRepo.articleGetOne({ sessionId: session?.id, articleId, language });
     const article = new Article(articleData);

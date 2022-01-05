@@ -2,8 +2,8 @@ export type IArticleGetOneResponse = {
   id: number;
   order: number;
   title: string;
-  content_json: string;
-  content_html: string;
+  contentJson: string;
+  contentHtml: string;
   published: string;
   userId: string;
   articleId: string;
