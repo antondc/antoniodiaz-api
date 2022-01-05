@@ -1,5 +1,5 @@
+import { Article } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
-import { ArticleTranslation } from '../entities/ArticleTranslation';
 import { IArticleGetAllRequest } from './interfaces/IArticleGetAllRequest';
 import { IArticleGetAllResponse } from './interfaces/IArticleGetAllResponse';
 
@@ -19,7 +19,7 @@ export class ArticleGetAllUseCase implements IArticleGetAllUseCase {
 
     const { articlesData, meta } = await this.articleRepo.articleGetAll({ sessionId: session?.id, sort, size, offset, filter, language });
 
-    const articles = articlesData.map((articleData) => new ArticleTranslation(articleData));
+    const articles = articlesData.map((articleData) => new Article(articleData));
 
     return {
       articles,

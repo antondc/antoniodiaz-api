@@ -4,6 +4,7 @@ import { ArticleCreateOneUseCase } from '@domain/article/useCases/ArticleCreateO
 import { ArticleDeleteOneUseCase } from '@domain/article/useCases/ArticleDeleteOneUseCase';
 import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
+import { ArticleTranslationCreateOneUseCase } from '@domain/article/useCases/ArticleTranslationCreateOneUseCase';
 import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';
 import { ArticleDeleteOneController } from '@infrastructure/http/controllers/ArticleDeleteOneController';
@@ -11,6 +12,7 @@ import { ArticleGetAllController } from '@infrastructure/http/controllers/Articl
 import { ArticleGetOneController } from '@infrastructure/http/controllers/ArticleGetOneController';
 import { ArticleUpdateOneController } from '@infrastructure/http/controllers/ArticleUpdateOneController';
 import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
+import { ArticleTranslationCreateOneController } from '../controllers/ArticleTranslationCreateOneController';
 
 const ArticlesRoute = express.Router({ mergeParams: true });
 
@@ -34,13 +36,24 @@ ArticlesRoute.get('/:articleId', async (req: Request & { language: string }, res
   return response;
 });
 
-ArticlesRoute.post('/:articleId?', async (req: Request, res: Response, next: NextFunction) => {
+ArticlesRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const articleRepo = new ArticleRepo();
   const articleGetOneUseCase = new ArticleGetOneUseCase(articleRepo);
   const articleCreateOneUseCase = new ArticleCreateOneUseCase(articleRepo, articleGetOneUseCase);
   const articleCreateOneController = new ArticleCreateOneController(articleCreateOneUseCase);
 
   const response = await articleCreateOneController.execute(req, res, next);
+
+  return response;
+});
+
+ArticlesRoute.patch('/:articleId', async (req: Request, res: Response, next: NextFunction) => {
+  const articleRepo = new ArticleRepo();
+  const articleGetOneUseCase = new ArticleGetOneUseCase(articleRepo);
+  const articleTranslationCreateOneUseCase = new ArticleTranslationCreateOneUseCase(articleRepo, articleGetOneUseCase);
+  const articleTranslationCreateOneController = new ArticleTranslationCreateOneController(articleTranslationCreateOneUseCase);
+
+  const response = await articleTranslationCreateOneController.execute(req, res, next);
 
   return response;
 });

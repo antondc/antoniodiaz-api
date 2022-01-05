@@ -1,29 +1,30 @@
 import { Request, Response } from 'express';
 
-import { IArticleCreateOneUseCase } from '@domain/article/useCases/ArticleCreateOneUseCase';
-import { IArticleCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleCreateOneRequest';
+import { IArticleTranslationCreateOneUseCase } from '@domain/article/useCases/ArticleTranslationCreateOneUseCase';
+import { IArticleTranslationCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleTranslationCreateOneRequest';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-export class ArticleCreateOneController extends BaseController {
-  useCase: IArticleCreateOneUseCase;
+export class ArticleTranslationCreateOneController extends BaseController {
+  useCase: IArticleTranslationCreateOneUseCase;
 
-  constructor(useCase: IArticleCreateOneUseCase) {
+  constructor(useCase: IArticleTranslationCreateOneUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { language = DEFAULT_LANGUAGE } = req.params;
+    const { articleId, language = DEFAULT_LANGUAGE } = req.params;
     const { title, content_json, content_html } = req.body;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
-    const articleCreateRequest: IArticleCreateOneRequest = {
+    const articleTranslationCreateRequest: IArticleTranslationCreateOneRequest = {
+      articleId: Number(articleId),
       language,
       session,
       title,
@@ -31,7 +32,7 @@ export class ArticleCreateOneController extends BaseController {
       content_html,
     };
 
-    const response = await this.useCase.execute(articleCreateRequest);
+    const response = await this.useCase.execute(articleTranslationCreateRequest);
 
     const formattedResponse = {
       links: {

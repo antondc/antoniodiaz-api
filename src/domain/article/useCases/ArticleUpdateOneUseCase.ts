@@ -1,4 +1,4 @@
-import { ArticleTranslation } from '@domain/article/entities/ArticleTranslation';
+import { Article } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IArticleUpdateOneRequest } from './interfaces/IArticleUpdateOneRequest';
@@ -25,7 +25,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
     await this.articleRepo.articleUpdateOne({ articleId, language, title, content_json, content_html });
 
     const articleData = await this.articleRepo.articleGetOne({ sessionId: session?.id, articleId, language });
-    const article = new ArticleTranslation(articleData);
+    const article = new Article(articleData);
 
     return article;
   }

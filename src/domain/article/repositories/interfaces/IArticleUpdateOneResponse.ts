@@ -1,3 +1,3 @@
-import { ArticleTranslation } from '@domain/article/entities/ArticleTranslation';
+import { Article } from '@domain/article/entities/Article';
 
-export type IArticleUpdateOneResponse = ArticleTranslation;
+export type IArticleUpdateOneResponse = Article;

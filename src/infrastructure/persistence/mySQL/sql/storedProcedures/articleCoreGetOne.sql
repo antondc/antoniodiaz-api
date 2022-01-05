@@ -11,7 +11,7 @@ BEGIN
   SELECT
     article.id,
     article.order,
-    article.user_id,
+    article.user_id as userId,
     article.createdAt,
     article.updatedAt
   FROM article

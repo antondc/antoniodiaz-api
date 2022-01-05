@@ -1,4 +1,4 @@
-import { ArticleTranslation } from '@domain/article/entities/ArticleTranslation';
+import { Article } from '@domain/article/entities/Article';
 
 export type IArticleGetAllResponse = {
   meta: {
@@ -7,5 +7,5 @@ export type IArticleGetAllResponse = {
     size: number;
     sort: string;
   };
-  articles: ArticleTranslation[];
+  articles: Article[];
 };

@@ -17,14 +17,15 @@ BEGIN
 
   SELECT
     article.id,
-    article.user_id as `userId`,
-    `article_translation`.published,
+    article.order,
     `article_translation`.title,
     `article_translation`.content_json,
     `article_translation`.content_html,
+    `article_translation`.published,
+    article.user_id as `userId`,
+    language.slug as language,
     `article`.createdAt,
-    `article_translation`.updatedAt,
-    language.slug as language
+    `article_translation`.updatedAt
     FROM article
     INNER JOIN `article_translation` ON article_translation.article_id = article.id
     INNER JOIN `language` ON article_translation.language_id = `language`.id
