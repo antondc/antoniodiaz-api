@@ -1,0 +1,42 @@
+import { IUserCreateConfirmationRequest } from './interfaces/IUserCreateConfirmationRequest';
+import { IUserCreateConfirmationResponse } from './interfaces/IUserCreateConfirmationResponse';
+import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
+import { IUserCreateOneResponse } from './interfaces/IUserCreateOneResponse';
+import { IUserCreateOneUndoRequest } from './interfaces/IUserCreateOneUndoRequest';
+import { IUserCreateOneUndoResponse } from './interfaces/IUserCreateOneUndoResponse';
+import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
+import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
+import { IUserForgotPasswordRequest } from './interfaces/IUserForgotPasswordRequest';
+import { IUserForgotPasswordResponse } from './interfaces/IUserForgotPasswordResponse';
+import { IUserGetAllRequest } from './interfaces/IUserGetAllRequest';
+import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
+import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
+import { IUserGetByIdsResponse } from './interfaces/IUserGetByIdsResponse';
+import { IUserGetCredentialsRequest } from './interfaces/IUserGetCredentialsRequest';
+import { IUserGetCredentialsResponse } from './interfaces/IUserGetCredentialsResponse';
+import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
+import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
+import { IUserLoginRequest } from './interfaces/IUserLoginRequest';
+import { IUserLoginResponse } from './interfaces/IUserLoginResponse';
+import { IUserLogSessionRequest } from './interfaces/IUserLogSessionRequest';
+import { IUserLogSessionResponse } from './interfaces/IUserLogSessionResponse';
+import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
+import { IUserResetPasswordResponse } from './interfaces/IUserResetPasswordResponse';
+import { IUserUpdateOneRequest } from './interfaces/IUserUpdateOneRequest';
+import { IUserUpdateOneResponse } from './interfaces/IUserUpdateOneResponse';
+
+export interface IUserRepo {
+  userGetOne: (userGetOneRequest: IUserGetOneRequest) => Promise<IUserGetOneResponse>;
+  userGetAll: (userGetAllRequest: IUserGetAllRequest) => Promise<IUserGetAllResponse>;
+  userGetByIds: (userGetByIdsRequest: IUserGetByIdsRequest) => Promise<IUserGetByIdsResponse>;
+  userCreateOne: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
+  userCreateOneUndo: (userCreateOneUndoRequest: IUserCreateOneUndoRequest) => Promise<IUserCreateOneUndoResponse>;
+  userCreateConfirmation: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;
+  userUpdateOne: (userUpdateOneRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
+  userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
+  userGetCredentials: (userGetCredentialsRequest: IUserGetCredentialsRequest) => Promise<IUserGetCredentialsResponse>;
+  userLogin: (userLoginRequest: IUserLoginRequest) => Promise<IUserLoginResponse>;
+  userLogSession: (userLogSessionRequest: IUserLogSessionRequest) => Promise<IUserLogSessionResponse>;
+  userResetPassword: (userResetPasswordRequest: IUserResetPasswordRequest) => Promise<IUserResetPasswordResponse>;
+  userForgotPassword: (userForgotPasswordRequest: IUserForgotPasswordRequest) => Promise<IUserForgotPasswordResponse>;
+}

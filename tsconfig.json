@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/",
+    "allowJs": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@domain/*": ["src/domain/*"],
+      "@adapter/*": ["src/adapter/*"],
+      "@shared/*": ["src/shared/*"],
+      "@tools/*": ["src/tools/*"],
+      "@root/*": ["./*"]
+    }
+  },
+  "include": ["./src/**/*", "./*"]
+}

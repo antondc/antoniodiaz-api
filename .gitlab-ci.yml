@@ -1,0 +1,42 @@
+image: node:latest
+
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq git
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SERVER_KEY" | base64 -d)
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+stages:
+  - install
+  - build
+  - deploy_production
+
+cache:
+  paths:
+    - node_modules/
+
+install:
+  stage: install
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm run build
+
+deploy_production:
+  stage: deploy_production
+  only:
+    - master
+  script:
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH} && rm -rf node_modules dist/* tmp"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH} && git pull origin master"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH} && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH} && pm2 delete api.antoniodiaz.me && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET=${SECRET} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.antoniodiaz.me --update-env"

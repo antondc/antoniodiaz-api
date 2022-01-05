@@ -1,0 +1,79 @@
+{
+  "development": {
+    "database": {
+      "host": "127.0.0.1",
+      "database": "antoniodiaz_local",
+      "user": "mx_76yKr2L81z",
+      "port": 3306
+    },
+    "PROTOCOL_SERVER": "https://",
+    "HOST_SERVER": "dev.antoniodiaz.me",
+    "PORT_SERVER_HTTP": 0,
+    "PORT_SERVER_HTTPS": 3000,
+    "ENDPOINT_CLIENT": true,
+    "ENDPOINT_CLIENTS": ["https://dev.antoniodiaz.me"],
+    "LOGGING": true,
+    "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
+    "EMAIL_PORT": 587,
+    "EMAIL_USER": "hello@urligram.com",
+    "RESTORE_MODELS": true,
+    "RESTORE_DATA": true,
+    "RESTORE_PROCEDURES": true,
+    "DEFAULT_LOCATION": "Madrid"
+  },
+  "staging": {
+    "database": {
+      "host": "127.0.0.1",
+      "database": "linking_stage",
+      "user": "w_9aIfE2XpoYz"
+    },
+    "PROTOCOL_SERVER": "https://",
+    "HOST_SERVER": "api-staging.urligram.com",
+    "PORT_SERVER_HTTP": 3001,
+    "PORT_SERVER_HTTPS": 0,
+    "ENDPOINT_CLIENT": "https://staging.antoniodiaz.me",
+    "ENDPOINT_CLIENTS": [
+      "https://staging.urligram.com",
+      "https://www.staging.urligram.com",
+      "http://0.0.0.0:4000",
+      "http://dev.urligram.com:4000",
+      "http://dev.urligram.com",
+      "https://dev.urligram.com"
+    ],
+    "LOGGING": true,
+    "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
+    "EMAIL_PORT": 587,
+    "EMAIL_USER": "hello@urligram.com",
+    "RESTORE_MODELS": false,
+    "RESTORE_DATA": false,
+    "RESTORE_PROCEDURES": true,
+    "DEFAULT_LOCATION": "Frankfurt"
+  },
+  "production": {
+    "database": {
+      "host": "127.0.0.1",
+      "database": "linking_stage",
+      "user": "w_9aIfE2XpoYz"
+    },
+    "PROTOCOL_SERVER": "https://",
+    "HOST_SERVER": "api.urligram.com",
+    "PORT_SERVER_HTTP": 3002,
+    "PORT_SERVER_HTTPS": 0,
+    "ENDPOINT_CLIENT": "https://antoniodiaz.me",
+    "ENDPOINT_CLIENTS": ["https://urligram.com", "https://www.urligram.com"],
+    "LOGGING": false,
+    "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
+    "EMAIL_PORT": 587,
+    "EMAIL_USER": "hello@urligram.com"
+  },
+  "SESSION_DURATION": 3600,
+  "MEDIA_FOLDER": "media",
+  "MEDIA_IMAGES": "media/images",
+  "MEDIA_FILES": "media/files",
+  "TEMP_FILES": "media/temp_files",
+  "DEFAULT_IMAGE": "/img/default-image.png",
+  "RESTORE_MODELS": false,
+  "RESTORE_DATA": false,
+  "RESTORE_PROCEDURES": true,
+  "DEFAULT_LOCATION": "Frankfurt"
+}
