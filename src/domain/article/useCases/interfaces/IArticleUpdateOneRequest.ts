@@ -1,5 +1,5 @@
 import { User } from '@domain/user/entities/User';
-import { TextEditorContent } from '@tools/types/TextEditor';
+import { TextEditorContent } from '@shared/services/TextEditor';
 
 export interface IArticleUpdateOneRequest {
   session: User;

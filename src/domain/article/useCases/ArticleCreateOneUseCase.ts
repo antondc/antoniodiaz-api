@@ -2,9 +2,9 @@ import { articleImageFormat } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleCreateOneRequest';
 import { IArticleCreateOneResponse } from '@domain/article/useCases/interfaces/IArticleCreateOneResponse';
-import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { RequestError } from '@shared/errors/RequestError';
+import { TextEditor } from '@shared/services/TextEditor';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 
 export interface IArticleCreateOneUseCase {
@@ -24,31 +24,14 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
 
   public async execute(articleCreateOneRequest: IArticleCreateOneRequest): Promise<IArticleCreateOneResponse> {
     const { session, language, title, contentHtml, contentJson } = articleCreateOneRequest;
-    if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
+    if (!title) throw new RequestError('Unprocessable Entity', 422);
 
-    const fileImage = new FileImage({ fileRepo: this.fileRepo });
-    const contentJsonWithImagesPromises = contentJson.map(async (item) => {
-      if (item.type === 'image') {
-        const savedImage = await fileImage.fileImageSaveOne({
-          fileUrl: item.image.original,
-          formatOptions: {
-            ...articleImageFormat,
-            destinationFolder: `${session?.id}/articles`,
-          },
-        });
-
-        return {
-          ...item,
-          image: {
-            original: savedImage?.path,
-          },
-        };
-      }
-
-      return item;
-    });
-
-    const contentJsonWithImages = await Promise.all(contentJsonWithImagesPromises);
+    const formatOptions = {
+      ...articleImageFormat,
+      destinationFolder: `${session?.id}/articles`,
+    };
+    const textEditor = new TextEditor(this.fileRepo, formatOptions);
+    const textEditorContent = await textEditor.saveImages(contentJson);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);
@@ -58,7 +41,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       language,
       title,
       contentHtml,
-      contentJson: contentJsonWithImages,
+      contentJson: textEditorContent,
       published: false,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);

@@ -35,7 +35,6 @@ export class StateRepo {
   private userLoginProcedure: string;
   private userLogSessionProcedure: string;
   private userResetPasswordProcedure: string;
-  private userRecommendedProcedure: string;
   private articleCoreGetOneProcedure: string;
   private articleGetOneProcedure: string;
   private articleGetAllProcedure: string;
@@ -81,7 +80,6 @@ export class StateRepo {
     this.userLoginProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogin.sql')).toString();
     this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
     this.userResetPasswordProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userResetPassword.sql')).toString();
-    this.userRecommendedProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userRecommended.sql')).toString();
     this.articleCoreGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleCoreGetOne.sql')).toString();
     this.articleGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleGetOne.sql')).toString();
     this.articleGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleGetAll.sql')).toString();
@@ -133,7 +131,6 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userLoginProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userLogSessionProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userResetPasswordProcedure))),
-        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userRecommendedProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleCoreGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleGetAllProcedure))),

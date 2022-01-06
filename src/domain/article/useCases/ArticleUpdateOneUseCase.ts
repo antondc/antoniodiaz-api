@@ -2,11 +2,22 @@ import { Article, articleImageFormat } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
 import { IArticleUpdateOneResponse } from '@domain/article/useCases/interfaces/IArticleUpdateOneResponse';
-import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
+import { TextEditor, TextEditorContent } from '@shared/services/TextEditor';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
+
+export const textEditorDefaultValue: TextEditorContent = [
+  {
+    type: 'paragraph',
+    children: [
+      {
+        text: 'Edit me...',
+      },
+    ],
+  },
+];
 
 export interface IArticleUpdateOneUseCase {
   execute: (articleUpdateOneRequest: IArticleUpdateOneRequest) => Promise<IArticleUpdateOneResponse>;
@@ -25,7 +36,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
 
   public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
     const { session, articleId, language, title, contentHtml, contentJson, published } = articleUpdateOneRequest;
-    if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
+    if (!title) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCoreData = await this.articleRepo.articleCoreGetOne({ articleId });
     if (!articleCoreData) throw new RequestError('Not Found', 404);
@@ -33,36 +44,20 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
     const notTheAuthor = session?.id !== articleCoreData?.userId;
     if (notTheAuthor) throw new AuthenticationError('Unauthorized', 401);
 
-    const fileImage = new FileImage({ fileRepo: this.fileRepo });
-    const contentJsonWithImagesPromises = contentJson.map(async (item) => {
-      if (item.type === 'image') {
-        const savedImage = await fileImage.fileImageSaveOne({
-          fileUrl: item.image.original,
-          formatOptions: {
-            ...articleImageFormat,
-            destinationFolder: `${session?.id}/articles`,
-          },
-        });
-
-        return {
-          ...item,
-          image: {
-            original: savedImage?.path,
-          },
-        };
-      }
-
-      return item;
-    });
-
-    const contentJsonWithImages = await Promise.all(contentJsonWithImagesPromises);
+    const formatOptions = {
+      ...articleImageFormat,
+      destinationFolder: `${session?.id}/articles`,
+    };
+    const textEditor = new TextEditor(this.fileRepo, formatOptions);
+    const contentJsonOrDefault = contentJson || textEditorDefaultValue;
+    const textEditorContent = await textEditor.saveImages(contentJsonOrDefault);
 
     const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId,
       language,
       title,
       contentHtml,
-      contentJson: contentJsonWithImages,
+      contentJson: textEditorContent,
       published,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);

@@ -22,7 +22,7 @@ export class FileDeleteOneUseCase implements IFileDeleteOneUseCase {
     if (!path) throw new RequestError('Unprocessable Entity', 422);
 
     // Users are only allowed to edit files within their own folders
-    if (!path.includes(session?.id)) throw new AuthenticationError('401 Unauthorized', 401);
+    if (!path.includes(session?.id) && !path.includes('temp_files')) throw new AuthenticationError('401 Unauthorized', 401);
 
     const fileInstance = new File({ fileRepo: this.fileRepo });
     const { success } = await fileInstance.fileDeleteOne(path);

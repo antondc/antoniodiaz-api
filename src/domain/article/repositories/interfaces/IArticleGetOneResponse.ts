@@ -1,4 +1,4 @@
-import { TextEditorContent } from '@tools/types/TextEditor';
+import { TextEditorContent } from '@shared/services/TextEditor';
 
 export type IArticleGetOneResponse = {
   id: number;

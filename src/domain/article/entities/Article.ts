@@ -1,5 +1,5 @@
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
-import { TextEditorContent } from '@tools/types/TextEditor';
+import { TextEditorContent } from '@shared/services/TextEditor';
 
 export const articleImageFormat: IFileImageFormatOptions = {
   extension: 'jpg',

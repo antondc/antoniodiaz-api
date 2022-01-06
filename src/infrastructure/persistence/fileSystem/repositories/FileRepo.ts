@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { IFileDeleteOneRequest } from '@domain/file/repositories/interfaces/IFileDeleteOneRequest';
 import { IFileDeleteOneResponse } from '@domain/file/repositories/interfaces/IFileDeleteOneResponse';
+import { IFileGetOneRequest } from '@domain/file/repositories/interfaces/IFileGetOneRequest';
+import { IFileGetOneResponse } from '@domain/file/repositories/interfaces/IFileGetOneResponse';
 import { IFileImageSaveOneRequest } from '@domain/file/repositories/interfaces/IFileImageSaveOneRequest';
 import { IFileImageSaveOneResponse } from '@domain/file/repositories/interfaces/IFileImageSaveOneResponse';
 import { IFileSaveInTempFolderRequest } from '@domain/file/repositories/interfaces/IFileSaveInTempFolderRequest';
@@ -21,6 +23,14 @@ import { URLWrapper } from '@shared/services/UrlWrapper';
 import { toRelative } from '@tools/helpers/url/toRelative';
 
 export class FileRepo implements IFileRepo {
+  public fileGetOne(fileGetOneRequest: IFileGetOneRequest): IFileGetOneResponse {
+    const { path: imagePath } = fileGetOneRequest;
+    const fullPath = path.resolve(process.cwd(), toRelative(imagePath));
+    const fileExists = fs.existsSync(fullPath);
+
+    return fileExists;
+  }
+
   public async fileImageSaveOne(fileImageSaveOneRequest: IFileImageSaveOneRequest): Promise<IFileImageSaveOneResponse> {
     const { path: finalPath, filename } = await this.fileSaveOne(fileImageSaveOneRequest);
 
