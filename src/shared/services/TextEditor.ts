@@ -19,6 +19,17 @@ type TextEditorImage = {
 
 export type TextEditorContent = Array<TextEditorText | TextEditorImage>;
 
+export const textEditorDefaultValue: TextEditorContent = [
+  {
+    type: 'paragraph',
+    children: [
+      {
+        text: 'Edit me...',
+      },
+    ],
+  },
+];
+
 export class TextEditor {
   fileRepo: IFileRepo;
   formatOptions: IFileImageFormatOptions;
@@ -51,6 +62,8 @@ export class TextEditor {
   }
 
   async saveImages(textEditorContent: TextEditorContent): Promise<TextEditorContent> {
+    if (!textEditorContent) return textEditorDefaultValue;
+
     const editorContentMissingImagesFiltered = this.filterOutMissingImages(textEditorContent);
 
     const contentJsonWithImagesPromises = editorContentMissingImagesFiltered.map(async (item) => {

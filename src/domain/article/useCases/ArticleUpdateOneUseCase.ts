@@ -5,19 +5,8 @@ import { IArticleUpdateOneResponse } from '@domain/article/useCases/interfaces/I
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
-import { TextEditor, TextEditorContent } from '@shared/services/TextEditor';
+import { TextEditor } from '@shared/services/TextEditor';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
-
-export const textEditorDefaultValue: TextEditorContent = [
-  {
-    type: 'paragraph',
-    children: [
-      {
-        text: 'Edit me...',
-      },
-    ],
-  },
-];
 
 export interface IArticleUpdateOneUseCase {
   execute: (articleUpdateOneRequest: IArticleUpdateOneRequest) => Promise<IArticleUpdateOneResponse>;
@@ -49,8 +38,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       destinationFolder: `${session?.id}/articles`,
     };
     const textEditor = new TextEditor(this.fileRepo, formatOptions);
-    const contentJsonOrDefault = contentJson || textEditorDefaultValue;
-    const textEditorContent = await textEditor.saveImages(contentJsonOrDefault);
+    const textEditorContent = await textEditor.saveImages(contentJson);
 
     const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId,
