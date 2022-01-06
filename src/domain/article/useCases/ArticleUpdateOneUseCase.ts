@@ -20,7 +20,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   }
 
   public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
-    const { session, articleId, language, title, contentHtml, contentJson } = articleUpdateOneRequest;
+    const { session, articleId, language, title, contentHtml, contentJson, published } = articleUpdateOneRequest;
     if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCoreData = await this.articleRepo.articleCoreGetOne({ articleId });
@@ -35,6 +35,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       title,
       contentHtml,
       contentJson,
+      published,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);
 

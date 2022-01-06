@@ -4,4 +4,5 @@ export interface IArticleUpdateOneRequest {
   title: string;
   contentJson: string;
   contentHtml: string;
+  published: boolean;
 }

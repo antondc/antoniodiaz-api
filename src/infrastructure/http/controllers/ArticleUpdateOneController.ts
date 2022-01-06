@@ -18,7 +18,7 @@ export class ArticleUpdateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { articleId, language = DEFAULT_LANGUAGE } = req.params;
-    const { title, contentJson, contentHtml } = req.body;
+    const { title, contentJson, contentHtml, published } = req.body;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
@@ -30,6 +30,7 @@ export class ArticleUpdateOneController extends BaseController {
       title,
       contentJson,
       contentHtml,
+      published,
     };
 
     const response = await this.useCase.execute(articleUpdateRequest);

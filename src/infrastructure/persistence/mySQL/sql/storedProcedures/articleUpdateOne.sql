@@ -7,7 +7,8 @@ CREATE PROCEDURE article_update_one(
   IN $ARTICLE_ID    INT,
   IN $TITLE         TEXT,
   IN $CONTENT_JSON  JSON,
-  IN $CONTENT_HTML  TEXT
+  IN $CONTENT_HTML  TEXT,
+  IN $PUBLISHED  TEXT
 )
 
 BEGIN
@@ -18,6 +19,7 @@ BEGIN
     `content_html`,
     `article_id`,
     `language_id`,
+    `published`,
     `createdAt`,
     `updatedAt`
   )
@@ -27,6 +29,7 @@ BEGIN
     $CONTENT_HTML,
     $ARTICLE_ID,
     language.id,
+    $PUBLISHED,
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP()
   FROM `language`
@@ -37,6 +40,7 @@ BEGIN
     `article_translation`.`content_html`  = $CONTENT_HTML,
     `article_translation`.`article_id`    = $ARTICLE_ID,
     `article_translation`.`language_id`   = language.id,
+    `article_translation`.`published`     = $PUBLISHED,
     `article_translation`.`updatedAt`     = UNIX_TIMESTAMP()
   ;
 

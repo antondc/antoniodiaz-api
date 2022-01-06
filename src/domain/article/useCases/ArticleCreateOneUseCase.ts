@@ -31,6 +31,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       title,
       contentHtml,
       contentJson,
+      published: false,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);
 

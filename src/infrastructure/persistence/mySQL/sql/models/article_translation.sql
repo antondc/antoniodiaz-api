@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS article_translation (
   `content_html`  TEXT NULL DEFAULT NULL,
   `article_id`    INT(11) NOT NULL,
   `language_id`   INT NOT NULL,
-  `published`     TINYINT(1) NULL DEFAULT 0,
+  `published`     TINYINT(1) NOT NULL DEFAULT FALSE,
   `createdAt`     INT(11) DEFAULT NULL,
   `updatedAt`     INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
