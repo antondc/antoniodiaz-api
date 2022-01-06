@@ -82,20 +82,6 @@ export class ArticleRepo implements IArticleRepo {
     }
   }
 
-  public async articleUpdateOne({ articleId, language, title, contentJson, contentHtml }) {
-    const mySQL = new MySQL();
-    try {
-      const articleUpdateQuery = 'CALL article_update_one(?, ?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(articleUpdateQuery, [articleId, language, title, JSON.stringify(contentJson), contentHtml]);
-
-      return results;
-    } catch (err) {
-      throw new RequestError('Article update failed', 500, err);
-    } finally {
-      await mySQL.close();
-    }
-  }
-
   public async articleDeleteOne({ sessionId, articleId, language }) {
     const mySQL = new MySQL();
     try {

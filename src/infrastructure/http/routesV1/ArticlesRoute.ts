@@ -5,12 +5,10 @@ import { ArticleDeleteOneUseCase } from '@domain/article/useCases/ArticleDeleteO
 import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
 import { ArticleTranslationCreateOneUseCase } from '@domain/article/useCases/ArticleTranslationCreateOneUseCase';
-import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';
 import { ArticleDeleteOneController } from '@infrastructure/http/controllers/ArticleDeleteOneController';
 import { ArticleGetAllController } from '@infrastructure/http/controllers/ArticleGetAllController';
 import { ArticleGetOneController } from '@infrastructure/http/controllers/ArticleGetOneController';
-import { ArticleUpdateOneController } from '@infrastructure/http/controllers/ArticleUpdateOneController';
 import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
 import { ArticleTranslationCreateOneController } from '../controllers/ArticleTranslationCreateOneController';
 
@@ -47,23 +45,13 @@ ArticlesRoute.post('/', async (req: Request, res: Response, next: NextFunction) 
   return response;
 });
 
-ArticlesRoute.patch('/:articleId', async (req: Request, res: Response, next: NextFunction) => {
+ArticlesRoute.put('/:articleId', async (req: Request, res: Response, next: NextFunction) => {
   const articleRepo = new ArticleRepo();
   const articleGetOneUseCase = new ArticleGetOneUseCase(articleRepo);
   const articleTranslationCreateOneUseCase = new ArticleTranslationCreateOneUseCase(articleRepo, articleGetOneUseCase);
   const articleTranslationCreateOneController = new ArticleTranslationCreateOneController(articleTranslationCreateOneUseCase);
 
   const response = await articleTranslationCreateOneController.execute(req, res, next);
-
-  return response;
-});
-
-ArticlesRoute.put('/:articleId', async (req: Request, res: Response, next: NextFunction) => {
-  const articleRepo = new ArticleRepo();
-  const articleUpdateOneUseCase = new ArticleUpdateOneUseCase(articleRepo);
-  const articleUpdateOneController = new ArticleUpdateOneController(articleUpdateOneUseCase);
-
-  const response = await articleUpdateOneController.execute(req, res, next);
 
   return response;
 });

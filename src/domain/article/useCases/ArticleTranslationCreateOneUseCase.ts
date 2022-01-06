@@ -23,13 +23,10 @@ export class ArticleTranslationCreateOneUseCase implements IArticleTranslationCr
     const { session, articleId, language, title, contentHtml, contentJson } = articleTranslationCreateOneRequest;
     if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
 
-    const articleTranslationExists = await this.articleRepo.articleGetOne({ sessionId: session?.id, articleId, language });
-    if (!!articleTranslationExists) throw new RequestError('409 Conflict', 409);
-
     const articleCoreData = await this.articleRepo.articleCoreGetOne({ articleId });
     if (!articleCoreData) throw new RequestError('Not Found', 404);
 
-    const notTheAuthor = !!articleTranslationExists && session?.id !== articleTranslationExists?.userId;
+    const notTheAuthor = session?.id !== articleCoreData?.userId;
     if (notTheAuthor) throw new AuthenticationError('Unauthorized', 401);
 
     const articleTranslationIdCreated = await this.articleRepo.articleTranslationCreateOne({

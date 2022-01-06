@@ -31,6 +31,13 @@ BEGIN
     UNIX_TIMESTAMP()
   FROM `language`
   WHERE `language`.slug = $LANGUAGE
+  ON DUPLICATE KEY UPDATE
+    `article_translation`.`title`         = $TITLE,
+    `article_translation`.`content_json`  = $CONTENT_JSON,
+    `article_translation`.`content_html`  = $CONTENT_HTML,
+    `article_translation`.`article_id`    = $ARTICLE_ID,
+    `article_translation`.`language_id`   = language.id,
+    `article_translation`.`updatedAt`     = UNIX_TIMESTAMP()
   ;
 
   SELECT LAST_INSERT_ID() as articleId;
@@ -39,4 +46,4 @@ END
 
 -- DELIMITER ;
 
--- CALL article_translation_create_one('es', 3, 'title one -', '{modified}', '<div>modified</div>');
+-- CALL article_translation_create_one('es', 3, 'UPDATED', '{}', '<div>modified</div>');

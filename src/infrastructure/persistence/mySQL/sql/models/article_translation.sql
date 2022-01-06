@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS article_translation (
   `createdAt`     INT(11) DEFAULT NULL,
   `updatedAt`     INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE `unique_index`(`article_id`, `language_id`),
   INDEX `fk_article_translation_article1_idx` (`article_id` ASC),
   INDEX `fk_article_translation_language1_idx` (`language_id` ASC),
   CONSTRAINT `fk_article_translation_article1`

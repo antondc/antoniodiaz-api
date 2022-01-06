@@ -10,8 +10,6 @@ import { IArticleGetOneRequest } from './interfaces/IArticleGetOneRequest';
 import { IArticleGetOneResponse } from './interfaces/IArticleGetOneResponse';
 import { IArticleTranslationCreateOneRequest } from './interfaces/IArticleTranslationCreateOneRequest';
 import { IArticleTranslationCreateOneResponse } from './interfaces/IArticleTranslationCreateOneResponse';
-import { IArticleUpdateOneRequest } from './interfaces/IArticleUpdateOneRequest';
-import { IArticleUpdateOneResponse } from './interfaces/IArticleUpdateOneResponse';
 
 export interface IArticleRepo {
   articleGetOne: (articleGetOneRequest: IArticleGetOneRequest) => Promise<IArticleGetOneResponse>;
@@ -19,6 +17,5 @@ export interface IArticleRepo {
   articleGetAll: (articleGetAllRequest: IArticleGetAllRequest) => Promise<IArticleGetAllResponse>;
   articleCreateOne: (articleCreateOneRequest: IArticleCreateOneRequest) => Promise<IArticleCreateOneResponse>;
   articleTranslationCreateOne: (articleTranslationCreateOneRequest: IArticleTranslationCreateOneRequest) => Promise<IArticleTranslationCreateOneResponse>;
-  articleUpdateOne: (articleUpdateOneRequest: IArticleUpdateOneRequest) => Promise<IArticleUpdateOneResponse>;
   articleDeleteOne: (articleDeleteOneRequest: IArticleDeleteOneRequest) => Promise<IArticleDeleteOneResponse>;
 }
