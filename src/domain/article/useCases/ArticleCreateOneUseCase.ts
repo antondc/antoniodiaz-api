@@ -31,7 +31,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       destinationFolder: `${session?.id}/articles`,
     };
     const textEditor = new TextEditor(this.fileRepo, formatOptions);
-    const textEditorContent = await textEditor.saveImages(contentJson);
+    const textEditorContent = await textEditor.processTextEditorContent(contentJson);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);

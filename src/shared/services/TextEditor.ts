@@ -11,7 +11,6 @@ type TextEditorText = {
 type TextEditorImage = {
   type: 'image';
   image: {
-    original: string;
     [key: string]: string;
   };
   children: Array<unknown>;
@@ -31,9 +30,9 @@ export const textEditorDefaultValue: TextEditorContent = [
 ];
 
 export class TextEditor {
-  fileRepo: IFileRepo;
-  formatOptions: IFileImageFormatOptions;
-  fileImage: FileImage;
+  private fileRepo: IFileRepo;
+  private formatOptions: IFileImageFormatOptions;
+  private fileImage: FileImage;
 
   constructor(fileRepo: IFileRepo, formatOptions: IFileImageFormatOptions) {
     this.fileRepo = fileRepo;
@@ -41,7 +40,17 @@ export class TextEditor {
     this.fileImage = new FileImage({ fileRepo: this.fileRepo });
   }
 
-  filterOutMissingImages(textEditorContent): TextEditorContent {
+  async processTextEditorContent(textEditorContent: TextEditorContent): Promise<TextEditorContent> {
+    if (!textEditorContent) return textEditorDefaultValue;
+
+    const editorContentMissingImagesFiltered = this.filterOutMissingImages(textEditorContent);
+    const contentJsonWithImages = await this.saveImagesToFileSystem(editorContentMissingImagesFiltered);
+    const textEditorContentWithImageSizes = this.formatImageUrls(contentJsonWithImages);
+
+    return textEditorContentWithImageSizes;
+  }
+
+  private filterOutMissingImages(textEditorContent: TextEditorContent): TextEditorContent {
     const result = textEditorContent.filter((item) => {
       const imageComponent = item.type === 'image';
       if (!imageComponent) return true;
@@ -61,12 +70,8 @@ export class TextEditor {
     return result;
   }
 
-  async saveImages(textEditorContent: TextEditorContent): Promise<TextEditorContent> {
-    if (!textEditorContent) return textEditorDefaultValue;
-
-    const editorContentMissingImagesFiltered = this.filterOutMissingImages(textEditorContent);
-
-    const contentJsonWithImagesPromises = editorContentMissingImagesFiltered.map(async (item) => {
+  private async saveImagesToFileSystem(textEditorContent: TextEditorContent): Promise<TextEditorContent> {
+    const contentJsonWithImagesPromises = textEditorContent.map(async (item) => {
       if (item.type !== 'image') return item;
 
       const savedImage = await this.fileImage.fileImageSaveOne({
@@ -83,5 +88,23 @@ export class TextEditor {
     const contentJsonWithImages = await Promise.all(contentJsonWithImagesPromises || []);
 
     return contentJsonWithImages;
+  }
+
+  private formatImageUrls(textEditorContent: TextEditorContent): TextEditorContent {
+    const textEditorContentWithImageSizes = textEditorContent.map((item) => {
+      if (item.type !== 'image') return item;
+
+      const imageFormatted = this.fileImage.getFormattedImageUrls({
+        sizes: this.formatOptions?.sizes,
+        imageUrl: item?.image.original,
+      });
+
+      return {
+        ...item,
+        image: imageFormatted,
+      };
+    });
+
+    return textEditorContentWithImageSizes;
   }
 }

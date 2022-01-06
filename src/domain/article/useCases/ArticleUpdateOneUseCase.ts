@@ -38,7 +38,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       destinationFolder: `${session?.id}/articles`,
     };
     const textEditor = new TextEditor(this.fileRepo, formatOptions);
-    const textEditorContent = await textEditor.saveImages(contentJson);
+    const textEditorContent = await textEditor.processTextEditorContent(contentJson);
 
     const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId,
