@@ -29,7 +29,13 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
     const fileImage = new FileImage({ fileRepo: this.fileRepo });
     const contentJsonWithImagesPromises = contentJson.map(async (item) => {
       if (item.type === 'image') {
-        const savedImage = await fileImage.fileImageSaveOne({ fileUrl: item.image.original, formatOptions: articleImageFormat });
+        const savedImage = await fileImage.fileImageSaveOne({
+          fileUrl: item.image.original,
+          formatOptions: {
+            ...articleImageFormat,
+            destinationFolder: `${session?.id}/articles`,
+          },
+        });
 
         return {
           ...item,

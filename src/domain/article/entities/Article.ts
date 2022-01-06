@@ -18,7 +18,7 @@ export const articleImageFormat: IFileImageFormatOptions = {
     },
   ],
   crop: 'center',
-  destinationFolder: 'articles/images',
+  destinationFolder: '',
 };
 
 export class Article {

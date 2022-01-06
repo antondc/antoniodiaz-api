@@ -4,7 +4,6 @@ import { RequestError } from '@shared/errors/RequestError';
 import { IFileUploadOneRequest } from './interfaces/IFileUploadOneRequest';
 import { IFileUploadOneResponse } from './interfaces/IFileUploadOneResponse';
 
-
 export interface IFileUploadOneUseCase {
   execute: (imageUploadOneRequest: IFileUploadOneRequest) => Promise<IFileUploadOneResponse>;
 }
