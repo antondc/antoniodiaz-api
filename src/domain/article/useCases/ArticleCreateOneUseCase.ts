@@ -19,6 +19,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
 
   public async execute(articleCreateOneRequest: IArticleCreateOneRequest): Promise<IArticleCreateOneResponse> {
     const { session, language, title, contentHtml, contentJson } = articleCreateOneRequest;
+
     if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });

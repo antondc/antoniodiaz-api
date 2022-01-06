@@ -16,6 +16,7 @@ BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
 
   SELECT
+    count(*) OVER() as totalItems,
     article.id,
     article.order,
     `article_translation`.title,
