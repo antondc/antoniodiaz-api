@@ -1,4 +1,4 @@
-export interface IArticleTranslationCreateOneRequest {
+export interface IArticleUpdateOneRequest {
   articleId: number;
   language: string;
   title: string;

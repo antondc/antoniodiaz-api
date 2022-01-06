@@ -25,7 +25,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);
 
-    const articleTranslationIdCreated = await this.articleRepo.articleTranslationCreateOne({
+    const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId: articleCreated?.articleId,
       language,
       title,

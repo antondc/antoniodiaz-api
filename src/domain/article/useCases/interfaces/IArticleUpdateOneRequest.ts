@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export interface IArticleTranslationCreateOneRequest {
+export interface IArticleUpdateOneRequest {
   session: User;
   articleId: number;
   language: string;

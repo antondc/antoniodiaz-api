@@ -1,8 +1,8 @@
-DROP PROCEDURE IF EXISTS article_translation_create_one;
+DROP PROCEDURE IF EXISTS article_update_one;
 
 -- DELIMITER $$
 
-CREATE PROCEDURE article_translation_create_one(
+CREATE PROCEDURE article_update_one(
   IN $LANGUAGE      TEXT,
   IN $ARTICLE_ID    INT,
   IN $TITLE         TEXT,
@@ -46,4 +46,4 @@ END
 
 -- DELIMITER ;
 
--- CALL article_translation_create_one('es', 3, 'UPDATED', '{}', '<div>modified</div>');
+-- CALL article_update_one('es', 3, 'UPDATED', '{}', '<div>modified</div>');

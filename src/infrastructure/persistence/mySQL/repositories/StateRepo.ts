@@ -39,10 +39,9 @@ export class StateRepo {
   private articleCoreGetOneProcedure: string;
   private articleGetOneProcedure: string;
   private articleGetAllProcedure: string;
+  private articleCreateOneProcedure: string;
   private articleUpdateOneProcedure: string;
   private articleDeleteOneProcedure: string;
-  private articleCreateOneProcedure: string;
-  private articleTranslationCreateOneProcedure: string;
 
   // Data
   private languageData: string;
@@ -86,10 +85,9 @@ export class StateRepo {
     this.articleCoreGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleCoreGetOne.sql')).toString();
     this.articleGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleGetOne.sql')).toString();
     this.articleGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleGetAll.sql')).toString();
+    this.articleCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleCreateOne.sql')).toString();
     this.articleUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleUpdateOne.sql')).toString();
     this.articleDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleDeleteOne.sql')).toString();
-    this.articleCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleCreateOne.sql')).toString();
-    this.articleTranslationCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleTranslationCreateOne.sql')).toString();
 
     //  Data
     this.languageData = fs.readFileSync(path.resolve(__dirname, '../sql/data/language.sql')).toString();
@@ -139,10 +137,9 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleCoreGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleCreateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleUpdateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleDeleteOneProcedure))),
-        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleCreateOneProcedure))),
-        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleTranslationCreateOneProcedure))),
 
         // Insert data
         ...(!!RESTORE_DATA && (await mySQL.query(this.languageData))), // As languages are isolated we can modify them without affecting the rest of the DB

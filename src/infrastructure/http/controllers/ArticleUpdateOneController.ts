@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
 
-import { IArticleTranslationCreateOneUseCase } from '@domain/article/useCases/ArticleTranslationCreateOneUseCase';
-import { IArticleTranslationCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleTranslationCreateOneRequest';
+import { IArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
+import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-export class ArticleTranslationCreateOneController extends BaseController {
-  useCase: IArticleTranslationCreateOneUseCase;
+export class ArticleUpdateOneController extends BaseController {
+  useCase: IArticleUpdateOneUseCase;
 
-  constructor(useCase: IArticleTranslationCreateOneUseCase) {
+  constructor(useCase: IArticleUpdateOneUseCase) {
     super();
     this.useCase = useCase;
   }
@@ -23,7 +23,7 @@ export class ArticleTranslationCreateOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
-    const articleTranslationCreateRequest: IArticleTranslationCreateOneRequest = {
+    const articleUpdateRequest: IArticleUpdateOneRequest = {
       articleId: Number(articleId),
       language,
       session,
@@ -32,7 +32,7 @@ export class ArticleTranslationCreateOneController extends BaseController {
       contentHtml,
     };
 
-    const response = await this.useCase.execute(articleTranslationCreateRequest);
+    const response = await this.useCase.execute(articleUpdateRequest);
 
     const formattedResponse = {
       links: {

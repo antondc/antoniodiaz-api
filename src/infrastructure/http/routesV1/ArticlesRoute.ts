@@ -4,13 +4,13 @@ import { ArticleCreateOneUseCase } from '@domain/article/useCases/ArticleCreateO
 import { ArticleDeleteOneUseCase } from '@domain/article/useCases/ArticleDeleteOneUseCase';
 import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
-import { ArticleTranslationCreateOneUseCase } from '@domain/article/useCases/ArticleTranslationCreateOneUseCase';
+import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';
 import { ArticleDeleteOneController } from '@infrastructure/http/controllers/ArticleDeleteOneController';
 import { ArticleGetAllController } from '@infrastructure/http/controllers/ArticleGetAllController';
 import { ArticleGetOneController } from '@infrastructure/http/controllers/ArticleGetOneController';
 import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
-import { ArticleTranslationCreateOneController } from '../controllers/ArticleTranslationCreateOneController';
+import { ArticleUpdateOneController } from '../controllers/ArticleUpdateOneController';
 
 const ArticlesRoute = express.Router({ mergeParams: true });
 
@@ -48,10 +48,10 @@ ArticlesRoute.post('/', async (req: Request, res: Response, next: NextFunction) 
 ArticlesRoute.put('/:articleId', async (req: Request, res: Response, next: NextFunction) => {
   const articleRepo = new ArticleRepo();
   const articleGetOneUseCase = new ArticleGetOneUseCase(articleRepo);
-  const articleTranslationCreateOneUseCase = new ArticleTranslationCreateOneUseCase(articleRepo, articleGetOneUseCase);
-  const articleTranslationCreateOneController = new ArticleTranslationCreateOneController(articleTranslationCreateOneUseCase);
+  const articleUpdateOneUseCase = new ArticleUpdateOneUseCase(articleRepo, articleGetOneUseCase);
+  const articleUpdateOneController = new ArticleUpdateOneController(articleUpdateOneUseCase);
 
-  const response = await articleTranslationCreateOneController.execute(req, res, next);
+  const response = await articleUpdateOneController.execute(req, res, next);
 
   return response;
 });

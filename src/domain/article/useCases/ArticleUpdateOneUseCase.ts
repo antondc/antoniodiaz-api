@@ -1,16 +1,16 @@
 import { Article } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
-import { IArticleTranslationCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleTranslationCreateOneRequest';
-import { IArticleTranslationCreateOneResponse } from '@domain/article/useCases/interfaces/IArticleTranslationCreateOneResponse';
+import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
+import { IArticleUpdateOneResponse } from '@domain/article/useCases/interfaces/IArticleUpdateOneResponse';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 
-export interface IArticleTranslationCreateOneUseCase {
-  execute: (articleTranslationCreateOneRequest: IArticleTranslationCreateOneRequest) => Promise<IArticleTranslationCreateOneResponse>;
+export interface IArticleUpdateOneUseCase {
+  execute: (articleUpdateOneRequest: IArticleUpdateOneRequest) => Promise<IArticleUpdateOneResponse>;
 }
 
-export class ArticleTranslationCreateOneUseCase implements IArticleTranslationCreateOneUseCase {
+export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   private articleRepo: IArticleRepo;
   private articleGetOneUseCase: IArticleGetOneUseCase;
 
@@ -19,8 +19,8 @@ export class ArticleTranslationCreateOneUseCase implements IArticleTranslationCr
     this.articleGetOneUseCase = articleGetOneUseCase;
   }
 
-  public async execute(articleTranslationCreateOneRequest: IArticleTranslationCreateOneRequest): Promise<IArticleTranslationCreateOneResponse> {
-    const { session, articleId, language, title, contentHtml, contentJson } = articleTranslationCreateOneRequest;
+  public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
+    const { session, articleId, language, title, contentHtml, contentJson } = articleUpdateOneRequest;
     if (!title || !contentHtml || !contentJson) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCoreData = await this.articleRepo.articleCoreGetOne({ articleId });
@@ -29,7 +29,7 @@ export class ArticleTranslationCreateOneUseCase implements IArticleTranslationCr
     const notTheAuthor = session?.id !== articleCoreData?.userId;
     if (notTheAuthor) throw new AuthenticationError('Unauthorized', 401);
 
-    const articleTranslationIdCreated = await this.articleRepo.articleTranslationCreateOne({
+    const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId,
       language,
       title,
