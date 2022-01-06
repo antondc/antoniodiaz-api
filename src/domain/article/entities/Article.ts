@@ -1,8 +1,31 @@
+import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
+import { TextEditorContent } from '@tools/types/TextEditor';
+
+export const articleImageFormat: IFileImageFormatOptions = {
+  extension: 'jpg',
+  sizes: [
+    {
+      height: 200,
+      width: 200,
+    },
+    {
+      height: 600,
+      width: 600,
+    },
+    {
+      height: 1200,
+      width: 1200,
+    },
+  ],
+  crop: 'center',
+  destinationFolder: 'articles/images',
+};
+
 export class Article {
   id: number;
   order: number;
   title: string;
-  contentJson: string;
+  contentJson: TextEditorContent;
   contentHtml: string;
   published: string;
   userId: string;
