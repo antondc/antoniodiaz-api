@@ -1,10 +1,10 @@
-import { RichContentJson } from "@domain/richContent/entities/interfaces/RichContentJson";
+import { TextEditorContent } from '@shared/services/TextEditor';
 
 export type IArticleGetOneResponse = {
   id: number;
   order: number;
   title: string;
-  contentJson: RichContentJson;
+  contentJson: TextEditorContent;
   contentHtml: string;
   published: string;
   userId: string;

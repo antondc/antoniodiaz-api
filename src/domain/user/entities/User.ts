@@ -37,7 +37,8 @@ export class User {
   updatedAt: Date;
 
   constructor(user) {
-    const imageFormatted = FileImage.getFormattedImageUrls({
+    const image = new FileImage();
+    const imageFormatted = image.getFormattedImageUrls({
       sizes: userImageFormat?.sizes,
       imageUrl: user?.image,
     });

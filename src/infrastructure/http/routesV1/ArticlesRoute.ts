@@ -5,8 +5,6 @@ import { ArticleDeleteOneUseCase } from '@domain/article/useCases/ArticleDeleteO
 import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
 import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
-import { FileImage } from '@domain/file/entities/FileImage';
-import { RichContent } from '@domain/richContent/entities/RichContent';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';
 import { ArticleDeleteOneController } from '@infrastructure/http/controllers/ArticleDeleteOneController';
 import { ArticleGetAllController } from '@infrastructure/http/controllers/ArticleGetAllController';

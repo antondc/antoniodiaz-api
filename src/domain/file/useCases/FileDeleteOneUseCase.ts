@@ -24,7 +24,7 @@ export class FileDeleteOneUseCase implements IFileDeleteOneUseCase {
     // Users are only allowed to edit files within their own folders
     if (!path.includes(session?.id) && !path.includes('temp_files')) throw new AuthenticationError('401 Unauthorized', 401);
 
-    const fileInstance = new File(this.fileRepo);
+    const fileInstance = new File({ fileRepo: this.fileRepo });
     const { success } = await fileInstance.fileDeleteOne(path);
     if (!success) throw new ServerError('Operation failed', 500);
 

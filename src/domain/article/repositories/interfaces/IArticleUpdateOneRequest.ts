@@ -1,10 +1,10 @@
-import { RichContentJson } from '@domain/richContent/entities/interfaces/RichContentJson';
+import { TextEditorContent } from '@shared/services/TextEditor';
 
 export interface IArticleUpdateOneRequest {
   articleId: number;
   language: string;
   title: string;
-  contentJson: RichContentJson;
+  contentJson: TextEditorContent;
   contentHtml: string;
   published: boolean;
 }

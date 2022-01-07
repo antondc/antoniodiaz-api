@@ -18,7 +18,7 @@ export class FileUploadOneUseCase implements IFileUploadOneUseCase {
     const { file } = imageUploadOneRequest;
     if (!allowedFileExtensions.includes(file.extension)) throw new RequestError('Wrong file extension', 400);
 
-    const fileInstance = new File(this.fileRepo);
+    const fileInstance = new File({ file, fileRepo: this.fileRepo });
 
     const mimeIncludesSomeMimeFileType = allowedFileExtensions.some((item) => file.type.toLowerCase().includes(item.toLowerCase()));
     if (!mimeIncludesSomeMimeFileType) throw new RequestError('Wrong file type', 400);
