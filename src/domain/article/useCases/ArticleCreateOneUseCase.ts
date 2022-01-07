@@ -4,7 +4,7 @@ import { IArticleCreateOneRequest } from '@domain/article/useCases/interfaces/IA
 import { IArticleCreateOneResponse } from '@domain/article/useCases/interfaces/IArticleCreateOneResponse';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { TextEditor } from '@shared/services/TextEditor';
+import { RichContent } from '@shared/services/RichContent';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 
 export interface IArticleCreateOneUseCase {
@@ -30,8 +30,8 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       ...articleImageFormat,
       destinationFolder: `${session?.id}/articles`,
     };
-    const textEditor = new TextEditor(this.fileRepo, formatOptions);
-    const textEditorContent = await textEditor.processTextEditorContent(contentJson);
+    const richContent = new RichContent(this.fileRepo, formatOptions);
+    const richContentJson = await richContent.processRichContent(contentJson);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);
@@ -41,7 +41,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       language,
       title,
       contentHtml,
-      contentJson: textEditorContent,
+      contentJson: richContentJson,
       published: false,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);

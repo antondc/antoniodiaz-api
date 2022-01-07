@@ -3,12 +3,12 @@ import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileI
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { URLWrapper } from './UrlWrapper';
 
-type TextEditorText = {
+type RichContentText = {
   type: 'paragraph' | 'code' | 'h1' | 'h2' | 'h3' | 'ul' | 'quote';
   children: Array<unknown>;
 };
 
-type TextEditorImage = {
+type RichContentImage = {
   type: 'image';
   image: {
     [key: string]: string;
@@ -16,9 +16,9 @@ type TextEditorImage = {
   children: Array<unknown>;
 };
 
-export type TextEditorContent = Array<TextEditorText | TextEditorImage>;
+export type RichContentJson = Array<RichContentText | RichContentImage>;
 
-export const textEditorDefaultValue: TextEditorContent = [
+export const richContentDefaultValue: RichContentJson = [
   {
     type: 'paragraph',
     children: [
@@ -29,7 +29,7 @@ export const textEditorDefaultValue: TextEditorContent = [
   },
 ];
 
-export class TextEditor {
+export class RichContent {
   private fileRepo: IFileRepo;
   private formatOptions: IFileImageFormatOptions;
   private fileImage: FileImage;
@@ -40,23 +40,23 @@ export class TextEditor {
     this.fileImage = new FileImage({ fileRepo: this.fileRepo });
   }
 
-  async processTextEditorContent(textEditorContent: TextEditorContent): Promise<TextEditorContent> {
-    if (!textEditorContent) return textEditorDefaultValue;
+  async processRichContent(richContent: RichContentJson): Promise<RichContentJson> {
+    if (!richContent) return richContentDefaultValue;
 
-    const editorContentMissingImagesFiltered = this.filterOutMissingImages(textEditorContent);
+    const editorContentMissingImagesFiltered = this.filterOutMissingImages(richContent);
     const contentJsonWithImages = await this.saveImagesToFileSystem(editorContentMissingImagesFiltered);
-    const textEditorContentWithImageSizes = this.formatImageUrls(contentJsonWithImages);
+    const richContentWithImageSizes = this.formatImageUrls(contentJsonWithImages);
 
-    return textEditorContentWithImageSizes;
+    return richContentWithImageSizes;
   }
 
-  private filterOutMissingImages(textEditorContent: TextEditorContent): TextEditorContent {
-    const result = textEditorContent.filter((item) => {
+  private filterOutMissingImages(richContent: RichContentJson): RichContentJson {
+    const result = richContent.filter((item) => {
       const imageComponent = item.type === 'image';
       if (!imageComponent) return true;
 
       try {
-        const imageElement = item as TextEditorImage; // Cast to TextEditorImage to be able to use «image» field
+        const imageElement = item as RichContentImage; // Cast to RichContentImage to be able to use «image» field
         const url = new URLWrapper(imageElement.image?.original);
         const path = url.getPath();
         const imageComponentAndImageExists = this.fileRepo.fileGetOne({ path });
@@ -70,8 +70,8 @@ export class TextEditor {
     return result;
   }
 
-  private async saveImagesToFileSystem(textEditorContent: TextEditorContent): Promise<TextEditorContent> {
-    const contentJsonWithImagesPromises = textEditorContent.map(async (item) => {
+  private async saveImagesToFileSystem(richContent: RichContentJson): Promise<RichContentJson> {
+    const contentJsonWithImagesPromises = richContent.map(async (item) => {
       if (item.type !== 'image') return item;
 
       const savedImage = await this.fileImage.fileImageSaveOne({
@@ -90,8 +90,8 @@ export class TextEditor {
     return contentJsonWithImages;
   }
 
-  private formatImageUrls(textEditorContent: TextEditorContent): TextEditorContent {
-    const textEditorContentWithImageSizes = textEditorContent.map((item) => {
+  private formatImageUrls(richContent: RichContentJson): RichContentJson {
+    const richContentWithImageSizes = richContent.map((item) => {
       if (item.type !== 'image') return item;
 
       const imageFormatted = this.fileImage.getFormattedImageUrls({
@@ -105,6 +105,6 @@ export class TextEditor {
       };
     });
 
-    return textEditorContentWithImageSizes;
+    return richContentWithImageSizes;
   }
 }
