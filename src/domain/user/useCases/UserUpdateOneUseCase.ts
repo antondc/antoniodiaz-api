@@ -30,8 +30,8 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     const userExists = await this.userRepo.userGetOne({ sessionId: session?.id, email, name });
     if (!userExists) throw new RequestError('User does not exist', 404);
 
-    const userImageEntity = new FileImage({ fileRepo: this.fileRepo });
-    const savedImage = await userImageEntity.fileImageSaveOne({ fileUrl: image, formatOptions: userImageFormat });
+    const userImage = new FileImage(this.fileRepo);
+    const savedImage = await userImage.fileImageSaveOne({ fileUrl: image, formatOptions: userImageFormat });
 
     await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: savedImage?.path });
 

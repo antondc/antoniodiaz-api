@@ -1,5 +1,5 @@
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
-import { TextEditorContent } from '@shared/services/TextEditor';
+import { RichContentJson } from '@domain/richContent/entities/interfaces/RichContentJson';
 
 export const articleImageFormat: IFileImageFormatOptions = {
   extension: 'jpg',
@@ -25,7 +25,7 @@ export class Article {
   id: number;
   order: number;
   title: string;
-  contentJson: TextEditorContent;
+  contentJson: RichContentJson;
   contentHtml: string;
   published: string;
   userId: string;

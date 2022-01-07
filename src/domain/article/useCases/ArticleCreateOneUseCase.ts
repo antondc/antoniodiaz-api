@@ -3,8 +3,8 @@ import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleCreateOneRequest';
 import { IArticleCreateOneResponse } from '@domain/article/useCases/interfaces/IArticleCreateOneResponse';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
+import { RichContent } from '@domain/richContent/entities/RichContent';
 import { RequestError } from '@shared/errors/RequestError';
-import { TextEditor } from '@shared/services/TextEditor';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 
 export interface IArticleCreateOneUseCase {
@@ -30,8 +30,8 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       ...articleImageFormat,
       destinationFolder: `${session?.id}/articles`,
     };
-    const textEditor = new TextEditor(this.fileRepo, formatOptions);
-    const textEditorContent = await textEditor.processTextEditorContent(contentJson);
+    const richContent = new RichContent(this.fileRepo);
+    const richContentJson = await richContent.processRichContentJson(contentJson, formatOptions);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);
@@ -41,7 +41,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       language,
       title,
       contentHtml,
-      contentJson: textEditorContent,
+      contentJson: richContentJson,
       published: false,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);

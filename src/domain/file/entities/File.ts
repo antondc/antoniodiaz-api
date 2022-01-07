@@ -2,6 +2,8 @@ import { IFileRepo } from '../repositories/IFileRepo';
 import { FileDTO } from './FileDTO';
 import { IFileDeleteOneRequest } from './interfaces/IFileDeleteOneRequest';
 import { IFileDeleteOneResponse } from './interfaces/IFileDeleteOneResponse';
+import { IFileGetOneRequest } from './interfaces/IFileGetOneRequest';
+import { IFileGetOneResponse } from './interfaces/IFileGetOneResponse';
 import { IFileSaveInTempFolderRequest } from './interfaces/IFileSaveInTempFolderRequest';
 import { IFileSaveInTempFolderResponse } from './interfaces/IFileSaveInTempFolderResponse';
 import { IFileSaveOneRequest } from './interfaces/IFileSaveOneRequest';
@@ -9,19 +11,12 @@ import { IFileSaveOneResponse } from './interfaces/IFileSaveOneResponse';
 
 export const allowedFileExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'html', 'json'];
 
-export interface FileConstructorProps {
-  file?: FileDTO;
-  fileRepo?: IFileRepo;
-}
-
 export class File extends FileDTO {
-  file?: FileDTO;
   fileRepo?: IFileRepo;
 
-  constructor(constructorProps?: FileConstructorProps) {
+  constructor(fileRepo?: IFileRepo) {
     super();
-    this.file = constructorProps?.file;
-    this.fileRepo = constructorProps?.fileRepo;
+    this.fileRepo = fileRepo;
   }
 
   async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {
@@ -36,6 +31,12 @@ export class File extends FileDTO {
     const { path } = await this.fileRepo.fileSaveOne(fileSaveOneRequest);
 
     return { path };
+  }
+
+  fileGetOne(fileGetOneRequest: IFileGetOneRequest): IFileGetOneResponse {
+    const fileExists = this.fileRepo.fileGetOne(fileGetOneRequest);
+
+    return fileExists;
   }
 
   fileDeleteOne = async (url: IFileDeleteOneRequest): Promise<IFileDeleteOneResponse> => {

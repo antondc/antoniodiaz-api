@@ -1,10 +1,9 @@
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { IImageSaveOneRequest } from '@domain/file/useCases/interfaces/IFileSaveOneRequest';
 import { IImageSaveOneResponse } from '@domain/file/useCases/interfaces/IFileSaveOneResponse';
-import { File, FileConstructorProps } from './File';
-import { FileDTO } from './FileDTO';
+import { File } from './File';
 
-type ImageUrlSplitBySizes = {
+type GetFormattedImageUrlsRequest = {
   imageUrl: string;
   sizes: {
     height: number;
@@ -12,18 +11,16 @@ type ImageUrlSplitBySizes = {
   }[];
 };
 
-type ImageUrlSplitBySizesReturn = {
+type GetFormattedImageUrlsResponse = {
   [key: string]: string;
 };
 
 export class FileImage extends File {
   fileRepo?: IFileRepo;
-  file?: FileDTO;
 
-  constructor(constructorProps?: FileConstructorProps) {
-    super(constructorProps);
-    this.file = constructorProps?.file;
-    this.fileRepo = constructorProps?.fileRepo;
+  constructor(fileRepo?: IFileRepo) {
+    super();
+    this.fileRepo = fileRepo;
   }
 
   async fileImageSaveOne(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
@@ -36,7 +33,7 @@ export class FileImage extends File {
     return null;
   };
 
-  getFormattedImageUrls = ({ imageUrl, sizes = [] }: ImageUrlSplitBySizes): ImageUrlSplitBySizesReturn => {
+  static getFormattedImageUrls = ({ imageUrl, sizes = [] }: GetFormattedImageUrlsRequest): GetFormattedImageUrlsResponse => {
     if (!imageUrl || !imageUrl.length) return {};
 
     // Default image object

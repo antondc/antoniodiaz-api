@@ -27,7 +27,7 @@ export class UserDeleteOneUseCase implements IUserDeleteOneUseCase {
     if (userData.status === 'disabled') throw new RequestError('User was already removed', 409);
 
     const user = new User(userData);
-    const fileInstance = new File({ fileRepo: this.fileRepo });
+    const fileInstance = new File(this.fileRepo);
     await fileInstance.fileDeleteOne(user?.image?.original);
     const { userId } = await this.userRepo.userDeleteOne({ userId: session?.id });
 
