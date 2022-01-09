@@ -8,6 +8,8 @@ import { IArticleGetAllRequest } from './interfaces/IArticleGetAllRequest';
 import { IArticleGetAllResponse } from './interfaces/IArticleGetAllResponse';
 import { IArticleGetOneRequest } from './interfaces/IArticleGetOneRequest';
 import { IArticleGetOneResponse } from './interfaces/IArticleGetOneResponse';
+import { IArticleSortOneRequest } from './interfaces/IArticleSortOneRequest';
+import { IArticleSortOneResponse } from './interfaces/IArticleSortOneResponse';
 import { IArticleUpdateOneRequest } from './interfaces/IArticleUpdateOneRequest';
 import { IArticleUpdateOneResponse } from './interfaces/IArticleUpdateOneResponse';
 
@@ -18,4 +20,5 @@ export interface IArticleRepo {
   articleCreateOne: (articleCreateOneRequest: IArticleCreateOneRequest) => Promise<IArticleCreateOneResponse>;
   articleUpdateOne: (articleUpdateOneRequest: IArticleUpdateOneRequest) => Promise<IArticleUpdateOneResponse>;
   articleDeleteOne: (articleDeleteOneRequest: IArticleDeleteOneRequest) => Promise<IArticleDeleteOneResponse>;
+  articleSortOne: (articleSortOneRequest: IArticleSortOneRequest) => Promise<IArticleSortOneResponse>;
 }

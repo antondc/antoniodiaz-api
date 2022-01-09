@@ -1,4 +1,6 @@
+import { Article } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
+import { IArticleSortOneRequest } from '@domain/article/repositories/interfaces/IArticleSortOneRequest';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { RequestError } from '@shared/errors/RequestError';
 
@@ -87,6 +89,20 @@ export class ArticleRepo implements IArticleRepo {
     try {
       const articleDeleteQuery = 'CALL article_delete_one(?, ?, ?)';
       const [[results]] = await mySQL.query(articleDeleteQuery, [sessionId, articleId, language]);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Article update failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async articleSortOne({ sessionId, articleId, order }) {
+    const mySQL = new MySQL();
+    try {
+      const articleDeleteQuery = 'CALL article_sort_one(?, ?, ?)';
+      const [[results]] = await mySQL.query(articleDeleteQuery, [sessionId, articleId, order]);
 
       return results;
     } catch (err) {

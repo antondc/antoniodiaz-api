@@ -7,7 +7,7 @@ import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-const DEFAULT_USER_GET_ALL_SORT = '-createdAt';
+const DEFAULT_ARTICLE_GET_ALL_SORT = 'order';
 
 type ArticleGetAllControllerQueryType = {
   sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
@@ -31,7 +31,7 @@ export class ArticleGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { language = DEFAULT_LANGUAGE } = req.params;
-    const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ArticleGetAllControllerQueryType;
+    const { sort = DEFAULT_ARTICLE_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ArticleGetAllControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);

@@ -41,6 +41,7 @@ export class StateRepo {
   private articleCreateOneProcedure: string;
   private articleUpdateOneProcedure: string;
   private articleDeleteOneProcedure: string;
+  private articleSortOneProcedure: string;
 
   // Data
   private languageData: string;
@@ -86,6 +87,7 @@ export class StateRepo {
     this.articleCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleCreateOne.sql')).toString();
     this.articleUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleUpdateOne.sql')).toString();
     this.articleDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleDeleteOne.sql')).toString();
+    this.articleSortOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleSortOne.sql')).toString();
 
     //  Data
     this.languageData = fs.readFileSync(path.resolve(__dirname, '../sql/data/language.sql')).toString();
@@ -137,6 +139,7 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleCreateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleUpdateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleSortOneProcedure))),
 
         // Insert data
         ...(!!RESTORE_DATA && (await mySQL.query(this.languageData))), // As languages are isolated we can modify them without affecting the rest of the DB
