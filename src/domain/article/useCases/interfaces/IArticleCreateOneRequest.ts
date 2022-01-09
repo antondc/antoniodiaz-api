@@ -6,5 +6,4 @@ export interface IArticleCreateOneRequest {
   language: string;
   title: string;
   contentJson: RichContentJson;
-  contentHtml: string;
 }

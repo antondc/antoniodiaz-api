@@ -7,6 +7,5 @@ export interface IArticleUpdateOneRequest {
   language: string;
   title: string;
   contentJson: RichContentJson;
-  contentHtml: string;
   published: boolean;
 }

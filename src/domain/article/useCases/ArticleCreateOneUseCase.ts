@@ -23,7 +23,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
   }
 
   public async execute(articleCreateOneRequest: IArticleCreateOneRequest): Promise<IArticleCreateOneResponse> {
-    const { session, language, title, contentHtml, contentJson } = articleCreateOneRequest;
+    const { session, language, title, contentJson } = articleCreateOneRequest;
     if (!title) throw new RequestError('Unprocessable Entity', 422);
 
     const formatOptions = {
@@ -31,7 +31,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       destinationFolder: `${session?.id}/articles`,
     };
     const richContent = new RichContent(this.fileRepo, formatOptions);
-    const richContentJson = await richContent.processRichContent(contentJson);
+    const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
     if (!articleCreated?.articleId) throw new RequestError('Article creation failed', 409);
@@ -40,7 +40,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       articleId: articleCreated?.articleId,
       language,
       title,
-      contentHtml,
+      contentHtml: richContentHtml,
       contentJson: richContentJson,
       published: false,
     });

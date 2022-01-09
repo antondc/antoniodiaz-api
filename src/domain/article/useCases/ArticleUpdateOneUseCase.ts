@@ -24,7 +24,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   }
 
   public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
-    const { session, articleId, language, title, contentHtml, contentJson, published } = articleUpdateOneRequest;
+    const { session, articleId, language, title,  contentJson, published } = articleUpdateOneRequest;
     if (!title) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCoreData = await this.articleRepo.articleCoreGetOne({ articleId });
@@ -38,13 +38,13 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       destinationFolder: `${session?.id}/articles`,
     };
     const richContent = new RichContent(this.fileRepo, formatOptions);
-    const richContentJson = await richContent.processRichContent(contentJson);
+    const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
 
     const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId,
       language,
       title,
-      contentHtml,
+      contentHtml: richContentHtml,
       contentJson: richContentJson,
       published,
     });

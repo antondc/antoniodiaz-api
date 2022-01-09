@@ -1,3 +1,5 @@
+import { toHtml } from '@antoniodcorrea/components';
+
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
@@ -40,14 +42,22 @@ export class RichContent {
     this.fileImage = new FileImage({ fileRepo: this.fileRepo });
   }
 
-  async processRichContent(richContent: RichContentJson): Promise<RichContentJson> {
-    if (!richContent) return richContentDefaultValue;
+  async processRichContent(richContent: RichContentJson): Promise<{
+    richContentJson: RichContentJson;
+    richContentHtml: string;
+  }> {
+    if (!richContent)
+      return {
+        richContentJson: richContentDefaultValue,
+        richContentHtml: '',
+      };
 
     const editorContentMissingImagesFiltered = this.filterOutMissingImages(richContent);
     const contentJsonWithImages = await this.saveImagesToFileSystem(editorContentMissingImagesFiltered);
     const richContentWithImageSizes = this.formatImageUrls(contentJsonWithImages);
+    const richContentAndHtmlContent = this.generateHtml(richContentWithImageSizes);
 
-    return richContentWithImageSizes;
+    return richContentAndHtmlContent;
   }
 
   private filterOutMissingImages(richContent: RichContentJson): RichContentJson {
@@ -106,5 +116,14 @@ export class RichContent {
     });
 
     return richContentWithImageSizes;
+  }
+
+  private generateHtml(richContent: RichContentJson): { richContentJson: RichContentJson; richContentHtml: string } {
+    const richContentHtml = toHtml({ children: richContent, type: '' });
+
+    return {
+      richContentJson: richContent,
+      richContentHtml,
+    };
   }
 }
