@@ -1,3 +1,4 @@
+import { toRelative, URLWrapper } from '@antoniodcorrea/utils';
 import fs from 'fs';
 import Jimp from 'jimp';
 import mkdirp from 'mkdirp';
@@ -19,8 +20,6 @@ import config from '@root/config.test.json';
 import { MS_30_MINS } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { ServerError } from '@shared/errors/ServerError';
-import { URLWrapper } from '@shared/services/UrlWrapper';
-import { toRelative } from '@tools/helpers/url/toRelative';
 
 export class FileRepo implements IFileRepo {
   public fileGetOne(fileGetOneRequest: IFileGetOneRequest): IFileGetOneResponse {

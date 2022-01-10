@@ -5,7 +5,7 @@ import { IUserLogoutRequest } from '@domain/user/useCases/interfaces/UserLogOutR
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
 import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
-import { URLWrapper } from '@shared/services/UrlWrapper';
+import { URLWrapper } from '@antoniodcorrea/utils';
 import { BaseController } from './BaseController';
 
 export class UserLogOutController extends BaseController {

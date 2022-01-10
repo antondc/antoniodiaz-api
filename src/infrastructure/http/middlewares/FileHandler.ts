@@ -1,10 +1,10 @@
+import { getExtension } from '@antoniodcorrea/utils';
 import { NextFunction, Request, Response } from 'express';
 import multer from 'multer';
 
 import { allowedFileExtensions } from '@domain/file/entities/File';
 import { FileDTO } from '@domain/file/entities/FileDTO';
 import { RequestError } from '@shared/errors/RequestError';
-import getExtension from '@tools/helpers/file/getExtension';
 
 export class FileHandler {
   static handleSingleFile() {

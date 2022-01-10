@@ -1,9 +1,9 @@
+import { URLWrapper } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IUserForgotPasswordRequest } from '@domain/user/useCases/interfaces/IUserForgotPasswordRequest';
 import { IUserForgotPasswordUseCase } from '@domain/user/useCases/UserForgotPasswordUseCase';
 import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
 
 export class UserForgotPasswordController extends BaseController {

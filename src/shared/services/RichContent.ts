@@ -1,9 +1,9 @@
 import { toHtml } from '@antoniodcorrea/components';
+import { URLWrapper } from '@antoniodcorrea/utils';
 
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
-import { URLWrapper } from './UrlWrapper';
 
 type RichContentText = {
   type: 'paragraph' | 'code' | 'h1' | 'h2' | 'h3' | 'ul' | 'quote';

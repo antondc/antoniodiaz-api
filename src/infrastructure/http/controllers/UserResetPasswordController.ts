@@ -4,7 +4,7 @@ import { IUserResetPasswordRequest } from '@domain/user/useCases/interfaces/IUse
 import { IUserResetPasswordUseCase } from '@domain/user/useCases/UserResetPasswordUseCase';
 import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
-import { URLWrapper } from '@shared/services/UrlWrapper';
+import { URLWrapper } from '@antoniodcorrea/utils';
 import { BaseController } from './BaseController';
 
 export class UserResetPasswordController extends BaseController {
