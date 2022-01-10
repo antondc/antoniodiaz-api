@@ -1,10 +1,11 @@
+import { validateEmailAddress } from '@antoniodcorrea/utils';
+
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { User, userImageFormat } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { UserError } from '@shared/errors/UserError';
-import { StringValidator } from '@shared/services/StringValidator';
 import { IUserUpdateOneRequest } from './interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneResponse } from './interfaces/IUserUpdateOneResponse';
 
@@ -24,7 +25,7 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
   public async execute(userUpdateRequest: IUserUpdateOneRequest): Promise<IUserUpdateOneResponse> {
     const { email, name, session, image } = userUpdateRequest;
 
-    const isEmail = StringValidator.validateEmailAddress(email);
+    const isEmail = validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
 
     const userExists = await this.userRepo.userGetOne({ sessionId: session?.id, email, name });

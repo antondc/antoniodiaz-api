@@ -1,7 +1,8 @@
+import { PasswordHasher } from '@antoniodcorrea/utils';
+
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
-import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { TokenService } from '@shared/services/TokenService';
 import { User } from '../entities/User';
 import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
