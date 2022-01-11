@@ -1,11 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
 import { IArticleGetOneRequest } from '@domain/article/useCases/interfaces/IArticleGetOneRequest';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ArticleGetOneController extends BaseController {
@@ -20,8 +20,8 @@ export class ArticleGetOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { articleId, language = DEFAULT_LANGUAGE } = req.params;
 
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const articleGetOneRequest: IArticleGetOneRequest = {
       language,

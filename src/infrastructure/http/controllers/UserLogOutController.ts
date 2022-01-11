@@ -1,11 +1,10 @@
+import { TokenJWT, URLWrapper } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserLogoutRequest } from '@domain/user/useCases/interfaces/UserLogOutRequest';
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
-import { URLWrapper } from '@antoniodcorrea/utils';
+import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserLogOutController extends BaseController {
@@ -17,8 +16,8 @@ export class UserLogOutController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const userLogOutRequest: IUserLogoutRequest = {
       session,

@@ -1,20 +1,14 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
-import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 type UserGetByIdsControllerQueryType = {
   userIds: string[];
-  sort:
-    | 'order'
-    | '-order'
-    | 'createdAt'
-    | '-createdAt'
-    | 'updatedAt'
-    | '-updatedAt';
+  sort: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   page: {
     size: string;
     offset: string;
@@ -33,8 +27,8 @@ export class UserGetByIdsController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort, userIds, page: { size, offset } = {} } = req.query as UserGetByIdsControllerQueryType;
 
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;

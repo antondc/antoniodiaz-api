@@ -1,11 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IArticleCreateOneUseCase } from '@domain/article/useCases/ArticleCreateOneUseCase';
 import { IArticleCreateOneRequest } from '@domain/article/useCases/interfaces/IArticleCreateOneRequest';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ArticleCreateOneController extends BaseController {
@@ -20,8 +20,8 @@ export class ArticleCreateOneController extends BaseController {
     const { language = DEFAULT_LANGUAGE } = req.params;
     const { title, contentJson } = req.body;
 
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const articleCreateRequest: IArticleCreateOneRequest = {
       language,

@@ -1,10 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserDeleteOneRequest } from '@domain/user/useCases/interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
-import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserDeleteOneController extends BaseController {
@@ -16,8 +16,8 @@ export class UserDeleteOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const userDeleteOneRequest: IUserDeleteOneRequest = {
       session,

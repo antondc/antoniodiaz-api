@@ -1,10 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE, DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_ARTICLE_GET_ALL_SORT = 'order';
@@ -33,8 +33,8 @@ export class ArticleGetAllController extends BaseController {
     const { language = DEFAULT_LANGUAGE } = req.params;
     const { sort = DEFAULT_ARTICLE_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ArticleGetAllControllerQueryType;
 
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort || undefined;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;

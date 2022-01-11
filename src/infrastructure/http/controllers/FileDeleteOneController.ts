@@ -1,10 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IFileDeleteOneUseCase } from '@domain/file/useCases/FileDeleteOneUseCase';
 import { IFileDeleteOneRequest } from '@domain/file/useCases/interfaces/IFileDeleteOneRequest';
 import { User } from '@domain/user/entities/User';
-import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class FileDeleteOneController extends BaseController {
@@ -18,8 +18,8 @@ export class FileDeleteOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { path } = req.body;
 
-    const tokenService = new TokenService();
-    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const tokenJWT = new TokenJWT(SECRET);
+    const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const fileDeleteOneRequest: IFileDeleteOneRequest = {
       path,

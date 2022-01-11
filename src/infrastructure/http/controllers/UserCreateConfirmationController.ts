@@ -1,10 +1,9 @@
-import { URLWrapper } from '@antoniodcorrea/utils';
+import { TokenJWT, URLWrapper } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationUseCase } from '@domain/user/useCases/UserCreateConfirmationUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserCreateConfirmationController extends BaseController {
@@ -41,8 +40,8 @@ export class UserCreateConfirmationController extends BaseController {
       included: [],
     };
 
-    const tokenService = new TokenService();
-    const sessionToken = tokenService.createToken(response);
+    const tokenJWT = new TokenJWT(SECRET);
+    const sessionToken = tokenJWT.createToken(response);
 
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin)); // Identify the client
 

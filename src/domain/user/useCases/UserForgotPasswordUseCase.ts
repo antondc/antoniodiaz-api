@@ -1,9 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
+
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, SECRET } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
-import { TokenService } from '@shared/services/TokenService';
 import { IUserForgotPasswordRequest } from './interfaces/IUserForgotPasswordRequest';
 import { IUserForgotPasswordResponse } from './interfaces/IUserForgotPasswordResponse';
 
@@ -24,8 +25,8 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     const user = await this.userRepo.userGetOne({ name: nameOrEmail, email: nameOrEmail });
     if (!user) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
 
-    const tokenService = new TokenService();
-    const token = tokenService.createToken({ name: user?.name });
+    const tokenJWT = new TokenJWT(SECRET);
+    const token = tokenJWT.createToken({ name: user?.name });
 
     const userUpdated = await this.userRepo.userForgotPassword({ userId: user?.id, token });
     if (!userUpdated) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');

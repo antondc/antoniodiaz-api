@@ -1,10 +1,9 @@
+import { TokenJWT, URLWrapper } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IUserResetPasswordRequest } from '@domain/user/useCases/interfaces/IUserResetPasswordRequest';
 import { IUserResetPasswordUseCase } from '@domain/user/useCases/UserResetPasswordUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
-import { URLWrapper } from '@antoniodcorrea/utils';
+import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserResetPasswordController extends BaseController {
@@ -27,8 +26,8 @@ export class UserResetPasswordController extends BaseController {
 
     const response = await this.useCase.execute(userResetPasswordRequest);
 
-    const tokenService = new TokenService();
-    const cookieToken = tokenService.createToken(response);
+    const tokenJWT = new TokenJWT(SECRET);
+    const cookieToken = tokenJWT.createToken(response);
 
     const formattedResponse = {
       links: {

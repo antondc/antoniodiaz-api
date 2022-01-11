@@ -1,12 +1,11 @@
-import { PasswordHasher, validateEmailAddress } from '@antoniodcorrea/utils';
+import { PasswordHasher, TokenJWT, validateEmailAddress } from '@antoniodcorrea/utils';
 
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, SECRET } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
-import { TokenService } from '@shared/services/TokenService';
 
 const DEFAULT_USER_IMAGE = 'https://picsum.photos/id/2/300/300';
 
@@ -34,8 +33,8 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const userAlreadyExists = await this.userRepo.userGetOne({ name, email });
     if (!!userAlreadyExists) throw new UserError('User already exist', 409, 'name');
 
-    const tokenService = new TokenService();
-    const token = tokenService.createToken({ name });
+    const tokenJWT = new TokenJWT(SECRET);
+    const token = tokenJWT.createToken({ name });
 
     const passwordHasher = new PasswordHasher();
     const passwordBuffer = await passwordHasher.hashPassword(password);
