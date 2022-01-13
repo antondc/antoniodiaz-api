@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS project_translation (
   `id`            INT(11) NOT NULL AUTO_INCREMENT,
   `title`         VARCHAR(255) NULL DEFAULT NULL,
+  `carousel`      JSON NULL DEFAULT NULL,
   `content_json`  JSON NULL DEFAULT NULL,
   `content_html`  TEXT NULL DEFAULT NULL,
   `project_id`    INT(11) NOT NULL,

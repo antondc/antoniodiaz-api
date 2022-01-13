@@ -20,6 +20,7 @@ BEGIN
     project.id,
     project.order,
     `project_translation`.title,
+    `project_translation`.carousel,
     `project_translation`.content_json as contentJson,
     `project_translation`.content_html as contentHtml,
     `project_translation`.published,

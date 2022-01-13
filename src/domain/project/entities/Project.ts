@@ -25,6 +25,7 @@ export class Project {
   id: number;
   order: number;
   title: string;
+  carousel: Record<string, unknown>;
   contentJson: RichContentJson;
   contentHtml: string;
   published: string;
@@ -37,6 +38,7 @@ export class Project {
     this.id = projectData?.id;
     this.order = projectData?.order;
     this.title = projectData?.title;
+    this.carousel = projectData?.carousel;
     this.contentJson = projectData?.contentJson;
     this.contentHtml = projectData?.contentHtml;
     this.published = projectData?.published;
