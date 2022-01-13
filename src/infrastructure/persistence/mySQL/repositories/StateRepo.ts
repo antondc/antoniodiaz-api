@@ -15,6 +15,8 @@ export class StateRepo {
   private glossary: string;
   private article: string;
   private articleTranslation: string;
+  private project: string;
+  private projectTranslation: string;
   private user: string;
   private userLogins: string;
 
@@ -42,6 +44,13 @@ export class StateRepo {
   private articleUpdateOneProcedure: string;
   private articleDeleteOneProcedure: string;
   private articleSortOneProcedure: string;
+  private projectCoreGetOneProcedure: string;
+  private projectGetOneProcedure: string;
+  private projectGetAllProcedure: string;
+  private projectCreateOneProcedure: string;
+  private projectUpdateOneProcedure: string;
+  private projectDeleteOneProcedure: string;
+  private projectSortOneProcedure: string;
 
   // Data
   private languageData: string;
@@ -50,6 +59,8 @@ export class StateRepo {
   private userLoginData: string;
   private articleData: string;
   private articleTranslationData: string;
+  private projectData: string;
+  private projectTranslationData: string;
 
   constructor() {
     // Operational tables
@@ -63,6 +74,8 @@ export class StateRepo {
     this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
     this.article = fs.readFileSync(path.resolve(__dirname, '../sql/models/article.sql')).toString();
     this.articleTranslation = fs.readFileSync(path.resolve(__dirname, '../sql/models/article_translation.sql')).toString();
+    this.project = fs.readFileSync(path.resolve(__dirname, '../sql/models/project.sql')).toString();
+    this.projectTranslation = fs.readFileSync(path.resolve(__dirname, '../sql/models/project_translation.sql')).toString();
 
     // Stored procedures
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
@@ -88,6 +101,13 @@ export class StateRepo {
     this.articleUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleUpdateOne.sql')).toString();
     this.articleDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleDeleteOne.sql')).toString();
     this.articleSortOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/articleSortOne.sql')).toString();
+    this.projectCoreGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectCoreGetOne.sql')).toString();
+    this.projectGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectGetOne.sql')).toString();
+    this.projectGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectGetAll.sql')).toString();
+    this.projectCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectCreateOne.sql')).toString();
+    this.projectUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectUpdateOne.sql')).toString();
+    this.projectDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectDeleteOne.sql')).toString();
+    this.projectSortOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/projectSortOne.sql')).toString();
 
     //  Data
     this.languageData = fs.readFileSync(path.resolve(__dirname, '../sql/data/language.sql')).toString();
@@ -96,6 +116,8 @@ export class StateRepo {
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
     this.articleData = fs.readFileSync(path.resolve(__dirname, '../sql/data/article.sql')).toString();
     this.articleTranslationData = fs.readFileSync(path.resolve(__dirname, '../sql/data/article_translation.sql')).toString();
+    this.projectData = fs.readFileSync(path.resolve(__dirname, '../sql/data/project.sql')).toString();
+    this.projectTranslationData = fs.readFileSync(path.resolve(__dirname, '../sql/data/project_translation.sql')).toString();
   }
 
   public async resetContent() {
@@ -115,6 +137,8 @@ export class StateRepo {
         ...(!!RESTORE_MODELS && (await mySQL.query(this.userLogins))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.article))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.articleTranslation))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.project))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.projectTranslation))),
 
         // Create procedures
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.debuggerProcedure))),
@@ -140,6 +164,13 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleUpdateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleDeleteOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.articleSortOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectCoreGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectCreateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectUpdateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.projectSortOneProcedure))),
 
         // Insert data
         ...(!!RESTORE_DATA && (await mySQL.query(this.languageData))), // As languages are isolated we can modify them without affecting the rest of the DB
@@ -148,6 +179,8 @@ export class StateRepo {
         ...(!!RESTORE_DATA && (await mySQL.query(this.userLoginData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.articleData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.articleTranslationData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.projectData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.projectTranslationData))),
       };
     } catch (err) {
       mySQL.rollback();
