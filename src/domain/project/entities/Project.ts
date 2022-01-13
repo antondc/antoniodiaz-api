@@ -38,7 +38,7 @@ export class Project {
     this.id = projectData?.id;
     this.order = projectData?.order;
     this.title = projectData?.title;
-    this.carousel = projectData?.carousel;
+    this.carousel = projectData?.carousel?.slides;
     this.contentJson = projectData?.contentJson;
     this.contentHtml = projectData?.contentHtml;
     this.published = projectData?.published;
