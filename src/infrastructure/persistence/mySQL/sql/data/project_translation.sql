@@ -22,7 +22,7 @@ INSERT INTO `project_translation` (
 (
   1,
   2,
-  'Articulo 1',
+  'Proyecto 1',
   '{"slides":[{"id":1,"order":1,"title":"slide 1","images":{"original":"https://picsum.photos/id/1/2400","w200":"https://picsum.photos/id/1/200","w400":"https://picsum.photos/id/1/400","w1200":"https://picsum.photos/id/1/1200","w2400":"https://picsum.photos/id/1/2400"}},{"id":2,"order":2,"title":"slide 2","images":{"original":"https://picsum.photos/id/2/2400","w200":"https://picsum.photos/id/2/200","w400":"https://picsum.photos/id/2/400","w1200":"https://picsum.photos/id/2/1200","w2400":"https://picsum.photos/id/2/2400"}},{"id":3,"order":3,"title":"slide 3","images":{"original":"https://picsum.photos/id/3/2400","w200":"https://picsum.photos/id/3/200","w400":"https://picsum.photos/id/3/400","w1200":"https://picsum.photos/id/3/1200","w2400":"https://picsum.photos/id/3/2400"}},{"id":4,"order":4,"title":"slide 4","images":{"original":"https://picsum.photos/id/4/2400","w200":"https://picsum.photos/id/4/200","w400":"https://picsum.photos/id/4/400","w1200":"https://picsum.photos/id/4/1200","w2400":"https://picsum.photos/id/4/2400"}}]}',
   '{}',
   '<div>Artículo uno</div>',
@@ -44,7 +44,7 @@ INSERT INTO `project_translation` (
 (
   2,
   2,
-  'Articulo 2',
+  'Proyecto 2',
   '{"slides":[{"id":1,"order":1,"title":"slide 1","images":{"original":"https://picsum.photos/id/1/2400","w200":"https://picsum.photos/id/1/200","w400":"https://picsum.photos/id/1/400","w1200":"https://picsum.photos/id/1/1200","w2400":"https://picsum.photos/id/1/2400"}},{"id":2,"order":2,"title":"slide 2","images":{"original":"https://picsum.photos/id/2/2400","w200":"https://picsum.photos/id/2/200","w400":"https://picsum.photos/id/2/400","w1200":"https://picsum.photos/id/2/1200","w2400":"https://picsum.photos/id/2/2400"}},{"id":3,"order":3,"title":"slide 3","images":{"original":"https://picsum.photos/id/3/2400","w200":"https://picsum.photos/id/3/200","w400":"https://picsum.photos/id/3/400","w1200":"https://picsum.photos/id/3/1200","w2400":"https://picsum.photos/id/3/2400"}},{"id":4,"order":4,"title":"slide 4","images":{"original":"https://picsum.photos/id/4/2400","w200":"https://picsum.photos/id/4/200","w400":"https://picsum.photos/id/4/400","w1200":"https://picsum.photos/id/4/1200","w2400":"https://picsum.photos/id/4/2400"}}]}',
   '{}',
   '<div>Artículo dos</div>',
@@ -66,7 +66,7 @@ INSERT INTO `project_translation` (
 (
   3,
   2,
-  'Articulo 3',
+  'Proyecto 3',
   '{"slides":[{"id":1,"order":1,"title":"slide 1","images":{"original":"https://picsum.photos/id/1/2400","w200":"https://picsum.photos/id/1/200","w400":"https://picsum.photos/id/1/400","w1200":"https://picsum.photos/id/1/1200","w2400":"https://picsum.photos/id/1/2400"}},{"id":2,"order":2,"title":"slide 2","images":{"original":"https://picsum.photos/id/2/2400","w200":"https://picsum.photos/id/2/200","w400":"https://picsum.photos/id/2/400","w1200":"https://picsum.photos/id/2/1200","w2400":"https://picsum.photos/id/2/2400"}},{"id":3,"order":3,"title":"slide 3","images":{"original":"https://picsum.photos/id/3/2400","w200":"https://picsum.photos/id/3/200","w400":"https://picsum.photos/id/3/400","w1200":"https://picsum.photos/id/3/1200","w2400":"https://picsum.photos/id/3/2400"}},{"id":4,"order":4,"title":"slide 4","images":{"original":"https://picsum.photos/id/4/2400","w200":"https://picsum.photos/id/4/200","w400":"https://picsum.photos/id/4/400","w1200":"https://picsum.photos/id/4/1200","w2400":"https://picsum.photos/id/4/2400"}}]}',
   '{}',
   '<div>Artículo tres</div>',
@@ -88,7 +88,7 @@ INSERT INTO `project_translation` (
 (
   4,
   2,
-  'Articulo 4',
+  'Proyecto 4',
   '{"slides":[{"id":1,"order":1,"title":"slide 1","images":{"original":"https://picsum.photos/id/1/2400","w200":"https://picsum.photos/id/1/200","w400":"https://picsum.photos/id/1/400","w1200":"https://picsum.photos/id/1/1200","w2400":"https://picsum.photos/id/1/2400"}},{"id":2,"order":2,"title":"slide 2","images":{"original":"https://picsum.photos/id/2/2400","w200":"https://picsum.photos/id/2/200","w400":"https://picsum.photos/id/2/400","w1200":"https://picsum.photos/id/2/1200","w2400":"https://picsum.photos/id/2/2400"}},{"id":3,"order":3,"title":"slide 3","images":{"original":"https://picsum.photos/id/3/2400","w200":"https://picsum.photos/id/3/200","w400":"https://picsum.photos/id/3/400","w1200":"https://picsum.photos/id/3/1200","w2400":"https://picsum.photos/id/3/2400"}},{"id":4,"order":4,"title":"slide 4","images":{"original":"https://picsum.photos/id/4/2400","w200":"https://picsum.photos/id/4/200","w400":"https://picsum.photos/id/4/400","w1200":"https://picsum.photos/id/4/1200","w2400":"https://picsum.photos/id/4/2400"}}]}',
   '{}',
   '<div>Artículo four</div>',
@@ -110,7 +110,7 @@ INSERT INTO `project_translation` (
 (
   5,
   2,
-  'Articulo 5',
+  'Proyecto 5',
   '{"slides":[{"id":1,"order":1,"title":"slide 1","images":{"original":"https://picsum.photos/id/1/2400","w200":"https://picsum.photos/id/1/200","w400":"https://picsum.photos/id/1/400","w1200":"https://picsum.photos/id/1/1200","w2400":"https://picsum.photos/id/1/2400"}},{"id":2,"order":2,"title":"slide 2","images":{"original":"https://picsum.photos/id/2/2400","w200":"https://picsum.photos/id/2/200","w400":"https://picsum.photos/id/2/400","w1200":"https://picsum.photos/id/2/1200","w2400":"https://picsum.photos/id/2/2400"}},{"id":3,"order":3,"title":"slide 3","images":{"original":"https://picsum.photos/id/3/2400","w200":"https://picsum.photos/id/3/200","w400":"https://picsum.photos/id/3/400","w1200":"https://picsum.photos/id/3/1200","w2400":"https://picsum.photos/id/3/2400"}},{"id":4,"order":4,"title":"slide 4","images":{"original":"https://picsum.photos/id/4/2400","w200":"https://picsum.photos/id/4/200","w400":"https://picsum.photos/id/4/400","w1200":"https://picsum.photos/id/4/1200","w2400":"https://picsum.photos/id/4/2400"}}]}',
   '{}',
   '<div>Artículo cinco</div>',
