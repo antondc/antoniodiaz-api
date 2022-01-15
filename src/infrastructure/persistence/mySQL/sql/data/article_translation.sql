@@ -13,7 +13,7 @@ INSERT INTO `article_translation` (
   'Article 1',
   '{}',
   '<div>Article One</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -23,7 +23,7 @@ INSERT INTO `article_translation` (
   'Articulo 1',
   '{}',
   '<div>Artículo uno</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -33,7 +33,7 @@ INSERT INTO `article_translation` (
   'Article 2',
   '{}',
   '<div>Article Two</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -43,7 +43,7 @@ INSERT INTO `article_translation` (
   'Articulo 2',
   '{}',
   '<div>Artículo dos</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -53,7 +53,7 @@ INSERT INTO `article_translation` (
   'Article 3',
   '{}',
   '<div>Article Three</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -63,7 +63,7 @@ INSERT INTO `article_translation` (
   'Articulo 3',
   '{}',
   '<div>Artículo tres</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -73,7 +73,7 @@ INSERT INTO `article_translation` (
   'Article 4',
   '{}',
   '<div>Article Four</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -83,7 +83,7 @@ INSERT INTO `article_translation` (
   'Articulo 4',
   '{}',
   '<div>Artículo four</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -93,7 +93,7 @@ INSERT INTO `article_translation` (
   'Article 5',
   '{}',
   '<div>Article Five</div>',
-  0,
+  1,
   1617143194,
   1617143194
 ),
@@ -103,7 +103,7 @@ INSERT INTO `article_translation` (
   'Articulo 5',
   '{}',
   '<div>Artículo cinco</div>',
-  0,
+  1,
   1617143194,
   1617143194
 );
