@@ -30,17 +30,29 @@ export class FileRepo implements IFileRepo {
     return fileExists;
   }
 
+  // Save method for original image
   public async fileImageSaveOne(fileImageSaveOneRequest: IFileImageSaveOneRequest): Promise<IFileImageSaveOneResponse> {
-    const { path: finalPath, filename } = await this.fileSaveOne(fileImageSaveOneRequest);
+    // Try to save image
+    // If whole process fails, return received path and do nothing
+    try {
+      const { path: finalPath, filename } = await this.fileSaveOne(fileImageSaveOneRequest);
 
-    await this.imageResizeAndSave(finalPath, filename, fileImageSaveOneRequest.formatOptions);
+      await this.imageSaveSizes(finalPath, filename, fileImageSaveOneRequest.formatOptions);
 
-    return {
-      path: `${URL_SERVER}/${finalPath}`,
-    };
+      return {
+        path: `${URL_SERVER}/${finalPath}`,
+      };
+    } catch (error) {
+      console.error(error);
+
+      return {
+        path: fileImageSaveOneRequest.fileUrl,
+      };
+    }
   }
 
-  private async imageResizeAndSave(originPath, filename, formatOptions): Promise<void> {
+  // Save method for image alternative sizes
+  private async imageSaveSizes(originPath, filename, formatOptions): Promise<void> {
     if (!formatOptions?.sizes) return;
 
     await formatOptions.sizes.forEach(async (item) => {
@@ -73,6 +85,7 @@ export class FileRepo implements IFileRepo {
     return;
   }
 
+  // Save method for any kind of file
   async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
     const myUrl = new URLWrapper(fileSaveOneRequest?.fileUrl);
 
@@ -113,6 +126,7 @@ export class FileRepo implements IFileRepo {
     });
   }
 
+  // Method for saving file in temporary folder
   async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {
     const { content, extension } = fileSaveInTempFolderRequest.file;
     const name = `${uuidv4()}.${extension}`;
