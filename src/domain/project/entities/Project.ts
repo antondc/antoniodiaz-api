@@ -21,7 +21,6 @@ export const projectImageFormat: IFileImageFormatOptions = {
   destinationFolder: '',
 };
 
-
 export class Project {
   id: number;
   order: number;

@@ -56,8 +56,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
     });
     if (!projectTranslationIdCreated) throw new RequestError('Project creation failed', 409);
 
-    const projectData = await this.projectGetOneUseCase.execute({ session, projectId, language });
-    const project = new Project(projectData);
+    const project = await this.projectGetOneUseCase.execute({ session, projectId, language });
 
     return project;
   }
