@@ -3,18 +3,20 @@ DROP PROCEDURE IF EXISTS project_update_one;
 -- DELIMITER $$
 
 CREATE PROCEDURE project_update_one(
-  IN $LANGUAGE      TEXT,
-  IN $ARTICLE_ID    INT,
-  IN $TITLE         TEXT,
-  IN $CONTENT_JSON  JSON,
-  IN $CONTENT_HTML  TEXT,
-  IN $PUBLISHED  TEXT
+  IN $LANGUAGE        TEXT,
+  IN $ARTICLE_ID      INT,
+  IN $TITLE           TEXT,
+  IN $CAROUSEL        JSON,
+  IN $CONTENT_JSON    JSON,
+  IN $CONTENT_HTML    TEXT,
+  IN $PUBLISHED       TEXT
 )
 
 BEGIN
 
   INSERT INTO `project_translation` (
     `title`,
+    `carousel`,
     `content_json`,
     `content_html`,
     `project_id`,
@@ -25,6 +27,7 @@ BEGIN
   )
   SELECT
     $TITLE,
+    $CAROUSEL,
     $CONTENT_JSON,
     $CONTENT_HTML,
     $ARTICLE_ID,
@@ -36,6 +39,7 @@ BEGIN
   WHERE `language`.slug = $LANGUAGE
   ON DUPLICATE KEY UPDATE
     `project_translation`.`title`         = $TITLE,
+    `project_translation`.`carousel`      = $CAROUSEL,
     `project_translation`.`content_json`  = $CONTENT_JSON,
     `project_translation`.`content_html`  = $CONTENT_HTML,
     `project_translation`.`project_id`    = $ARTICLE_ID,

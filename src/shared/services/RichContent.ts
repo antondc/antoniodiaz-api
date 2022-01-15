@@ -46,7 +46,7 @@ export class RichContent {
     richContentJson: RichContentJson;
     richContentHtml: string;
   }> {
-    if (!richContent)
+    if (!richContent || !Array.isArray(richContent))
       return {
         richContentJson: richContentDefaultValue,
         richContentHtml: '',

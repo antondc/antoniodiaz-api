@@ -4,6 +4,7 @@ import { IProjectRepo } from '@domain/project/repositories/IProjectRepo';
 import { IProjectCreateOneRequest } from '@domain/project/useCases/interfaces/IProjectCreateOneRequest';
 import { IProjectCreateOneResponse } from '@domain/project/useCases/interfaces/IProjectCreateOneResponse';
 import { RequestError } from '@shared/errors/RequestError';
+import { CarouselField } from '@shared/services/CarouselField';
 import { RichContent } from '@shared/services/RichContent';
 import { IProjectGetOneUseCase } from './ProjectGetOneUseCase';
 
@@ -23,7 +24,7 @@ export class ProjectCreateOneUseCase implements IProjectCreateOneUseCase {
   }
 
   public async execute(projectCreateOneRequest: IProjectCreateOneRequest): Promise<IProjectCreateOneResponse> {
-    const { session, language, title, contentJson } = projectCreateOneRequest;
+    const { session, language, title, carousel, contentJson } = projectCreateOneRequest;
     if (!title) throw new RequestError('Unprocessable Entity', 422);
 
     const formatOptions = {
@@ -32,7 +33,8 @@ export class ProjectCreateOneUseCase implements IProjectCreateOneUseCase {
     };
     const richContent = new RichContent(this.fileRepo, formatOptions);
     const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
-
+    const carouselField = new CarouselField(this.fileRepo, formatOptions);
+    const carouselUploaded = await carouselField.processImages(carousel);
     const projectCreated = await this.projectRepo.projectCreateOne({ sessionId: session?.id });
     if (!projectCreated?.projectId) throw new RequestError('Project creation failed', 409);
 
@@ -40,6 +42,9 @@ export class ProjectCreateOneUseCase implements IProjectCreateOneUseCase {
       projectId: projectCreated?.projectId,
       language,
       title,
+      carousel: {
+        slides: carouselUploaded,
+      },
       contentHtml: richContentHtml,
       contentJson: richContentJson,
       published: false,

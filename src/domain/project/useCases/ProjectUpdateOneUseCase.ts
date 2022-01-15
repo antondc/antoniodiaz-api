@@ -5,6 +5,7 @@ import { IProjectUpdateOneRequest } from '@domain/project/useCases/interfaces/IP
 import { IProjectUpdateOneResponse } from '@domain/project/useCases/interfaces/IProjectUpdateOneResponse';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
+import { CarouselField } from '@shared/services/CarouselField';
 import { RichContent } from '@shared/services/RichContent';
 import { IProjectGetOneUseCase } from './ProjectGetOneUseCase';
 
@@ -24,7 +25,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
   }
 
   public async execute(projectUpdateOneRequest: IProjectUpdateOneRequest): Promise<IProjectUpdateOneResponse> {
-    const { session, projectId, language, title, contentJson, published } = projectUpdateOneRequest;
+    const { session, projectId, language, title, carousel, contentJson, published } = projectUpdateOneRequest;
     if (!title) throw new RequestError('Unprocessable Entity', 422);
 
     const projectCoreData = await this.projectRepo.projectCoreGetOne({ projectId });
@@ -39,11 +40,16 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
     };
     const richContent = new RichContent(this.fileRepo, formatOptions);
     const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
+    const carouselField = new CarouselField(this.fileRepo, formatOptions);
+    const carouselUploaded = await carouselField.processImages(carousel);
 
     const projectTranslationIdCreated = await this.projectRepo.projectUpdateOne({
       projectId,
       language,
       title,
+      carousel: {
+        slides: carouselUploaded,
+      },
       contentHtml: richContentHtml,
       contentJson: richContentJson,
       published,

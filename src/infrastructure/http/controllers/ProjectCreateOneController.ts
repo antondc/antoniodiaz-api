@@ -18,7 +18,7 @@ export class ProjectCreateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { language = DEFAULT_LANGUAGE } = req.params;
-    const { title, contentJson } = req.body;
+    const { title, carousel, contentJson } = req.body;
 
     const tokenJWT = new TokenJWT(SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
@@ -27,6 +27,7 @@ export class ProjectCreateOneController extends BaseController {
       language,
       session,
       title,
+      carousel,
       contentJson,
     };
 
