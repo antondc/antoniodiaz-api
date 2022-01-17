@@ -38,7 +38,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
       ...projectImageFormat,
       destinationFolder: `${session?.id}/projects`,
     };
-    const richContent = new RichContent(this.fileRepo, formatOptions);
+    const richContent = new RichContent({ fileRepo: this.fileRepo, formatOptions });
     const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
     const carouselField = new CarouselField(this.fileRepo, formatOptions);
     const carouselUploaded = await carouselField.processImages(carousel);

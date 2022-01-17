@@ -37,7 +37,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       ...articleImageFormat,
       destinationFolder: `${session?.id}/articles`,
     };
-    const richContent = new RichContent(this.fileRepo, formatOptions);
+    const richContent = new RichContent({ fileRepo: this.fileRepo, formatOptions });
     const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
 
     const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({

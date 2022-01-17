@@ -30,7 +30,7 @@ export class ArticleCreateOneUseCase implements IArticleCreateOneUseCase {
       ...articleImageFormat,
       destinationFolder: `${session?.id}/articles`,
     };
-    const richContent = new RichContent(this.fileRepo, formatOptions);
+    const richContent = new RichContent({ fileRepo: this.fileRepo, formatOptions });
     const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
 
     const articleCreated = await this.articleRepo.articleCreateOne({ sessionId: session?.id });
