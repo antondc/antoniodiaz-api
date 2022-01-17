@@ -3,7 +3,8 @@ DROP PROCEDURE IF EXISTS language_glossary_update_one;
 CREATE PROCEDURE language_glossary_update_one(
   IN $LANGUAGE_ID INT,
   IN $WHO VARCHAR(40),
-  IN $WHO_CONTENT_JSON TEXT
+  IN $WHO_CONTENT_JSON JSON,
+  IN $WHO_CONTENT_HTML TEXT
 )
 
 BEGIN
@@ -12,6 +13,7 @@ BEGIN
   SET
     `who`             = $WHO,
     `whoContentJson`  = $WHO_CONTENT_JSON,
+    `whoContentHtml`  = $WHO_CONTENT_HTML,
     `updatedAt`       = UNIX_TIMESTAMP()
   WHERE id            = $LANGUAGE_ID
   ;

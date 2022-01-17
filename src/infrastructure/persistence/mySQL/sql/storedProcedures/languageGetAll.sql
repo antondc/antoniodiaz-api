@@ -13,7 +13,7 @@ BEGIN
     JSON_OBJECT(
       'who', glossary.who,
       'whoContentJson', glossary.whoContentJson,
-      'whoHtmlText', glossary.whoHtmlText,
+      'whoContentHtml', glossary.whoContentHtml,
       'what', glossary.what,
       'whatSubtitle', glossary.whatSubtitle,
       'when', glossary.when,

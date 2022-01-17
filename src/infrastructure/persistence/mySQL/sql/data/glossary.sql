@@ -2,7 +2,7 @@ INSERT INTO `glossary` (
   `id`,
   `who`,
   `whoContentJson`,
-  `whoHtmlText`,
+  `whoContentHtml`,
   `what`,
   `whatSubtitle`,
   `when`,

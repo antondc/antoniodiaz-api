@@ -9,7 +9,7 @@ export class Language {
   glossary: {
     who: string;
     whoContentJson: RichContentJson;
-    whoHtmlText: string;
+    whoContentHtml: string;
     what: string;
     whatSubtitle: string;
     when: string;

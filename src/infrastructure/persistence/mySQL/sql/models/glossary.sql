@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS glossary (
   `id`              INT(11) NOT NULL AUTO_INCREMENT,
   `who`             VARCHAR(255) NULL DEFAULT NULL,
   `whoContentJson`  JSON NULL DEFAULT NULL,
-  `whoHtmlText`     TEXT NULL DEFAULT NULL,
+  `whoContentHtml`     TEXT NULL DEFAULT NULL,
   `what`            VARCHAR(255) NULL DEFAULT NULL,
   `whatSubtitle`    VARCHAR(255) NULL DEFAULT NULL,
   `when`            VARCHAR(255) NULL DEFAULT NULL,

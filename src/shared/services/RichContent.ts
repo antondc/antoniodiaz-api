@@ -31,14 +31,19 @@ export const richContentDefaultValue: RichContentJson = [
   },
 ];
 
+type Options = {
+  fileRepo: IFileRepo;
+  formatOptions: IFileImageFormatOptions;
+};
+
 export class RichContent {
   private fileRepo: IFileRepo;
   private formatOptions: IFileImageFormatOptions;
   private fileImage: FileImage;
 
-  constructor(fileRepo: IFileRepo, formatOptions: IFileImageFormatOptions) {
-    this.fileRepo = fileRepo;
-    this.formatOptions = formatOptions;
+  constructor(options?: Options) {
+    this.fileRepo = options?.fileRepo;
+    this.formatOptions = options?.formatOptions;
     this.fileImage = new FileImage({ fileRepo: this.fileRepo });
   }
 
@@ -51,6 +56,12 @@ export class RichContent {
         richContentJson: richContentDefaultValue,
         richContentHtml: '',
       };
+
+    if (!this.fileRepo) {
+      const richContentAndHtmlContent = this.generateHtml(richContent);
+
+      return richContentAndHtmlContent;
+    }
 
     const editorContentMissingImagesFiltered = this.filterOutMissingImages(richContent);
     const contentJsonWithImages = await this.saveImagesToFileSystem(editorContentMissingImagesFiltered);
@@ -118,7 +129,7 @@ export class RichContent {
     return richContentWithImageSizes;
   }
 
-  private generateHtml(richContent: RichContentJson): { richContentJson: RichContentJson; richContentHtml: string } {
+  generateHtml(richContent: RichContentJson): { richContentJson: RichContentJson; richContentHtml: string } {
     const richContentHtml = toHtml({ children: richContent, type: '' });
 
     return {

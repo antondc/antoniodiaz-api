@@ -33,12 +33,12 @@ export class LanguageRepo implements ILanguageRepo {
     }
   }
 
-  public async languageGlossaryUpdateOne({ id, who, whoContentJson }) {
+  public async languageGlossaryUpdateOne({ id, who, whoContentJson, whoContentHtml }) {
     const mySQL = new MySQL();
 
     try {
-      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?)';
-      const [[language]] = await mySQL.query(articleCreateQuery, [id, who, JSON.stringify(whoContentJson)]);
+      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?)';
+      const [[language]] = await mySQL.query(articleCreateQuery, [id, who, JSON.stringify(whoContentJson), whoContentHtml]);
 
       return language;
     } catch (err) {
