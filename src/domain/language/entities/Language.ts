@@ -1,3 +1,5 @@
+import { RichContentJson } from '@shared/services/RichContent';
+
 export class Language {
   id: number;
   slug: string;
@@ -5,18 +7,17 @@ export class Language {
   isDefault: boolean;
   loading?: boolean;
   glossary: {
-    Home: string;
-    Login: string;
-    LogOut: string;
-    Control: string;
-    NotFound: string;
-    Trending: string;
-    Lists: string;
-    Bookmarks: string;
-    Links: string;
-    Users: string;
-    Followers: string;
-    Following: string;
+    who: string;
+    whoContentJson: RichContentJson;
+    whoHtmlText: string;
+    what: string;
+    whatSubtitle: string;
+    when: string;
+    where: string;
+    post: string;
+    serverError: string;
+    control: string;
+    notFound: string;
   };
 
   constructor(options) {
