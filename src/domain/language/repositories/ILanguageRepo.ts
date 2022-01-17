@@ -1,8 +1,11 @@
-import { ILanguageGetAllResponse } from '@domain/language/repositories/interfaces/ILanguageGetAllResponse';
-import { ILanguageGetOneRequest } from '@domain/language/repositories/interfaces/ILanguageGetOneRequest';
-import { ILanguageGetOneResponse } from '@domain/language/repositories/interfaces/ILanguageGetOneResponse';
+import { ILanguageGetAllResponse } from './interfaces/ILanguageGetAllResponse';
+import { ILanguageGetOneRequest } from './interfaces/ILanguageGetOneRequest';
+import { ILanguageGetOneResponse } from './interfaces/ILanguageGetOneResponse';
+import { ILanguageGlossaryUpdateOneRequest } from './interfaces/ILanguageGlossaryUpdateOneRequest';
+import { ILanguageGlossaryUpdateOneResponse } from './interfaces/ILanguageGlossaryUpdateOneResponse';
 
 export interface ILanguageRepo {
   languageGetOne: (languageGetOneRequest: ILanguageGetOneRequest) => Promise<ILanguageGetOneResponse>;
   languageGetAll: () => Promise<ILanguageGetAllResponse>;
+  languageGlossaryUpdateOne: (languageGlossaryUpdateOneRequest: ILanguageGlossaryUpdateOneRequest) => Promise<ILanguageGlossaryUpdateOneResponse>;
 }

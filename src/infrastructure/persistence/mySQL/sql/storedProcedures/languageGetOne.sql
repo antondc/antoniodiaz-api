@@ -26,7 +26,7 @@ BEGIN
       'notFound', glossary.notFound
     ) glossary
   FROM language
-  INNER JOIN glossary ON language.id = glossarry.id
+  INNER JOIN glossary ON language.id = glossary.id
   WHERE language.slug = $SLUG;
 
 END

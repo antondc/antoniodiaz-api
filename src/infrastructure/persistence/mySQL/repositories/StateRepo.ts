@@ -24,6 +24,7 @@ export class StateRepo {
   private debuggerProcedure: string;
   private languageGetOneProcedure: string;
   private languageGetAllProcedure: string;
+  private languageUpdateOneProcedure: string;
   private userGetAllProcedure: string;
   private userGetByIdsProcedure: string;
   private userGetCredentialsProcedure: string;
@@ -81,6 +82,7 @@ export class StateRepo {
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
+    this.languageUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGlossaryUpdateOne.sql')).toString();
     this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
     this.userGetByIdsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetByIds.sql')).toString();
     this.userGetCredentialsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetCredentials.sql')).toString();
@@ -144,6 +146,7 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.debuggerProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageUpdateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetByIdsProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetCredentialsProcedure))),

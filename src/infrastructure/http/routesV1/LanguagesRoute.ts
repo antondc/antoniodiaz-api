@@ -2,8 +2,10 @@ import express, { NextFunction, Request, Response } from 'express'; // eslint-di
 
 import { LanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
 import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
+import { LanguageUpdateOneUseCase } from '@domain/language/useCases/LanguageUpdateOneUseCase';
 import { LanguageGetAllController } from '@infrastructure/http/controllers/LanguageGetAllController';
 import { LanguageGetOneController } from '@infrastructure/http/controllers/LanguageGetOneController';
+import { LanguageUpdateOneController } from '@infrastructure/http/controllers/LanguageUpdateOneController';
 import { LanguageRepo } from '@infrastructure/persistence/mySQL/repositories/LanguageRepo';
 
 const LanguagesRoute = express.Router({ mergeParams: true });
@@ -14,6 +16,16 @@ LanguagesRoute.get('/:slug', async (req: Request, res: Response, next: NextFunct
   const languageGetOneController = new LanguageGetOneController(languageGetOneUseCase);
 
   const response = await languageGetOneController.execute(req, res, next);
+
+  return response;
+});
+
+LanguagesRoute.put('/:slug', async (req: Request, res: Response, next: NextFunction) => {
+  const languageRepo = new LanguageRepo();
+  const languageUpdateOneUseCase = new LanguageUpdateOneUseCase(languageRepo);
+  const languageUpdateOneController = new LanguageUpdateOneController(languageUpdateOneUseCase);
+
+  const response = await languageUpdateOneController.execute(req, res, next);
 
   return response;
 });
