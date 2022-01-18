@@ -13,9 +13,10 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
     (req.method === 'POST' && req.baseUrl === '/api/v1/login') || // Allow login
     (req.method === 'DELETE' && req.baseUrl === '/api/v1/login') || // Allow logout for users with corrupted cookies
     (req.method === 'PUT' && req.baseUrl === '/api/v1/login') || // Allow forgot password request
-    (req.method === 'PATCH' && req.baseUrl === '/api/v1/login') || // Allow reset password request
-    (req.method === 'POST' && req.baseUrl === '/api/v1/users') || // Allow user creation
-    (req.method === 'POST' && req.baseUrl === '/api/v1/users/sign-up-confirmation') // Allow user creation confirmation
+    (req.method === 'PATCH' && req.baseUrl === '/api/v1/login') // Allow reset password request
+    // User creation disabled
+    // (req.method === 'POST' && req.baseUrl === '/api/v1/users') || // Allow user creation
+    // (req.method === 'POST' && req.baseUrl === '/api/v1/users/sign-up-confirmation') // Allow user creation confirmation
   ) {
     return next();
   }
