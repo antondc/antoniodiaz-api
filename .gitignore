@@ -19,3 +19,4 @@ tmp
 src/infrastructure/http/ssl/private.crt
 src/infrastructure/http/ssl/private.csr
 src/infrastructure/http/ssl/private.key
+.env
