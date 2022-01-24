@@ -1,12 +1,9 @@
-import { mockApiCall } from '@antoniodcorrea/utils';
-
 import { Project } from '@domain/project/entities/Project';
 import { IProjectRepo } from '@domain/project/repositories/IProjectRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IProjectSortOneRequest } from './interfaces/IProjectSortOneRequest';
 import { IProjectSortOneResponse } from './interfaces/IProjectSortOneResponse';
 import { IProjectGetOneUseCase } from './ProjectGetOneUseCase';
-mockApiCall;
 export interface IProjectSortOneUseCase {
   execute: (projectSortOneRequest: IProjectSortOneRequest) => Promise<IProjectSortOneResponse>;
 }

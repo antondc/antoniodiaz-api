@@ -1,12 +1,10 @@
-import { mockApiCall } from '@antoniodcorrea/utils';
-
 import { Article } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 import { IArticleSortOneRequest } from './interfaces/IArticleSortOneRequest';
 import { IArticleSortOneResponse } from './interfaces/IArticleSortOneResponse';
-mockApiCall;
+
 export interface IArticleSortOneUseCase {
   execute: (articleSortOneRequest: IArticleSortOneRequest) => Promise<IArticleSortOneResponse>;
 }
