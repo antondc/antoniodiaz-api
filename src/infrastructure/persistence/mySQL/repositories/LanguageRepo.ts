@@ -33,12 +33,41 @@ export class LanguageRepo implements ILanguageRepo {
     }
   }
 
-  public async languageGlossaryUpdateOne({ id, who, whoContentJson, whoContentHtml }) {
+  public async languageGlossaryUpdateOne({
+    id,
+    glossary = {
+      who: null,
+      whoContentJson: null,
+      whoContentHtml: null,
+      what: null,
+      whatSubtitle: null,
+      when: null,
+      where: null,
+      post: null,
+      serverError: null,
+      control: null,
+      notFound: null,
+    },
+  }) {
     const mySQL = new MySQL();
 
     try {
-      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?)';
-      const [[language]] = await mySQL.query(articleCreateQuery, [id, who, JSON.stringify(whoContentJson), whoContentHtml]);
+      const { who, whoContentJson, whoContentHtml, what, whatSubtitle, when, where, post, serverError, control, notFound } = glossary;
+      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+      const [[language]] = await mySQL.query(articleCreateQuery, [
+        id,
+        who,
+        JSON.stringify(whoContentJson),
+        whoContentHtml,
+        what,
+        whatSubtitle,
+        when,
+        where,
+        post,
+        serverError,
+        control,
+        notFound,
+      ]);
 
       return language;
     } catch (err) {

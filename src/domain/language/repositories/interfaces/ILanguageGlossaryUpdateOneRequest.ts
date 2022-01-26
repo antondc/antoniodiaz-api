@@ -1,8 +1,6 @@
-import { RichContentJson } from '@shared/services/RichContent';
+import { Glossary } from '@domain/language/entities/Language';
 
 export interface ILanguageGlossaryUpdateOneRequest {
   id: number;
-  who: string;
-  whoContentJson: RichContentJson;
-  whoContentHtml: string;
+  glossary: Glossary;
 }

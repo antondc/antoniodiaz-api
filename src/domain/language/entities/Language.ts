@@ -1,4 +1,18 @@
-import { RichContentJson } from '@shared/services/RichContent';
+import { RichContent, RichContentJson } from '@shared/services/RichContent';
+
+export type Glossary = {
+  who: string;
+  whoContentJson: RichContentJson;
+  whoContentHtml: string;
+  what: string;
+  whatSubtitle: string;
+  when: string;
+  where: string;
+  post: string;
+  serverError: string;
+  control: string;
+  notFound: string;
+};
 
 export class Language {
   id: number;
@@ -6,19 +20,7 @@ export class Language {
   name: string;
   isDefault: boolean;
   loading?: boolean;
-  glossary: {
-    who: string;
-    whoContentJson: RichContentJson;
-    whoContentHtml: string;
-    what: string;
-    whatSubtitle: string;
-    when: string;
-    where: string;
-    post: string;
-    serverError: string;
-    control: string;
-    notFound: string;
-  };
+  glossary: Glossary;
 
   constructor(options) {
     this.id = options.id;
@@ -26,6 +28,13 @@ export class Language {
     this.name = options.name;
     this.isDefault = options.isDefault;
     this.loading = options.loading;
-    this.glossary = options.glossary;
+
+    const richContent = new RichContent();
+    const { richContentJson, richContentHtml } = richContent.generateHtml(options.glossary?.whoContentJson);
+    this.glossary = {
+      whoContentJson: richContentJson,
+      whoContentHtml: richContentHtml,
+      ...options.glossary,
+    };
   }
 }

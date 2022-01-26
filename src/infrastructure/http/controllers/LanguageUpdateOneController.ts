@@ -17,7 +17,7 @@ export class LanguageUpdateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { slug } = req.params;
-    const { who, whoContentJson } = req.body;
+    const { glossary } = req.body;
 
     const tokenJWT = new TokenJWT(SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
@@ -25,8 +25,7 @@ export class LanguageUpdateOneController extends BaseController {
     const languageUpdateRequest: ILanguageUpdateOneRequest = {
       session,
       slug,
-      who,
-      whoContentJson,
+      glossary,
     };
 
     const response = await this.useCase.execute(languageUpdateRequest);

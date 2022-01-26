@@ -49,7 +49,7 @@ export class RichContent {
 
   async processRichContent(richContent: RichContentJson): Promise<{
     richContentJson: RichContentJson;
-    richContentHtml: string;
+    richContentHtml?: string;
   }> {
     if (!richContent || !Array.isArray(richContent))
       return {
@@ -129,7 +129,12 @@ export class RichContent {
     return richContentWithImageSizes;
   }
 
-  generateHtml(richContent: RichContentJson): { richContentJson: RichContentJson; richContentHtml: string } {
+  generateHtml(richContent: RichContentJson): {
+    richContentJson: RichContentJson;
+    richContentHtml?: string;
+  } {
+    if (!richContent) return { richContentJson: richContent };
+
     const richContentHtml = toHtml({ children: richContent, type: '' });
 
     return {
