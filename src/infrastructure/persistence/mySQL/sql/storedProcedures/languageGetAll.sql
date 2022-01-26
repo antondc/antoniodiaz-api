@@ -17,6 +17,7 @@ BEGIN
       'what', glossary.what,
       'whatSubtitle', glossary.whatSubtitle,
       'when', glossary.when,
+      'whenSubtitle', glossary.whenSubtitle,
       'where', glossary.where,
       'post', glossary.post,
       'serverError', glossary.serverError,

@@ -7,6 +7,7 @@ export type Glossary = {
   what: string;
   whatSubtitle: string;
   when: string;
+  whenSubtitle: string;
   where: string;
   post: string;
   serverError: string;

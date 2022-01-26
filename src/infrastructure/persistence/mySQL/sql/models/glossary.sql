@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS glossary (
   `what`            VARCHAR(255) NULL DEFAULT NULL,
   `whatSubtitle`    VARCHAR(255) NULL DEFAULT NULL,
   `when`            VARCHAR(255) NULL DEFAULT NULL,
+  `whenSubtitle`    VARCHAR(255) NULL DEFAULT NULL,
   `post`            VARCHAR(255) NULL DEFAULT NULL,
   `where`           VARCHAR(255) NULL DEFAULT NULL,
   `serverError`     VARCHAR(255) NULL DEFAULT NULL,

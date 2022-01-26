@@ -42,6 +42,7 @@ export class LanguageRepo implements ILanguageRepo {
       what: null,
       whatSubtitle: null,
       when: null,
+      whenSubtitle: null,
       where: null,
       post: null,
       serverError: null,
@@ -52,8 +53,8 @@ export class LanguageRepo implements ILanguageRepo {
     const mySQL = new MySQL();
 
     try {
-      const { who, whoContentJson, whoContentHtml, what, whatSubtitle, when, where, post, serverError, control, notFound } = glossary;
-      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+      const { who, whoContentJson, whoContentHtml, what, whatSubtitle, when, whenSubtitle, where, post, serverError, control, notFound } = glossary;
+      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
       const [[language]] = await mySQL.query(articleCreateQuery, [
         id,
         who,
@@ -62,6 +63,7 @@ export class LanguageRepo implements ILanguageRepo {
         what,
         whatSubtitle,
         when,
+        whenSubtitle,
         where,
         post,
         serverError,
