@@ -58,10 +58,6 @@ export class StateRepo {
   private glossaryData: string;
   private userData: string;
   private userLoginData: string;
-  private articleData: string;
-  private articleTranslationData: string;
-  private projectData: string;
-  private projectTranslationData: string;
 
   constructor() {
     // Operational tables
@@ -116,10 +112,6 @@ export class StateRepo {
     this.glossaryData = fs.readFileSync(path.resolve(__dirname, '../sql/data/glossary.sql')).toString();
     this.userData = fs.readFileSync(path.resolve(__dirname, '../sql/data/user.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
-    this.articleData = fs.readFileSync(path.resolve(__dirname, '../sql/data/article.sql')).toString();
-    this.articleTranslationData = fs.readFileSync(path.resolve(__dirname, '../sql/data/article_translation.sql')).toString();
-    this.projectData = fs.readFileSync(path.resolve(__dirname, '../sql/data/project.sql')).toString();
-    this.projectTranslationData = fs.readFileSync(path.resolve(__dirname, '../sql/data/project_translation.sql')).toString();
   }
 
   public async resetContent() {
@@ -180,10 +172,6 @@ export class StateRepo {
         ...(!!RESTORE_DATA && (await mySQL.query(this.glossaryData))), // As languages are isolated we can modify them without affecting the rest of the DB
         ...(!!RESTORE_DATA && (await mySQL.query(this.userData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userLoginData))),
-        ...(!!RESTORE_DATA && (await mySQL.query(this.articleData))),
-        ...(!!RESTORE_DATA && (await mySQL.query(this.articleTranslationData))),
-        ...(!!RESTORE_DATA && (await mySQL.query(this.projectData))),
-        ...(!!RESTORE_DATA && (await mySQL.query(this.projectTranslationData))),
       };
     } catch (err) {
       mySQL.rollback();
