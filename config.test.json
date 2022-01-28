@@ -52,8 +52,8 @@
   "production": {
     "database": {
       "host": "127.0.0.1",
-      "database": "linking_stage",
-      "user": "w_9aIfE2XpoYz"
+      "database": "antoniodiaz_production",
+      "user": "s_yKrbajobIYhs"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "api.antoniodiaz.me",
