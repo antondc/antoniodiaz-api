@@ -1,7 +1,7 @@
 {
-  "name": "clean-architecture-node-api-starter",
+  "name": "antoniodiaz-api",
   "version": "1.0.1",
-  "description": "Clean Architecture API starter kit",
+  "description": "API for Antoni Diaz Website",
   "keywords": [
     "node",
     "clean-architecture",
