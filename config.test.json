@@ -29,7 +29,7 @@
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "api-staging.antoniodiaz.me",
-    "PORT_SERVER_HTTP": 3001,
+    "PORT_SERVER_HTTP": 3006,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://staging.antoniodiaz.me",
     "ENDPOINT_CLIENTS": [
@@ -57,7 +57,7 @@
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "api.antoniodiaz.me",
-    "PORT_SERVER_HTTP": 3002,
+    "PORT_SERVER_HTTP": 3007,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://antoniodiaz.me",
     "ENDPOINT_CLIENTS": ["https://antoniodiaz.me", "https://www.antoniodiaz.me"],
