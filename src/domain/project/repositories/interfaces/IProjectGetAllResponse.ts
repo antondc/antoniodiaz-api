@@ -1,4 +1,4 @@
-import { Project } from '@domain/Project/entities/Project';
+import { Project } from '@domain/project/entities/Project';
 
 export type IProjectGetAllResponse = {
   meta: {
