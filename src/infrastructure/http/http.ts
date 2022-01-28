@@ -50,7 +50,7 @@ app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
 app.use('*', AuthMiddleware);
-app.use('/api/v1/', RouterV1);
+// app.use('/api/v1/', RouterV1);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

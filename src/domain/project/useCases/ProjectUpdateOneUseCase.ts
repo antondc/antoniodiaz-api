@@ -1,5 +1,5 @@
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
-import { Project, projectImageFormat } from '@domain/project/entities/Project';
+import { projectImageFormat } from '@domain/project/entities/Project';
 import { IProjectRepo } from '@domain/project/repositories/IProjectRepo';
 import { IProjectUpdateOneRequest } from '@domain/project/useCases/interfaces/IProjectUpdateOneRequest';
 import { IProjectUpdateOneResponse } from '@domain/project/useCases/interfaces/IProjectUpdateOneResponse';
