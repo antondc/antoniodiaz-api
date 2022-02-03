@@ -15,6 +15,7 @@ type RichContentImage = {
   image: {
     [key: string]: string;
   };
+  ratio?: number;
   children: Array<unknown>;
 };
 
@@ -102,7 +103,10 @@ export class RichContent {
 
       return {
         ...item,
-        image: { original: savedImage?.path },
+        ratio: savedImage?.ratio,
+        image: {
+          original: savedImage?.path,
+        },
       };
     });
 
@@ -123,6 +127,7 @@ export class RichContent {
       return {
         ...item,
         image: imageFormatted,
+        ratio: item.ratio,
       };
     });
 
