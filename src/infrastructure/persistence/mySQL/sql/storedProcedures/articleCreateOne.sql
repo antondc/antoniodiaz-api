@@ -8,12 +8,16 @@ CREATE PROCEDURE article_create_one(
 
 BEGIN
 
+  SET @newOrder := (select IFNULL(MAX(`order`), 0) FROM project);
+
   INSERT IGNORE INTO `article` (
     `user_id`,
+    `order`,
     `createdAt`,
     `updatedAt`
   ) VALUES (
     $SESSION_ID,
+    @newOrder + 1,
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP()
   );
