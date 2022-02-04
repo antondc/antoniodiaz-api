@@ -29,18 +29,13 @@ app.use(express.static('media/files'));
 app.use(express.static('media/images'));
 app.use(express.static('media/temp_files'));
 app.use('/media', express.static('media'));
-app.use('/media', express.static('media'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Parsers - - - - - - - - - - - - -*/
-// Parsing application/x-www-form-urlencoded:
-app.use(bodyParser.urlencoded({ extended: false }));
-// Parsing body
-app.use(bodyParser.json());
-// Parsing JSON
-app.use(express.json());
 // Parsing req.body
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// Parsing JSON
+app.use(express.json({ limit: '50mb' }));
 // Parsing cookies
 app.use(cookieParser());
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
