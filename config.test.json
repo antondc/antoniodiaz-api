@@ -10,7 +10,7 @@
     "HOST_SERVER": "www.dev.antoniodiaz.me",
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
-    "ENDPOINT_CLIENT": true,
+    "ENDPOINT_CLIENT": "https://www.dev.antoniodiaz.me",
     "ENDPOINT_CLIENTS": ["https://www.dev.antoniodiaz.me"],
     "LOGGING": true,
     "EMAIL_HOST": "antoniodiaz.me-com.correoseguro.dinaserver.com",

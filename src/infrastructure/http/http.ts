@@ -1,6 +1,5 @@
 import 'module-alias/register';
 import 'dotenv/config';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
