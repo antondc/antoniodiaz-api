@@ -56,7 +56,7 @@ export class FileRepo implements IFileRepo {
     if (!formatOptions?.sizes) return;
 
     await formatOptions.sizes.forEach(async (item) => {
-      const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `w${item.width}h${item.height}`);
+      const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `${item.width}w`);
       const destinationPathExists = fs.existsSync(destinationPath);
       if (!destinationPathExists) mkdirp.sync(destinationPath);
 

@@ -6,7 +6,7 @@ export type CarouselImage = {
   id: number;
   order: number;
   title: string;
-  images: {
+  image: {
     original: string;
     [key: string]: string;
   };
@@ -35,18 +35,18 @@ export class CarouselField {
   private async saveImagesToFileSystem(carouselImages: Array<CarouselImage>): Promise<Array<CarouselImage>> {
     const carouselImagesUploadPromises = carouselImages.map(async (item) => {
       const savedImage = await this.fileImage.fileImageSaveOne({
-        fileUrl: item.images.original,
+        fileUrl: item.image.original,
         formatOptions: this.formatOptions,
       });
 
-      const image: CarouselImage = {
+      const resultImage: CarouselImage = {
         ...item,
-        images: {
+        image: {
           original: savedImage?.path,
         },
       };
 
-      return image;
+      return resultImage;
     });
 
     const carouselImagesUploaded = await Promise.all(carouselImagesUploadPromises || []);
@@ -58,7 +58,7 @@ export class CarouselField {
     const richContentWithImageSizes = carouselImages.map((item) => {
       const imageFormatted = this.fileImage.getFormattedImageUrls({
         sizes: this.formatOptions?.sizes,
-        imageUrl: item?.images.original,
+        imageUrl: item?.image.original,
       });
 
       return {
