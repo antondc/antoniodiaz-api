@@ -47,6 +47,7 @@ export class ProjectCreateOneUseCase implements IProjectCreateOneUseCase {
       },
       contentHtml: richContentHtml,
       contentJson: richContentJson,
+      files: [],
       published: false,
     });
     if (!projectTranslationIdCreated) throw new RequestError('Project creation failed', 409);

@@ -33,21 +33,27 @@ export class CarouselField {
   }
 
   private async saveImagesToFileSystem(carouselImages: Array<CarouselImage>): Promise<Array<CarouselImage>> {
-    const carouselImagesUploadPromises = carouselImages.map(async (item) => {
-      const savedImage = await this.fileImage.fileImageSaveOne({
-        fileUrl: item.image.original,
-        formatOptions: this.formatOptions,
-      });
+    const carouselImagesUploadPromises = carouselImages
+      .map(async (item) => {
+        try {
+          const savedImage = await this.fileImage.fileImageSaveOne({
+            fileUrl: item.image.original,
+            formatOptions: this.formatOptions,
+          });
 
-      const resultImage: CarouselImage = {
-        ...item,
-        image: {
-          original: savedImage?.path,
-        },
-      };
+          const resultImage: CarouselImage = {
+            ...item,
+            image: {
+              original: savedImage?.path,
+            },
+          };
 
-      return resultImage;
-    });
+          return resultImage;
+        } catch {
+          return null;
+        }
+      })
+      .filter((item) => item !== null);
 
     const carouselImagesUploaded = await Promise.all(carouselImagesUploadPromises || []);
 

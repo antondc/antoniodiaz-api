@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import multer from 'multer';
 
 import { allowedFileExtensions } from '@domain/file/entities/File';
-import { FileDTO } from '@domain/file/entities/FileDTO';
+import { FileBlobDTO } from '@domain/file/entities/FileBlobDTO';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class FileHandler {
@@ -22,7 +22,7 @@ export class FileHandler {
   // We want our files complying with our own interface
   static wrapSingleFile(req: Request, _: Response, next: NextFunction) {
     const [file] = req?.files as Express.Multer.File[];
-    const mappedFiles: FileDTO = {
+    const mappedFiles: FileBlobDTO = {
       name: file.originalname,
       type: file.mimetype,
       content: file.buffer,

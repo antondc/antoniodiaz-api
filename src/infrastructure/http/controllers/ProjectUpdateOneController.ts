@@ -18,7 +18,7 @@ export class ProjectUpdateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { projectId, language = DEFAULT_LANGUAGE } = req.params;
-    const { title, contentJson, published, carousel } = req.body;
+    const { title, contentJson, published, carousel, files } = req.body;
 
     const tokenJWT = new TokenJWT(SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
@@ -31,6 +31,7 @@ export class ProjectUpdateOneController extends BaseController {
       carousel,
       contentJson,
       published,
+      files,
     };
 
     const response = await this.useCase.execute(projectUpdateRequest);

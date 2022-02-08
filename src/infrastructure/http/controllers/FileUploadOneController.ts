@@ -13,16 +13,16 @@ export class FileUploadOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { file } = req.body;
+    const { file: fileBlob } = req.body;
 
-    const response = await this.useCase.execute({ file });
+    const response = await this.useCase.execute({ fileBlob });
 
     const formattedResponse = {
       links: {
         self: URL_SERVER + PATH_API_V1 + '/images/upload/single',
       },
       data: {
-        image: `${URL_SERVER}/${response?.path}`,
+        file: `${URL_SERVER}/${response?.path}`,
       },
       included: [],
     };

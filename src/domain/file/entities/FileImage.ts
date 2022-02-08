@@ -4,7 +4,7 @@ import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { IImageSaveOneRequest } from '@domain/file/useCases/interfaces/IFileSaveOneRequest';
 import { IImageSaveOneResponse } from '@domain/file/useCases/interfaces/IFileSaveOneResponse';
 import { File, FileConstructorProps } from './File';
-import { FileDTO } from './FileDTO';
+import { FileBlobDTO } from './FileBlobDTO';
 
 type ImageUrlSplitBySizes = {
   imageUrl: string;
@@ -21,11 +21,11 @@ type ImageUrlSplitBySizesReturn = {
 
 export class FileImage extends File {
   fileRepo?: IFileRepo;
-  file?: FileDTO;
+  fileBlob?: FileBlobDTO;
 
   constructor(constructorProps?: FileConstructorProps) {
     super(constructorProps);
-    this.file = constructorProps?.file;
+    this.fileBlob = constructorProps?.fileBlob;
     this.fileRepo = constructorProps?.fileRepo;
   }
 

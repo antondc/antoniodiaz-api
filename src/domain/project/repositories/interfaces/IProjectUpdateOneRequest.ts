@@ -10,5 +10,9 @@ export interface IProjectUpdateOneRequest {
   };
   contentJson: RichContentJson;
   contentHtml: string;
+  files: {
+    url: string;
+    name: string;
+  }[];
   published: boolean;
 }

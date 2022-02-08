@@ -1,4 +1,4 @@
-export class FileDTO {
+export class FileBlobDTO {
   name: string;
   size: number;
   type: string;

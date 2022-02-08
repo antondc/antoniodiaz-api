@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS project_translation (
   `carousel`      JSON NULL DEFAULT NULL,
   `content_json`  JSON NULL DEFAULT NULL,
   `content_html`  TEXT NULL DEFAULT NULL,
+  `files`         JSON NULL DEFAULT NULL,
   `project_id`    INT(11) NOT NULL,
   `language_id`   INT NOT NULL,
   `published`     TINYINT(1) NOT NULL DEFAULT FALSE,

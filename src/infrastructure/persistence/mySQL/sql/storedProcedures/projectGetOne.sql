@@ -16,6 +16,7 @@ BEGIN
     `project_translation`.carousel,
     `project_translation`.content_json as contentJson,
     `project_translation`.content_html as contentHtml,
+    `project_translation`.files,
     `project_translation`.published,
     project.user_id as `userId`,
     language.slug as language,

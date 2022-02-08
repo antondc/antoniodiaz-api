@@ -4,11 +4,12 @@ DROP PROCEDURE IF EXISTS project_update_one;
 
 CREATE PROCEDURE project_update_one(
   IN $LANGUAGE        TEXT,
-  IN $ARTICLE_ID      INT,
+  IN $PROJECT_ID      INT,
   IN $TITLE           TEXT,
   IN $CAROUSEL        JSON,
   IN $CONTENT_JSON    JSON,
   IN $CONTENT_HTML    TEXT,
+  IN $FILES           JSON,
   IN $PUBLISHED       TEXT
 )
 
@@ -19,6 +20,7 @@ BEGIN
     `carousel`,
     `content_json`,
     `content_html`,
+    `files`,
     `project_id`,
     `language_id`,
     `published`,
@@ -30,7 +32,8 @@ BEGIN
     $CAROUSEL,
     $CONTENT_JSON,
     $CONTENT_HTML,
-    $ARTICLE_ID,
+    $FILES,
+    $PROJECT_ID,
     language.id,
     $PUBLISHED,
     UNIX_TIMESTAMP(),
@@ -42,7 +45,8 @@ BEGIN
     `project_translation`.`carousel`      = $CAROUSEL,
     `project_translation`.`content_json`  = $CONTENT_JSON,
     `project_translation`.`content_html`  = $CONTENT_HTML,
-    `project_translation`.`project_id`    = $ARTICLE_ID,
+    `project_translation`.`files`         = $FILES,
+    `project_translation`.`project_id`    = $PROJECT_ID,
     `project_translation`.`language_id`   = language.id,
     `project_translation`.`published`     = $PUBLISHED,
     `project_translation`.`updatedAt`     = UNIX_TIMESTAMP()

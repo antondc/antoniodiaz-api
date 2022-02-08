@@ -68,10 +68,11 @@ export class ProjectRepo implements IProjectRepo {
     }
   }
 
-  public async projectUpdateOne({ language, projectId = null, title, carousel, contentJson, contentHtml, published = null }) {
+  public async projectUpdateOne({ language, projectId = null, title, carousel, contentJson, contentHtml, files, published = null }) {
     const mySQL = new MySQL();
+
     try {
-      const projectCreateQuery = 'CALL project_update_one(?, ?, ?, ?, ?, ?, ?)';
+      const projectCreateQuery = 'CALL project_update_one(?, ?, ?, ?, ?, ?, ?, ?)';
       const [[results]] = await mySQL.query(projectCreateQuery, [
         language,
         projectId,
@@ -79,6 +80,7 @@ export class ProjectRepo implements IProjectRepo {
         JSON.stringify(carousel),
         JSON.stringify(contentJson),
         contentHtml,
+        JSON.stringify(files),
         published,
       ]);
 

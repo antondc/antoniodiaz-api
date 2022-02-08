@@ -1,3 +1,4 @@
+import { IFileFormatOptions } from '@domain/file/entities/interfaces/IFileFormatOptions';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
 import { RichContentJson } from '@shared/services/RichContent';
 
@@ -21,6 +22,11 @@ export const projectImageFormat: IFileImageFormatOptions = {
   destinationFolder: '',
 };
 
+export const projectFileFormat: IFileFormatOptions = {
+  extension: '.pdf',
+  destinationFolder: '',
+};
+
 export class Project {
   id: number;
   order: number;
@@ -28,6 +34,10 @@ export class Project {
   carousel: Record<string, unknown>;
   contentJson: RichContentJson;
   contentHtml: string;
+  files: {
+    url: string;
+    name: string;
+  };
   published: string;
   userId: string;
   language: string;
@@ -41,6 +51,7 @@ export class Project {
     this.carousel = projectData?.carousel?.slides;
     this.contentJson = projectData?.contentJson;
     this.contentHtml = projectData?.contentHtml;
+    this.files = projectData?.files;
     this.published = projectData?.published;
     this.userId = projectData?.userId;
     this.language = projectData?.language;

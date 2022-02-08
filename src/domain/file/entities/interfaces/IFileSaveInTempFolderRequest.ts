@@ -1,5 +1,5 @@
-import { FileDTO } from '@domain/file/entities/FileDTO';
+import { FileBlobDTO } from '@domain/file/entities/FileBlobDTO';
 
 export type IFileSaveInTempFolderRequest = {
-  file: FileDTO;
+  fileBlob: FileBlobDTO;
 };

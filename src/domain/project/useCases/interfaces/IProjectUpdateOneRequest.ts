@@ -10,4 +10,8 @@ export interface IProjectUpdateOneRequest {
   title: string;
   contentJson: RichContentJson;
   published: boolean;
+  files: {
+    name: string;
+    url: string;
+  }[];
 }

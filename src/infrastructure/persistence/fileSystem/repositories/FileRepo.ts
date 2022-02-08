@@ -128,7 +128,7 @@ export class FileRepo implements IFileRepo {
 
   // Method for saving file in temporary folder
   async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {
-    const { content, extension } = fileSaveInTempFolderRequest.file;
+    const { content, extension } = fileSaveInTempFolderRequest.fileBlob;
     const name = `${uuidv4()}.${extension}`;
     const destinationPath = path.join(config.TEMP_FILES);
     const destinationPathExists = fs.existsSync(destinationPath);
