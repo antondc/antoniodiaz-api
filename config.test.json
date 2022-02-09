@@ -64,6 +64,9 @@
     "LOGGING": false,
     "EMAIL_HOST": "",
     "EMAIL_PORT": 587,
+    "RESTORE_MODELS": false,
+    "RESTORE_DATA": false,
+    "RESTORE_PROCEDURES": true,
     "EMAIL_USER": "hello@antoniodiaz.me"
   },
   "SESSION_DURATION": 3600,
@@ -72,8 +75,5 @@
   "MEDIA_FILES": "media/files",
   "TEMP_FILES": "media/temp_files",
   "DEFAULT_IMAGE": "/img/default-image.png",
-  "RESTORE_MODELS": false,
-  "RESTORE_DATA": false,
-  "RESTORE_PROCEDURES": true,
   "DEFAULT_LOCATION": "Frankfurt"
 }
