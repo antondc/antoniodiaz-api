@@ -39,12 +39,19 @@ export class File extends FileBlobDTO {
   }
 
   async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
-    const { path } = await this.fileRepo.fileSaveOne(fileSaveOneRequest);
+    try {
+      const { path } = await this.fileRepo.fileSaveOne(fileSaveOneRequest);
 
-    return {
-      name: this.fileName,
-      path,
-    };
+      return {
+        name: this.fileName,
+        path,
+      };
+    } catch (error) {
+      return {
+        name: this.fileName,
+        path: undefined,
+      };
+    }
   }
 
   fileDeleteOne = async (url: IFileDeleteOneRequest): Promise<IFileDeleteOneResponse> => {

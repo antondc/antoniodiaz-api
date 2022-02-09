@@ -58,6 +58,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
       };
     });
     const filesSaved = await Promise.all(filesSavedPromises);
+    const filesSavedCleaned = filesSaved.filter((item) => !!item.url);
     const projectTranslationIdCreated = await this.projectRepo.projectUpdateOne({
       projectId,
       language,
@@ -67,7 +68,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
       },
       contentHtml: richContentHtml,
       contentJson: richContentJson,
-      files: filesSaved,
+      files: filesSavedCleaned,
       published,
     });
     if (!projectTranslationIdCreated) throw new RequestError('Project creation failed', 409);
