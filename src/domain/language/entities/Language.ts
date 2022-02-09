@@ -33,9 +33,9 @@ export class Language {
     const richContent = new RichContent();
     const { richContentJson, richContentHtml } = richContent.generateHtml(options.glossary?.whoContentJson);
     this.glossary = {
+      ...options.glossary,
       whoContentJson: richContentJson,
       whoContentHtml: richContentHtml,
-      ...options.glossary,
     };
   }
 }
