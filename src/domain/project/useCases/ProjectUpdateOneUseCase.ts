@@ -48,7 +48,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
       ...projectFileFormat,
       destinationFolder: `${session?.id}/files`,
     };
-    const filesSavedPromises = files.map(async (item) => {
+    const filesSavedPromises = files?.map(async (item) => {
       const file = new File({ fileRepo: this.fileRepo });
       const savedFile = await file.fileSaveOne({ fileUrl: item.url, formatOptions: fileFormatOptions });
 
@@ -57,7 +57,7 @@ export class ProjectUpdateOneUseCase implements IProjectUpdateOneUseCase {
         name: item.name,
       };
     });
-    const filesSaved = await Promise.all(filesSavedPromises);
+    const filesSaved = await Promise.all(filesSavedPromises || []);
     const filesSavedCleaned = filesSaved.filter((item) => !!item.url);
     const projectTranslationIdCreated = await this.projectRepo.projectUpdateOne({
       projectId,
