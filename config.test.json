@@ -61,7 +61,7 @@
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.antoniodiaz.me",
     "ENDPOINT_CLIENTS": ["https://antoniodiaz.me", "https://www.antoniodiaz.me"],
-    "LOGGING": false,
+    "LOGGING": true,
     "EMAIL_HOST": "",
     "EMAIL_PORT": 587,
     "RESTORE_MODELS": false,
