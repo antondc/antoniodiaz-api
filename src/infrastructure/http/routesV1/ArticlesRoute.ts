@@ -6,7 +6,6 @@ import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseC
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
 import { ArticleSortOneUseCase } from '@domain/article/useCases/ArticleSortOneUseCase';
 import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
-import { LanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
 import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
 import { RssUpdateAllUseCase } from '@domain/rss/useCases/RssUpdateAllUseCase';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';

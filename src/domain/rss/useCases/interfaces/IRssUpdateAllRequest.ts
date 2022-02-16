@@ -8,5 +8,6 @@ export type IRssUpdateAllRequest = {
     date: string;
     slug: string;
     content: string;
+    url: string;
   }[];
 };
