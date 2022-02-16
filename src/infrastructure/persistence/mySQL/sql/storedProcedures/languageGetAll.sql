@@ -11,6 +11,9 @@ BEGIN
     language.isDefault,
     language.slug,
     JSON_OBJECT(
+      'siteTitle', glossary.siteTitle,
+      'siteDescription', glossary.siteDescription,
+      'author', glossary.author,
       'who', glossary.who,
       'whoContentJson', glossary.whoContentJson,
       'whoContentHtml', glossary.whoContentHtml,

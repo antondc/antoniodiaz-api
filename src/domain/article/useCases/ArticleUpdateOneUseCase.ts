@@ -3,7 +3,9 @@ import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
 import { IArticleUpdateOneResponse } from '@domain/article/useCases/interfaces/IArticleUpdateOneResponse';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
+import { ILanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
 import { IRssUpdateAllUseCase } from '@domain/rss/useCases/RssUpdateAllUseCase';
+import { ENDPOINT_CLIENT } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
 import { RichContent } from '@shared/services/RichContent';
@@ -20,19 +22,22 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   private articleGetAllUseCase: IArticleGetAllUseCase;
   private articleGetOneUseCase: IArticleGetOneUseCase;
   private rssUpdateAllUseCase: IRssUpdateAllUseCase;
+  private languageGetOneUseCase: ILanguageGetOneUseCase;
 
   constructor(
     articleRepo: IArticleRepo,
     fileRepo: IFileRepo,
     articleGetAllUseCase: IArticleGetAllUseCase,
     articleGetOneUseCase: IArticleGetOneUseCase,
-    rssUpdateAllUseCase: IRssUpdateAllUseCase
+    rssUpdateAllUseCase: IRssUpdateAllUseCase,
+    languageGetOneUseCase: ILanguageGetOneUseCase
   ) {
     this.articleRepo = articleRepo;
     this.fileRepo = fileRepo;
     this.articleGetOneUseCase = articleGetOneUseCase;
     this.articleGetAllUseCase = articleGetAllUseCase;
     this.rssUpdateAllUseCase = rssUpdateAllUseCase;
+    this.languageGetOneUseCase = languageGetOneUseCase;
   }
 
   public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
@@ -69,9 +74,11 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       date: new Date(item.createdAt).toDateString(),
       slug: item.id.toString(),
       content: item.contentHtml,
+      url: `${ENDPOINT_CLIENT}/${language}/when/${item.id}`,
     }));
+    const languageRetrieved = await this.languageGetOneUseCase.execute({ slug: language });
 
-    await this.rssUpdateAllUseCase.execute({ feed: 'blog', language, items: articlesForRss });
+    await this.rssUpdateAllUseCase.execute({ feed: 'blog', language: languageRetrieved, items: articlesForRss });
 
     return article;
   }

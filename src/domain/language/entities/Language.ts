@@ -1,6 +1,9 @@
 import { RichContent, RichContentJson } from '@shared/services/RichContent';
 
 export type Glossary = {
+  siteTitle: string;
+  siteDescription: string;
+  author: string;
   who: string;
   whoContentJson: RichContentJson;
   whoContentHtml: string;

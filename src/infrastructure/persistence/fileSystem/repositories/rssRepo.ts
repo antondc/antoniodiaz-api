@@ -8,11 +8,12 @@ import { IRssGetOneResponse } from '@domain/rss/repositories/interfaces/IRssGetO
 import { IRssUpdateAllRequest } from '@domain/rss/repositories/interfaces/IRssUpdateAllRequest';
 import { IRssUpdateAllResponse } from '@domain/rss/repositories/interfaces/IRssUpdateAllResponse';
 import { IRssRepo } from '@domain/rss/repositories/IRssRepo';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 
 export class RssRepo implements IRssRepo {
   public async rssGetOne(rssGetOneRequest: IRssGetOneRequest): Promise<IRssGetOneResponse> {
     console.log(rssGetOneRequest);
-    const filePath = path.resolve(process.cwd(), `src/infrastructure/persistence/fileSystem/data/rss/${rssGetOneRequest.feed}/${rssGetOneRequest.language}`);
+    const filePath = path.resolve(process.cwd(), `dist/rss/${rssGetOneRequest.feed}/${rssGetOneRequest.language}`);
     const filePathWithFile = path.join(filePath, '/feed.rss');
 
     const rssFile = fs.readFileSync(filePathWithFile, { encoding: 'utf8' });
@@ -24,25 +25,10 @@ export class RssRepo implements IRssRepo {
     const itemsSortedBNyDate = rssUpdateAll.items.sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
     const feedItems = itemsSortedBNyDate.map((item) => ({
       item: [
-        {
-          title: item.title,
-        },
-        {
-          pubDate: new Date(item.date as string).toUTCString(),
-        },
-        {
-          guid: [
-            {
-              _attr: { isPermaLink: true },
-            },
-            `YOUR-WEBSITE/${item.slug}/`,
-          ],
-        },
-        {
-          description: {
-            _cdata: item.content,
-          },
-        },
+        { title: item.title },
+        { pubDate: new Date(item.date as string).toUTCString() },
+        { guid: [{ _attr: { isPermaLink: true } }, item.url] },
+        { description: { _cdata: item.content } },
       ],
     }));
 
@@ -59,20 +45,16 @@ export class RssRepo implements IRssRepo {
             {
               'atom:link': {
                 _attr: {
-                  href: 'YOUR-WEBSITE/feed.rss',
+                  href: `${URL_SERVER}${PATH_API_V1}/${rssUpdateAll.language.slug}/rss/${rssUpdateAll.feed}`,
                   rel: 'self',
                   type: 'application/rss+xml',
                 },
               },
             },
-            {
-              title: 'YOUR-WEBSITE-TITLE',
-            },
-            {
-              link: 'YOUR-WEBSITE/',
-            },
-            { description: 'YOUR-WEBSITE-DESCRIPTION' },
-            { language: 'en-US' },
+            { title: rssUpdateAll.language.glossary.siteTitle },
+            { link: URL_SERVER },
+            { description: rssUpdateAll.language.glossary.siteDescription },
+            { language: `${rssUpdateAll.language.slug}-${rssUpdateAll.language.slug.toUpperCase()}` },
             ...feedItems,
           ],
         },
@@ -81,7 +63,7 @@ export class RssRepo implements IRssRepo {
 
     const feed = '<?xml version="1.0" encoding="UTF-8"?>' + xml(feedObject);
 
-    const filePath = path.resolve(process.cwd(), `src/infrastructure/persistence/fileSystem/data/rss/${rssUpdateAll.feed}/${rssUpdateAll.language}`);
+    const filePath = path.resolve(process.cwd(), `dist/rss/${rssUpdateAll.feed}/${rssUpdateAll.language.slug}`);
 
     const filePathExists = fs.existsSync(filePath);
     if (!filePathExists) mkdirp.sync(filePath);

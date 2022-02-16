@@ -6,6 +6,8 @@ import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseC
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
 import { ArticleSortOneUseCase } from '@domain/article/useCases/ArticleSortOneUseCase';
 import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
+import { LanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
+import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
 import { RssUpdateAllUseCase } from '@domain/rss/useCases/RssUpdateAllUseCase';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';
 import { ArticleDeleteOneController } from '@infrastructure/http/controllers/ArticleDeleteOneController';
@@ -16,6 +18,7 @@ import { ArticleUpdateOneController } from '@infrastructure/http/controllers/Art
 import { FileRepo } from '@infrastructure/persistence/fileSystem/repositories/FileRepo';
 import { RssRepo } from '@infrastructure/persistence/fileSystem/repositories/rssRepo';
 import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
+import { LanguageRepo } from '@infrastructure/persistence/mySQL/repositories/LanguageRepo';
 
 const ArticlesRoute = express.Router({ mergeParams: true });
 
@@ -55,10 +58,19 @@ ArticlesRoute.put('/:articleId', async (req: Request, res: Response, next: NextF
   const articleRepo = new ArticleRepo();
   const fileRepo = new FileRepo();
   const rssRepo = new RssRepo();
+  const languageRepo = new LanguageRepo();
   const articleGetAllUseCase = new ArticleGetAllUseCase(articleRepo);
+  const languageGetOneUseCase = new LanguageGetOneUseCase(languageRepo);
   const rssUpdateAllUseCase = new RssUpdateAllUseCase(rssRepo);
   const articleGetOneUseCase = new ArticleGetOneUseCase(articleRepo);
-  const articleUpdateOneUseCase = new ArticleUpdateOneUseCase(articleRepo, fileRepo, articleGetAllUseCase, articleGetOneUseCase, rssUpdateAllUseCase);
+  const articleUpdateOneUseCase = new ArticleUpdateOneUseCase(
+    articleRepo,
+    fileRepo,
+    articleGetAllUseCase,
+    articleGetOneUseCase,
+    rssUpdateAllUseCase,
+    languageGetOneUseCase
+  );
   const articleUpdateOneController = new ArticleUpdateOneController(articleUpdateOneUseCase);
 
   const response = await articleUpdateOneController.execute(req, res, next);
