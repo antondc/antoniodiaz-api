@@ -1,0 +1,1 @@
+export type IRssGetOneResponse = XMLDocument;

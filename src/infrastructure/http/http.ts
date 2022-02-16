@@ -43,6 +43,7 @@ app.use(cookieParser());
 app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
+app.use('/api/v1/test_a', (req, res) => res.send('alkjdkas'));
 app.use('*', AuthMiddleware);
 app.use('/api/v1/', RouterV1);
 
