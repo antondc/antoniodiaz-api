@@ -16,7 +16,7 @@ export class RssRepo implements IRssRepo {
     const filePath = path.resolve(process.cwd(), `dist/rss/${rssGetOneRequest.feed}/${rssGetOneRequest.language}`);
     const filePathWithFile = path.join(filePath, '/feed.rss');
 
-    const rssFile = fs.readFileSync(filePathWithFile, { encoding: 'utf8' });
+    const rssFile = await fs.promises.readFile(filePathWithFile, { encoding: 'utf8' });
 
     return rssFile;
   }
@@ -69,8 +69,8 @@ export class RssRepo implements IRssRepo {
     if (!filePathExists) mkdirp.sync(filePath);
 
     const filePathWithFile = path.join(filePath, '/feed.rss');
-    await fs.writeFile(filePathWithFile, feed, 'utf8');
-    const rssFile = fs.readFileSync(filePathWithFile, { encoding: 'utf8' });
+    await fs.promises.writeFile(filePathWithFile, feed, 'utf-8');
+    const rssFile = await fs.promises.readFile(filePathWithFile, { encoding: 'utf8' });
 
     return rssFile;
   }
