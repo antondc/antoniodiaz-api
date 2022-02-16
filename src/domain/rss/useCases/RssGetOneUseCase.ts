@@ -14,8 +14,8 @@ export class RssGetOneUseCase implements IRssGetOneUseCase {
   }
 
   public async execute(getRsssRequest: IRssGetOneRequest): Promise<IRssGetOneResponse> {
-    const { language } = getRsssRequest;
-    const response = await this.rssRepo.rssGetOne({ language });
+    const { language, feed } = getRsssRequest;
+    const response = await this.rssRepo.rssGetOne({ language, feed });
 
     return response;
   }

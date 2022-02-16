@@ -1,1 +1,1 @@
-export type IRssGetOneResponse = XMLDocument;
+export type IRssGetOneResponse = string;

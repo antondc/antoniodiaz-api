@@ -1,4 +1,4 @@
-export type IRssGetOneRequest = {
+export type IRssUpdateAllRequest = {
   feed: string;
   language: string;
 };

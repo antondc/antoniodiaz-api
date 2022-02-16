@@ -16,9 +16,10 @@ export class RssGetOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { language = DEFAULT_LANGUAGE } = req.params;
+    const { language = DEFAULT_LANGUAGE, feed } = req.params;
 
     const rssGetOneRequest: IRssGetOneRequest = {
+      feed,
       language,
     };
 
