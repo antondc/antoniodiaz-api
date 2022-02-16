@@ -1,6 +1,4 @@
-import { Article } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
-import { IArticleSortOneRequest } from '@domain/article/repositories/interfaces/IArticleSortOneRequest';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { RequestError } from '@shared/errors/RequestError';
 

@@ -1,4 +1,5 @@
 import fs from 'fs-extra';
+import mkdirp from 'mkdirp';
 import path from 'path';
 import xml from 'xml';
 
@@ -11,33 +12,39 @@ import { IRssRepo } from '@domain/rss/repositories/IRssRepo';
 export class RssRepo implements IRssRepo {
   public async rssGetOne(rssGetOneRequest: IRssGetOneRequest): Promise<IRssGetOneResponse> {
     console.log(rssGetOneRequest);
-    const filePath = path.resolve(process.cwd(), 'src/infrastructure/persistence/fileSystem/data/rss/blog/all.rss');
+    const filePath = path.resolve(process.cwd(), `src/infrastructure/persistence/fileSystem/data/rss/${rssGetOneRequest.feed}/${rssGetOneRequest.language}`);
+    const filePathWithFile = path.join(filePath, '/feed.rss');
 
-    const rssFile = fs.readFileSync(filePath, { encoding: 'utf8' });
+    const rssFile = fs.readFileSync(filePathWithFile, { encoding: 'utf8' });
 
     return rssFile;
   }
 
   public async rssUpdateAll(rssUpdateAll: IRssUpdateAllRequest): Promise<IRssUpdateAllResponse> {
     const itemsSortedBNyDate = rssUpdateAll.items.sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
-    const feedItems = itemsSortedBNyDate.map((item) => {
-      return {
-        item: [
-          { title: item.title },
-          {
-            pubDate: new Date(item.date as string).toUTCString(),
-          },
-          {
-            guid: [{ _attr: { isPermaLink: true } }, `YOUR-WEBSITE/${item.slug}/`],
-          },
-          {
-            description: {
-              _cdata: item.content,
+    const feedItems = itemsSortedBNyDate.map((item) => ({
+      item: [
+        {
+          title: item.title,
+        },
+        {
+          pubDate: new Date(item.date as string).toUTCString(),
+        },
+        {
+          guid: [
+            {
+              _attr: { isPermaLink: true },
             },
+            `YOUR-WEBSITE/${item.slug}/`,
+          ],
+        },
+        {
+          description: {
+            _cdata: item.content,
           },
-        ],
-      };
-    });
+        },
+      ],
+    }));
 
     const feedObject = {
       rss: [
@@ -74,9 +81,14 @@ export class RssRepo implements IRssRepo {
 
     const feed = '<?xml version="1.0" encoding="UTF-8"?>' + xml(feedObject);
 
-    const filePath = path.resolve(process.cwd(), 'src/infrastructure/persistence/fileSystem/data/rss/blog/all.rss');
-    await fs.writeFile(filePath, feed, 'utf8');
-    const rssFile = fs.readFileSync(filePath, { encoding: 'utf8' });
+    const filePath = path.resolve(process.cwd(), `src/infrastructure/persistence/fileSystem/data/rss/${rssUpdateAll.feed}/${rssUpdateAll.language}`);
+
+    const filePathExists = fs.existsSync(filePath);
+    if (!filePathExists) mkdirp.sync(filePath);
+
+    const filePathWithFile = path.join(filePath, '/feed.rss');
+    await fs.writeFile(filePathWithFile, feed, 'utf8');
+    const rssFile = fs.readFileSync(filePathWithFile, { encoding: 'utf8' });
 
     return rssFile;
   }

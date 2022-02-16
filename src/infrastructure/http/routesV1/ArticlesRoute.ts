@@ -6,6 +6,7 @@ import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseC
 import { ArticleGetOneUseCase } from '@domain/article/useCases/ArticleGetOneUseCase';
 import { ArticleSortOneUseCase } from '@domain/article/useCases/ArticleSortOneUseCase';
 import { ArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';
+import { RssUpdateAllUseCase } from '@domain/rss/useCases/RssUpdateAllUseCase';
 import { ArticleCreateOneController } from '@infrastructure/http/controllers/ArticleCreateOneController';
 import { ArticleDeleteOneController } from '@infrastructure/http/controllers/ArticleDeleteOneController';
 import { ArticleGetAllController } from '@infrastructure/http/controllers/ArticleGetAllController';
@@ -13,6 +14,7 @@ import { ArticleGetOneController } from '@infrastructure/http/controllers/Articl
 import { ArticleSortOneController } from '@infrastructure/http/controllers/ArticleSortOneController';
 import { ArticleUpdateOneController } from '@infrastructure/http/controllers/ArticleUpdateOneController';
 import { FileRepo } from '@infrastructure/persistence/fileSystem/repositories/FileRepo';
+import { RssRepo } from '@infrastructure/persistence/fileSystem/repositories/rssRepo';
 import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
 
 const ArticlesRoute = express.Router({ mergeParams: true });
@@ -52,8 +54,11 @@ ArticlesRoute.post('/', async (req: Request, res: Response, next: NextFunction) 
 ArticlesRoute.put('/:articleId', async (req: Request, res: Response, next: NextFunction) => {
   const articleRepo = new ArticleRepo();
   const fileRepo = new FileRepo();
+  const rssRepo = new RssRepo();
+  const articleGetAllUseCase = new ArticleGetAllUseCase(articleRepo);
+  const rssUpdateAllUseCase = new RssUpdateAllUseCase(rssRepo);
   const articleGetOneUseCase = new ArticleGetOneUseCase(articleRepo);
-  const articleUpdateOneUseCase = new ArticleUpdateOneUseCase(articleRepo, fileRepo, articleGetOneUseCase);
+  const articleUpdateOneUseCase = new ArticleUpdateOneUseCase(articleRepo, fileRepo, articleGetAllUseCase, articleGetOneUseCase, rssUpdateAllUseCase);
   const articleUpdateOneController = new ArticleUpdateOneController(articleUpdateOneUseCase);
 
   const response = await articleUpdateOneController.execute(req, res, next);

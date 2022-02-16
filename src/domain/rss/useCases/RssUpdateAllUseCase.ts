@@ -14,35 +14,9 @@ export class RssUpdateAllUseCase implements IRssUpdateAllUseCase {
   }
 
   public async execute(getRssRequest: IRssUpdateAllRequest): Promise<IRssUpdateAllResponse> {
-    const { feed, language } = getRssRequest;
+    const { feed, language, items } = getRssRequest;
 
-    const posts = [
-      {
-        title: 'Post One',
-        date: '1/1/2020',
-        slug: 'post-one',
-        content: 'This is some content for post one.',
-      },
-      {
-        title: 'Post Two',
-        date: '1/2/2020',
-        slug: 'post-two',
-        content: 'This is some content for post two.',
-      },
-      {
-        title: 'Post Three',
-        date: '1/3/2020',
-        slug: 'post-three',
-        content: 'This is some content for post three.',
-      },
-      {
-        title: 'Post Four',
-        date: '1/4/2020',
-        slug: 'post-four',
-        content: 'This is some content for post four.',
-      },
-    ];
-    const response = await this.rssRepo.rssUpdateAll({ feed, language, items: posts });
+    const response = await this.rssRepo.rssUpdateAll({ feed, language, items });
 
     return response;
   }
