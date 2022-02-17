@@ -55,6 +55,7 @@ export class LanguageRepo implements ILanguageRepo {
       notFound: null,
     },
   }) {
+    debugger;
     const mySQL = new MySQL();
 
     try {
@@ -70,12 +71,14 @@ export class LanguageRepo implements ILanguageRepo {
         when,
         whenSubtitle,
         where,
+        code,
+        email,
         post,
         serverError,
         control,
         notFound,
       } = glossary;
-      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
       const [[language]] = await mySQL.query(articleCreateQuery, [
         id,
         siteTitle,
@@ -89,6 +92,8 @@ export class LanguageRepo implements ILanguageRepo {
         when,
         whenSubtitle,
         where,
+        code,
+        email,
         post,
         serverError,
         control,
