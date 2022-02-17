@@ -1,17 +1,23 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { RssGetOneUseCase } from '@domain/rss/useCases/RssGetOneUseCase';
-import { RssGetOneController } from '@infrastructure/http/controllers/RssGetOneController';
-import { RssRepo } from '@infrastructure/persistence/fileSystem/repositories/rssRepo';
+import { ArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
+import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
+import { RssBlogGetAllUseCase } from '@domain/rss/useCases/RssBlogGetAllUseCase';
+import { RssBlogGetAllController } from '@infrastructure/http/controllers/RssBlogGetAllController';
+import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
+import { LanguageRepo } from '@infrastructure/persistence/mySQL/repositories/LanguageRepo';
 
 const RssRoute = express.Router({ mergeParams: true });
 
-RssRoute.get('/:feed', async (req: Request, res: Response, next: NextFunction) => {
-  const rssRepo = new RssRepo();
-  const rssGetOneUseCase = new RssGetOneUseCase(rssRepo);
-  const rssGetOneController = new RssGetOneController(rssGetOneUseCase);
+RssRoute.get('/blog', async (req: Request, res: Response, next: NextFunction) => {
+  const articleRepo = new ArticleRepo();
+  const languageRepo = new LanguageRepo();
+  const languageGetOneUseCase = new LanguageGetOneUseCase(languageRepo);
+  const articleGetAllUseCase = new ArticleGetAllUseCase(articleRepo);
+  const rssBlogGetOneUseCase = new RssBlogGetAllUseCase(articleGetAllUseCase, languageGetOneUseCase);
+  const rssBlogGetOneController = new RssBlogGetAllController(rssBlogGetOneUseCase);
 
-  const response = await rssGetOneController.execute(req, res, next);
+  const response = await rssBlogGetOneController.execute(req, res, next);
 
   return response;
 });

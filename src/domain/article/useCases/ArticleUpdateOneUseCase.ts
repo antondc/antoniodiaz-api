@@ -3,13 +3,9 @@ import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
 import { IArticleUpdateOneResponse } from '@domain/article/useCases/interfaces/IArticleUpdateOneResponse';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
-import { ILanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
-import { IRssUpdateAllUseCase } from '@domain/rss/useCases/RssUpdateAllUseCase';
-import { ENDPOINT_CLIENT } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
 import { RichContent } from '@shared/services/RichContent';
-import { IArticleGetAllUseCase } from './ArticleGetAllUseCase';
 import { IArticleGetOneUseCase } from './ArticleGetOneUseCase';
 
 export interface IArticleUpdateOneUseCase {
@@ -19,25 +15,16 @@ export interface IArticleUpdateOneUseCase {
 export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   private articleRepo: IArticleRepo;
   private fileRepo: IFileRepo;
-  private articleGetAllUseCase: IArticleGetAllUseCase;
   private articleGetOneUseCase: IArticleGetOneUseCase;
-  private rssUpdateAllUseCase: IRssUpdateAllUseCase;
-  private languageGetOneUseCase: ILanguageGetOneUseCase;
 
   constructor(
     articleRepo: IArticleRepo,
     fileRepo: IFileRepo,
-    articleGetAllUseCase: IArticleGetAllUseCase,
     articleGetOneUseCase: IArticleGetOneUseCase,
-    rssUpdateAllUseCase: IRssUpdateAllUseCase,
-    languageGetOneUseCase: ILanguageGetOneUseCase
   ) {
     this.articleRepo = articleRepo;
     this.fileRepo = fileRepo;
     this.articleGetOneUseCase = articleGetOneUseCase;
-    this.articleGetAllUseCase = articleGetAllUseCase;
-    this.rssUpdateAllUseCase = rssUpdateAllUseCase;
-    this.languageGetOneUseCase = languageGetOneUseCase;
   }
 
   public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
@@ -68,17 +55,6 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);
 
     const article = await this.articleGetOneUseCase.execute({ session, articleId, language });
-    const articles = await this.articleGetAllUseCase.execute({ session, language });
-    const articlesForRss = articles.articles.map((item) => ({
-      title: item.title,
-      date: new Date(item.createdAt).toDateString(),
-      slug: item.id.toString(),
-      content: item.contentHtml,
-      url: `${ENDPOINT_CLIENT}/${language}/when/${item.id}`,
-    }));
-    const languageRetrieved = await this.languageGetOneUseCase.execute({ slug: language });
-
-    await this.rssUpdateAllUseCase.execute({ feed: 'blog', language: languageRetrieved, items: articlesForRss });
 
     return article;
   }
