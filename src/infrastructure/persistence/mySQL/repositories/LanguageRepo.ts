@@ -36,6 +36,9 @@ export class LanguageRepo implements ILanguageRepo {
   public async languageGlossaryUpdateOne({
     id,
     glossary = {
+      siteTitle: null,
+      siteDescription: null,
+      author: null,
       who: null,
       whoContentJson: null,
       whoContentHtml: null,
@@ -44,6 +47,8 @@ export class LanguageRepo implements ILanguageRepo {
       when: null,
       whenSubtitle: null,
       where: null,
+      code: null,
+      email: null,
       post: null,
       serverError: null,
       control: null,
@@ -53,10 +58,29 @@ export class LanguageRepo implements ILanguageRepo {
     const mySQL = new MySQL();
 
     try {
-      const { who, whoContentJson, whoContentHtml, what, whatSubtitle, when, whenSubtitle, where, post, serverError, control, notFound } = glossary;
-      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+      const {
+        siteTitle,
+        siteDescription,
+        author,
+        who,
+        whoContentJson,
+        whoContentHtml,
+        what,
+        whatSubtitle,
+        when,
+        whenSubtitle,
+        where,
+        post,
+        serverError,
+        control,
+        notFound,
+      } = glossary;
+      const articleCreateQuery = 'CALL language_glossary_update_one(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
       const [[language]] = await mySQL.query(articleCreateQuery, [
         id,
+        siteTitle,
+        siteDescription,
+        author,
         who,
         JSON.stringify(whoContentJson),
         whoContentHtml,

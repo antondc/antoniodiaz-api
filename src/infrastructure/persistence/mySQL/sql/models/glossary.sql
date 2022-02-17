@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS glossary (
   `whenSubtitle`    VARCHAR(255) NULL DEFAULT NULL,
   `post`            VARCHAR(255) NULL DEFAULT NULL,
   `where`           VARCHAR(255) NULL DEFAULT NULL,
+  `code`            VARCHAR(255) NULL DEFAULT NULL,
+  `email`           VARCHAR(255) NULL DEFAULT NULL,
   `serverError`     VARCHAR(255) NULL DEFAULT NULL,
   `control`         VARCHAR(255) NULL DEFAULT NULL,
   `notFound`        VARCHAR(255) NULL DEFAULT NULL,
