@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS language_glossary_update_one;
 
-DELIMITER $$
+
 CREATE PROCEDURE language_glossary_update_one(
   IN $LANGUAGE_ID INT,
   IN $SITE_TITLE VARCHAR(255),
@@ -53,6 +53,4 @@ BEGIN
   WHERE glossary.id = $LANGUAGE_ID
   ;
 
-END $$
-
-DELIMITER ;
+END
