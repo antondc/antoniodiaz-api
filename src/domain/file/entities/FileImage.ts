@@ -50,13 +50,19 @@ export class FileImage extends File {
   };
 
   getImageProportions = async (path: string): Promise<number> => {
-    const image = await Jimp.read(path);
-    const height = image.bitmap.height;
-    const width = image.bitmap.width;
-    const ratio = height / width;
-    const roundedRatio = +ratio.toFixed(2); // https://stackoverflow.com/questions/11832914/how-to-round-to-at-most-2-decimal-places-if-necessary
+    try {
+      const image = await Jimp.read(path);
+      const height = image.bitmap.height;
+      const width = image.bitmap.width;
+      const ratio = height / width;
+      const roundedRatio = +ratio.toFixed(2); // https://stackoverflow.com/questions/11832914/how-to-round-to-at-most-2-decimal-places-if-necessary
 
-    return roundedRatio;
+      return roundedRatio;
+    } catch (error) {
+      console.log(error);
+
+      return null;
+    }
   };
 
   getFormattedImageUrls = ({ imageUrl, sizes = [] }: ImageUrlSplitBySizes): ImageUrlSplitBySizesReturn => {

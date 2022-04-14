@@ -53,36 +53,42 @@ export class FileRepo implements IFileRepo {
 
   // Save method for image alternative sizes
   private async imageSaveSizes(originPath, filename, formatOptions): Promise<void> {
-    if (!formatOptions?.sizes) return;
+    try {
+      if (!formatOptions?.sizes) return;
 
-    await formatOptions.sizes.forEach(async (item) => {
-      const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `${item.width}w`);
-      const destinationPathExists = fs.existsSync(destinationPath);
-      if (!destinationPathExists) mkdirp.sync(destinationPath);
+      await formatOptions.sizes.forEach(async (item) => {
+        const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `${item.width}w`);
+        const destinationPathExists = fs.existsSync(destinationPath);
+        if (!destinationPathExists) mkdirp.sync(destinationPath);
 
-      const finalPath = path.join(destinationPath, filename);
-      const finalPathExists = fs.existsSync(finalPath);
+        const finalPath = path.join(destinationPath, filename);
+        const finalPathExists = fs.existsSync(finalPath);
 
-      if (finalPathExists) return; // If file already exists, return
+        if (finalPathExists) return; // If file already exists, return
 
-      // Define mime type
-      let mime;
-      switch (formatOptions.extension) {
-        case 'png':
-          mime = Jimp.MIME_PNG;
-          break;
-        case 'jpg':
-        default:
-          mime = Jimp.MIME_JPEG;
-          break;
-      }
+        // Define mime type
+        let mime;
+        switch (formatOptions.extension) {
+          case 'png':
+            mime = Jimp.MIME_PNG;
+            break;
+          case 'jpg':
+          default:
+            mime = Jimp.MIME_JPEG;
+            break;
+        }
 
-      const image = await Jimp.read(originPath);
-      await image.scaleToFit(item.width, item.height);
-      await image.getBuffer(mime, (err, buff) => fs.writeFileSync(finalPath, buff));
-    });
+        const image = await Jimp.read(originPath);
+        await image.scaleToFit(item.width, item.height);
+        await image.getBuffer(mime, (err, buff) => fs.writeFileSync(finalPath, buff));
+      });
 
-    return;
+      return;
+    } catch (error) {
+      console.log(error);
+
+      return;
+    }
   }
 
   // Save method for any kind of file
