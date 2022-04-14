@@ -30,13 +30,19 @@ export class FileImage extends File {
   }
 
   async fileImageSaveOne(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
-    const ratio = await this.getImageProportions(imageSaveOneRequest.fileUrl);
-    const image = await this.fileRepo.fileImageSaveOne(imageSaveOneRequest);
+    try {
+      const ratio = await this.getImageProportions(imageSaveOneRequest.fileUrl);
+      const image = await this.fileRepo.fileImageSaveOne(imageSaveOneRequest);
 
-    return {
-      path: image.path,
-      ratio,
-    };
+      return {
+        path: image.path,
+        ratio,
+      };
+    } catch (error) {
+      console.log(error);
+
+      return null;
+    }
   }
 
   setImageColorProfile = (): void => {
