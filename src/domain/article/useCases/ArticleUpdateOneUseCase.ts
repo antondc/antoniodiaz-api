@@ -2,6 +2,7 @@ import { articleImageFormat } from '@domain/article/entities/Article';
 import { IArticleRepo } from '@domain/article/repositories/IArticleRepo';
 import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
 import { IArticleUpdateOneResponse } from '@domain/article/useCases/interfaces/IArticleUpdateOneResponse';
+import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { RequestError } from '@shared/errors/RequestError';
@@ -17,18 +18,14 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
   private fileRepo: IFileRepo;
   private articleGetOneUseCase: IArticleGetOneUseCase;
 
-  constructor(
-    articleRepo: IArticleRepo,
-    fileRepo: IFileRepo,
-    articleGetOneUseCase: IArticleGetOneUseCase,
-  ) {
+  constructor(articleRepo: IArticleRepo, fileRepo: IFileRepo, articleGetOneUseCase: IArticleGetOneUseCase) {
     this.articleRepo = articleRepo;
     this.fileRepo = fileRepo;
     this.articleGetOneUseCase = articleGetOneUseCase;
   }
 
   public async execute(articleUpdateOneRequest: IArticleUpdateOneRequest): Promise<IArticleUpdateOneResponse> {
-    const { session, articleId, language, title, contentJson, published } = articleUpdateOneRequest;
+    const { session, articleId, language, title, contentJson, published, ogImage } = articleUpdateOneRequest;
     if (!title) throw new RequestError('Unprocessable Entity', 422);
 
     const articleCoreData = await this.articleRepo.articleCoreGetOne({ articleId });
@@ -44,6 +41,9 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
     const richContent = new RichContent({ fileRepo: this.fileRepo, formatOptions });
     const { richContentJson, richContentHtml } = await richContent.processRichContent(contentJson);
 
+    const userImageEntity = new FileImage({ fileRepo: this.fileRepo });
+    const savedImage = await userImageEntity.fileImageSaveOne({ fileUrl: ogImage, formatOptions: articleImageFormat });
+
     const articleTranslationIdCreated = await this.articleRepo.articleUpdateOne({
       articleId,
       language,
@@ -51,6 +51,7 @@ export class ArticleUpdateOneUseCase implements IArticleUpdateOneUseCase {
       contentHtml: richContentHtml,
       contentJson: richContentJson,
       published,
+      ogImage: savedImage.path,
     });
     if (!articleTranslationIdCreated) throw new RequestError('Article creation failed', 409);
 

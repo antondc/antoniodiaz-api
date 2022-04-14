@@ -18,7 +18,7 @@ export class ArticleUpdateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { articleId, language = DEFAULT_LANGUAGE } = req.params;
-    const { title, contentJson, published } = req.body;
+    const { title, contentJson, published, ogImage } = req.body;
 
     const tokenJWT = new TokenJWT(SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
@@ -30,6 +30,7 @@ export class ArticleUpdateOneController extends BaseController {
       title,
       contentJson,
       published,
+      ogImage,
     };
 
     const response = await this.useCase.execute(articleUpdateRequest);

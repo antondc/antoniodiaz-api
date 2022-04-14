@@ -6,15 +6,17 @@ CREATE PROCEDURE article_update_one(
   IN $LANGUAGE      TEXT,
   IN $ARTICLE_ID    INT,
   IN $TITLE         TEXT,
+  IN $OG_IMAGE      TEXT,
   IN $CONTENT_JSON  JSON,
   IN $CONTENT_HTML  TEXT,
-  IN $PUBLISHED  TEXT
+  IN $PUBLISHED     TEXT
 )
 
 BEGIN
 
   INSERT INTO `article_translation` (
     `title`,
+    `og_image`,
     `content_json`,
     `content_html`,
     `article_id`,
@@ -25,6 +27,7 @@ BEGIN
   )
   SELECT
     $TITLE,
+    $OG_IMAGE,
     $CONTENT_JSON,
     $CONTENT_HTML,
     $ARTICLE_ID,
@@ -37,6 +40,7 @@ BEGIN
   ON DUPLICATE KEY UPDATE
     `article_translation`.`title`         = $TITLE,
     `article_translation`.`content_json`  = $CONTENT_JSON,
+    `article_translation`.`og_image`      = $OG_IMAGE,
     `article_translation`.`content_html`  = $CONTENT_HTML,
     `article_translation`.`article_id`    = $ARTICLE_ID,
     `article_translation`.`language_id`   = language.id,

@@ -18,7 +18,7 @@ export class ArticleCreateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { language = DEFAULT_LANGUAGE } = req.params;
-    const { title, contentJson } = req.body;
+    const { title, contentJson, ogImage } = req.body;
 
     const tokenJWT = new TokenJWT(SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
@@ -28,6 +28,7 @@ export class ArticleCreateOneController extends BaseController {
       session,
       title,
       contentJson,
+      ogImage,
     };
 
     const response = await this.useCase.execute(articleCreateRequest);

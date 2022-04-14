@@ -25,6 +25,7 @@ export class Article {
   id: number;
   order: number;
   title: string;
+  ogImage: string;
   contentJson: RichContentJson;
   contentHtml: string;
   published: string;
@@ -37,6 +38,7 @@ export class Article {
     this.id = articleData?.id;
     this.order = articleData?.order;
     this.title = articleData?.title;
+    this.ogImage = articleData?.ogImage;
     this.contentJson = articleData?.contentJson;
     this.contentHtml = articleData?.contentHtml;
     this.published = articleData?.published;

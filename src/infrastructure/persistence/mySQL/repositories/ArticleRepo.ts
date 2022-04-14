@@ -68,11 +68,11 @@ export class ArticleRepo implements IArticleRepo {
     }
   }
 
-  public async articleUpdateOne({ language, articleId = null, title, contentJson, contentHtml, published = null }) {
+  public async articleUpdateOne({ language, articleId = null, title, ogImage, contentJson, contentHtml, published = null }) {
     const mySQL = new MySQL();
     try {
-      const articleCreateQuery = 'CALL article_update_one(?, ?, ?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(articleCreateQuery, [language, articleId, title, JSON.stringify(contentJson), contentHtml, published]);
+      const articleCreateQuery = 'CALL article_update_one(?, ?, ?, ?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(articleCreateQuery, [language, articleId, title, ogImage, JSON.stringify(contentJson), contentHtml, published]);
 
       return results;
     } catch (err) {

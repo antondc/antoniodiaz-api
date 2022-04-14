@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS article_translation (
   `id`            INT(11) NOT NULL AUTO_INCREMENT,
   `title`         VARCHAR(255) NULL DEFAULT NULL,
+  `og_image`      TEXT NULL DEFAULT NULL,
   `content_json`  JSON NULL DEFAULT NULL,
   `content_html`  TEXT NULL DEFAULT NULL,
   `article_id`    INT(11) NOT NULL,

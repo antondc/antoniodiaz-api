@@ -7,4 +7,5 @@ export interface IArticleUpdateOneRequest {
   contentJson: RichContentJson;
   contentHtml: string;
   published: boolean;
+  ogImage: string;
 }

@@ -12,6 +12,7 @@ BEGIN
   SELECT
     article.id,
     article.order,
+    `article_translation`.og_image as ogImage,
     `article_translation`.title,
     `article_translation`.content_json as contentJson,
     `article_translation`.content_html as contentHtml,
