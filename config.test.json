@@ -24,7 +24,7 @@
   "staging": {
     "database": {
       "host": "127.0.0.1",
-      "database": "linking_stage",
+      "database": "antoniodiaz_local",
       "user": "w_9aIfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
