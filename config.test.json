@@ -24,12 +24,12 @@
   "staging": {
     "database": {
       "host": "127.0.0.1",
-      "database": "antoniodiaz_local",
-      "user": "w_9aIfE2XpoYz"
+      "database": "antoniodiaz_staging",
+      "user": "u_lK8jMrs"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.api-staging.antoniodiaz.me",
-    "PORT_SERVER_HTTP": 3006,
+    "PORT_SERVER_HTTP": 3009,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.staging.antoniodiaz.me",
     "ENDPOINT_CLIENTS": [
@@ -40,12 +40,12 @@
       "http://dev.antoniodiaz.me",
       "https://dev.antoniodiaz.me"
     ],
-    "LOGGING": true,
+    "LOGGING": false,
     "EMAIL_HOST": "",
     "EMAIL_PORT": 587,
     "EMAIL_USER": "hello@antoniodiaz.me",
-    "RESTORE_MODELS": false,
-    "RESTORE_DATA": false,
+    "RESTORE_MODELS": true,
+    "RESTORE_DATA": true,
     "RESTORE_PROCEDURES": true,
     "DEFAULT_LOCATION": "Frankfurt"
   },
