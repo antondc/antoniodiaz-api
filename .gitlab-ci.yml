@@ -35,7 +35,7 @@ build:
 deploy_staging:
   stage: deploy_staging
   only:
-    - master
+    - staging
   script:
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && rm -rf node_modules dist/* tmp"
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && git pull origin staging"
