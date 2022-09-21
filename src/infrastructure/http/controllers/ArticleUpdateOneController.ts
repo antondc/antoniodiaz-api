@@ -5,7 +5,7 @@ import { IArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdate
 import { IArticleUpdateOneRequest } from '@domain/article/useCases/interfaces/IArticleUpdateOneRequest';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ArticleUpdateOneController extends BaseController {
@@ -20,7 +20,7 @@ export class ArticleUpdateOneController extends BaseController {
     const { articleId, language = DEFAULT_LANGUAGE } = req.params;
     const { title, contentJson, published, ogImage } = req.body;
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const articleUpdateRequest: IArticleUpdateOneRequest = {

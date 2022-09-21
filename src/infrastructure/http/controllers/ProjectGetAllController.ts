@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { IProjectGetAllUseCase } from '@domain/project/useCases/ProjectGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE, DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_ARTICLE_GET_ALL_SORT = 'order';
@@ -33,7 +33,7 @@ export class ProjectGetAllController extends BaseController {
     const { language = DEFAULT_LANGUAGE } = req.params;
     const { sort = DEFAULT_ARTICLE_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ProjectGetAllControllerQueryType;
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort || undefined;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;

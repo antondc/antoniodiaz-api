@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { IStateResetContentUseCaseRequest } from '@domain/state/useCases/interfaces/IStateResetContentUseCaseRequest';
 import { IStateResetContentUseCase } from '@domain/state/useCases/StateResetContentUseCase';
 import { User } from '@domain/user/entities/User';
-import { SECRET } from '@shared/constants/env';
+import { SECRET_JWT } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class StateResetContentController extends BaseController {
@@ -16,7 +16,7 @@ export class StateResetContentController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
     const stateResetContentUseCaseRequest: IStateResetContentUseCaseRequest = {
       session,

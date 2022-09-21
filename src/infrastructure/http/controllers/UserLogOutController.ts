@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserLogoutRequest } from '@domain/user/useCases/interfaces/UserLogOutRequest';
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserLogOutController extends BaseController {
@@ -16,7 +16,7 @@ export class UserLogOutController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const userLogOutRequest: IUserLogoutRequest = {

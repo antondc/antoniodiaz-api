@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { IFileDeleteOneUseCase } from '@domain/file/useCases/FileDeleteOneUseCase';
 import { IFileDeleteOneRequest } from '@domain/file/useCases/interfaces/IFileDeleteOneRequest';
 import { User } from '@domain/user/entities/User';
-import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class FileDeleteOneController extends BaseController {
@@ -18,7 +18,7 @@ export class FileDeleteOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { path } = req.body;
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const fileDeleteOneRequest: IFileDeleteOneRequest = {

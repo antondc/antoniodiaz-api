@@ -5,7 +5,7 @@ import { IProjectSortOneRequest } from '@domain/project/useCases/interfaces/IPro
 import { IProjectSortOneUseCase } from '@domain/project/useCases/ProjectSortOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ProjectSortOneController extends BaseController {
@@ -21,7 +21,7 @@ export class ProjectSortOneController extends BaseController {
     const { projectId, language = DEFAULT_LANGUAGE } = req.params;
     const { order } = req.body;
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const projectSortOneRequest: IProjectSortOneRequest = {

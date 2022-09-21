@@ -5,7 +5,7 @@ import { IProjectDeleteOneRequest } from '@domain/project/useCases/interfaces/IP
 import { IProjectDeleteOneUseCase } from '@domain/project/useCases/ProjectDeleteOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ProjectDeleteOneController extends BaseController {
@@ -18,7 +18,7 @@ export class ProjectDeleteOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { projectId, language = DEFAULT_LANGUAGE } = req.params;
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const projectDeleteOneRequest: IProjectDeleteOneRequest = {

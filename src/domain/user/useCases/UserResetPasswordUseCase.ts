@@ -1,7 +1,7 @@
 import { PasswordHasher, TokenJWT } from '@antoniodcorrea/utils';
 
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { SECRET } from '@shared/constants/env';
+import { SECRET_JWT } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
 import { User } from '../entities/User';
@@ -26,7 +26,7 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
     if (!password || !passwordRepeated) throw new UserError('One of the passwords is missing', 409, 'password');
     if (password !== passwordRepeated) throw new UserError('Passwords are not equal', 409, 'password');
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const decodedToken = tokenJWT.decodeToken<{ name: string }>(token);
     if (decodedToken?.name !== name) throw new AuthenticationError('401 Unauthorized', 401);
 

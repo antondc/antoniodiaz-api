@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRequest';
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserLoginController extends BaseController {
@@ -23,7 +23,7 @@ export class UserLoginController extends BaseController {
     };
     const response = await this.useCase.execute(userLoginRequest);
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const sessionToken = tokenJWT.createToken(response);
 
     const formattedResponse = {

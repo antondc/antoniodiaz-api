@@ -12,6 +12,7 @@ before_script:
 stages:
   - install
   - build
+  # - deploy_staging
   - deploy_production
 
 cache:
@@ -31,12 +32,22 @@ build:
   script:
     - npm run build
 
+# deploy_staging:
+#   stage: deploy_staging
+#   only:
+#     - master
+#   script:
+#     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && rm -rf node_modules dist/* tmp"
+#     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && git pull origin staging"
+#     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH_STAGING} && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
+#     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && pm2 delete api-staging.antoniodiaz.me && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET_JWT=${SECRET_JWT} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.antoniodiaz.me --update-env"
+
 deploy_production:
   stage: deploy_production
   only:
     - master
   script:
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH} && rm -rf node_modules dist/* tmp"
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH} && git pull origin master"
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH} && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH} && pm2 delete api.antoniodiaz.me && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET=${SECRET} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.antoniodiaz.me --update-env"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && rm -rf node_modules dist/* tmp"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && git pull origin master"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH_PRODUCTION} && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && pm2 delete api.antoniodiaz.me && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET_JWT=${SECRET_JWT} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.antoniodiaz.me --update-env"

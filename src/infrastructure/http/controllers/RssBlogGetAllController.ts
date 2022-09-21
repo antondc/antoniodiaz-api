@@ -5,7 +5,7 @@ import { IRssBlogGetAllRequest } from '@domain/rss/useCases/interfaces/IRssBlogG
 import { IRssBlogGetAllUseCase } from '@domain/rss/useCases/RssBlogGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { SECRET } from '@shared/constants/env';
+import { SECRET_JWT } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class RssBlogGetAllController extends BaseController {
@@ -19,7 +19,7 @@ export class RssBlogGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { language = DEFAULT_LANGUAGE } = req.params;
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
 
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
     const rssBlogGetAllRequest: IRssBlogGetAllRequest = { session, language };

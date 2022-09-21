@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { ILanguageUpdateOneRequest } from '@domain/language/useCases/interfaces/ILanguageUpdateOneRequest';
 import { ILanguageUpdateOneUseCase } from '@domain/language/useCases/LanguageUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { PATH_API_V1, SECRET, URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class LanguageUpdateOneController extends BaseController {
@@ -19,7 +19,7 @@ export class LanguageUpdateOneController extends BaseController {
     const { slug } = req.params;
     const { glossary } = req.body;
 
-    const tokenJWT = new TokenJWT(SECRET);
+    const tokenJWT = new TokenJWT(SECRET_JWT);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const languageUpdateRequest: ILanguageUpdateOneRequest = {
