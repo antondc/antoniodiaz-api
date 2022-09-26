@@ -1,4 +1,4 @@
-INSERT INTO `tag` (`id`, `name`, `createdAt`, `updatedAt`)
+INSERT INTO `tag` (`id`, `text`, `createdAt`, `updatedAt`)
 VALUES (1, 'software', 1619457303, 1622234842),
   (2, 'technology', 1619457303, 1619457303),
   (3, 'web', 1619457303, 1621346807),

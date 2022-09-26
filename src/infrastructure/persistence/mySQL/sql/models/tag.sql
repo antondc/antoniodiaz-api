@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS `tag` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NULL DEFAULT NULL,
+  `text` VARCHAR(255) NULL DEFAULT NULL,
   `createdAt` int(11) DEFAULT NULL,
   `updatedAt` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name` (`name` ASC)
+  UNIQUE INDEX `text` (`text` ASC)
 );
