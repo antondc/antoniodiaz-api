@@ -13,8 +13,10 @@ export class StateRepo {
   // Models
   private language: string;
   private glossary: string;
+  private tag: string;
   private article: string;
   private articleTranslation: string;
+  private articleTag: string;
   private project: string;
   private projectTranslation: string;
   private user: string;
@@ -58,6 +60,7 @@ export class StateRepo {
   private glossaryData: string;
   private userData: string;
   private userLoginData: string;
+  private tagData: string;
 
   constructor() {
     // Operational tables
@@ -69,8 +72,10 @@ export class StateRepo {
     this.glossary = fs.readFileSync(path.resolve(__dirname, '../sql/models/glossary.sql')).toString();
     this.user = fs.readFileSync(path.resolve(__dirname, '../sql/models/user.sql')).toString();
     this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
+    this.tag = fs.readFileSync(path.resolve(__dirname, '../sql/models/tag.sql')).toString();
     this.article = fs.readFileSync(path.resolve(__dirname, '../sql/models/article.sql')).toString();
     this.articleTranslation = fs.readFileSync(path.resolve(__dirname, '../sql/models/article_translation.sql')).toString();
+    this.articleTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/article_tag.sql')).toString();
     this.project = fs.readFileSync(path.resolve(__dirname, '../sql/models/project.sql')).toString();
     this.projectTranslation = fs.readFileSync(path.resolve(__dirname, '../sql/models/project_translation.sql')).toString();
 
@@ -112,6 +117,7 @@ export class StateRepo {
     this.glossaryData = fs.readFileSync(path.resolve(__dirname, '../sql/data/glossary.sql')).toString();
     this.userData = fs.readFileSync(path.resolve(__dirname, '../sql/data/user.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
+    this.tagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/tag.sql')).toString();
   }
 
   public async resetContent() {
@@ -129,8 +135,10 @@ export class StateRepo {
         ...(!!RESTORE_MODELS && (await mySQL.query(this.glossary))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.user))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.userLogins))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.tag))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.article))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.articleTranslation))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.articleTag))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.project))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.projectTranslation))),
 
@@ -172,6 +180,7 @@ export class StateRepo {
         ...(!!RESTORE_DATA && (await mySQL.query(this.glossaryData))), // As languages are isolated we can modify them without affecting the rest of the DB
         ...(!!RESTORE_DATA && (await mySQL.query(this.userData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userLoginData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.tagData))),
       };
     } catch (err) {
       mySQL.rollback();

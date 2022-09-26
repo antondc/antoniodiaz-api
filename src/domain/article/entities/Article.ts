@@ -31,6 +31,10 @@ export class Article {
   published: string;
   userId: string;
   language: string;
+  tags: Array<{
+    id: number;
+    text: string;
+  }>;
   createdAt: Date;
   updatedAt: Date;
 
@@ -44,6 +48,7 @@ export class Article {
     this.published = articleData?.published;
     this.userId = articleData?.userId;
     this.language = articleData?.language;
+    this.tags = articleData?.tags;
     this.createdAt = articleData?.createdAt;
     this.updatedAt = articleData?.updatedAt;
   }
