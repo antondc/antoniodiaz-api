@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
+import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_USER_GET_ALL_SORT = '-createdAt';
@@ -32,7 +32,7 @@ export class UserGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {}, filter: { name } = {} } = req.query as UserGetAllControllerQueryType;
 
-    const tokenJWT = new TokenJWT(SECRET_JWT);
+    const tokenJWT = new TokenJWT(JWT_SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort || undefined;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;

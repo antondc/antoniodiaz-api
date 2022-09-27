@@ -3,7 +3,7 @@ import { PasswordHasher, TokenJWT, validateEmailAddress } from '@antoniodcorrea/
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, SECRET_JWT } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, JWT_SECRET } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
 
@@ -33,7 +33,7 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const userAlreadyExists = await this.userRepo.userGetOne({ name, email });
     if (!!userAlreadyExists) throw new UserError('User already exist', 409, 'name');
 
-    const tokenJWT = new TokenJWT(SECRET_JWT);
+    const tokenJWT = new TokenJWT(JWT_SECRET);
     const token = tokenJWT.createToken({ name });
 
     const passwordHasher = new PasswordHasher();

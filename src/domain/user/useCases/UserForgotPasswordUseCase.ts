@@ -1,7 +1,7 @@
 import { TokenJWT } from '@antoniodcorrea/utils';
 
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, SECRET_JWT } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, JWT_SECRET } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
@@ -25,7 +25,7 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     const user = await this.userRepo.userGetOne({ name: nameOrEmail, email: nameOrEmail });
     if (!user) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
 
-    const tokenJWT = new TokenJWT(SECRET_JWT);
+    const tokenJWT = new TokenJWT(JWT_SECRET);
     const token = tokenJWT.createToken({ name: user?.name });
 
     const userUpdated = await this.userRepo.userForgotPassword({ userId: user?.id, token });

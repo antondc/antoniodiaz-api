@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserUpdateOneRequest } from '@domain/user/useCases/interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
-import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
+import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserUpdateOneController extends BaseController {
@@ -18,7 +18,7 @@ export class UserUpdateOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { name, email, statement, location, image } = req.body;
 
-    const tokenJWT = new TokenJWT(SECRET_JWT);
+    const tokenJWT = new TokenJWT(JWT_SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const userUpdateRequest: IUserUpdateOneRequest = {

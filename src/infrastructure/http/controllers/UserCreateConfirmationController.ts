@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationUseCase } from '@domain/user/useCases/UserCreateConfirmationUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserCreateConfirmationController extends BaseController {
@@ -40,7 +40,7 @@ export class UserCreateConfirmationController extends BaseController {
       included: [],
     };
 
-    const tokenJWT = new TokenJWT(SECRET_JWT);
+    const tokenJWT = new TokenJWT(JWT_SECRET);
     const sessionToken = tokenJWT.createToken(response);
 
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin)); // Identify the client

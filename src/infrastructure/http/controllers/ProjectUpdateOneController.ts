@@ -5,7 +5,7 @@ import { IProjectUpdateOneRequest } from '@domain/project/useCases/interfaces/IP
 import { IProjectUpdateOneUseCase } from '@domain/project/useCases/ProjectUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { PATH_API_V1, SECRET_JWT, URL_SERVER } from '@shared/constants/env';
+import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ProjectUpdateOneController extends BaseController {
@@ -20,7 +20,7 @@ export class ProjectUpdateOneController extends BaseController {
     const { projectId, language = DEFAULT_LANGUAGE } = req.params;
     const { title, contentJson, published, carousel, files } = req.body;
 
-    const tokenJWT = new TokenJWT(SECRET_JWT);
+    const tokenJWT = new TokenJWT(JWT_SECRET);
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
 
     const projectUpdateRequest: IProjectUpdateOneRequest = {

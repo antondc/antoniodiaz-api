@@ -6,7 +6,7 @@ API REST service written in Node and TypeScript for www.antoniodiaz.me.
 
 ### Create .env file with environment variables
 
-    SECRET_JWT=xxxx
+    JWT_SECRET=xxxx
     DATABASE_PASSWORD=xxxx
     EMAIL_PASSWORD=xxxx
     NODE_TLS_REJECT_UNAUTHORIZED=0
