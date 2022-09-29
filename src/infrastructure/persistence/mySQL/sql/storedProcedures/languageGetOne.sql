@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS language_get_one;
 
-DELIMITER $$
+-- DELIMITER $$
 
 CREATE PROCEDURE language_get_one(
   IN $SLUG VARCHAR(4)
@@ -38,8 +38,8 @@ BEGIN
   INNER JOIN glossary ON language.id = glossary.id
   WHERE language.slug = $SLUG;
 
-END $$
+END
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- CALL proje

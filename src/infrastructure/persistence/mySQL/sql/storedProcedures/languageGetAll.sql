@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS language_get_all;
 
-DELIMITER $$
+-- DELIMITER $$
 
 CREATE PROCEDURE language_get_all()
 
@@ -35,8 +35,8 @@ BEGIN
   FROM language
   INNER JOIN glossary ON language.id = glossary.id;
 
-END $$
+END
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- CALL proje
