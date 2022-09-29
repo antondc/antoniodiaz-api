@@ -25,7 +25,7 @@ XmlRoute.get('/rss', async (req: Request, res: Response, next: NextFunction) => 
   return response;
 });
 
-XmlRoute.get('/sitemap.xml', async (req: Request, res: Response, next: NextFunction) => {
+XmlRoute.get('/sitemap', async (req: Request, res: Response, next: NextFunction) => {
   const articleRepo = new ArticleRepo();
   const languageRepo = new LanguageRepo();
   const languageGetAllUseCase = new LanguageGetAllUseCase(languageRepo);
