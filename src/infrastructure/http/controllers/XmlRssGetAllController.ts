@@ -1,17 +1,17 @@
 import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
-import { IRssBlogGetAllRequest } from '@domain/rss/useCases/interfaces/IRssBlogGetAllRequest';
-import { IRssBlogGetAllUseCase } from '@domain/rss/useCases/RssBlogGetAllUseCase';
 import { User } from '@domain/user/entities/User';
+import { IXmlRssGetAllRequest } from '@domain/xml/useCases/interfaces/IXmlRssGetAllRequest';
+import { IXmlRssGetAllUseCase } from '@domain/xml/useCases/XmlRssGetAllUseCase';
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
 import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class RssBlogGetAllController extends BaseController {
-  useCase: IRssBlogGetAllUseCase;
+export class XmlRssGetAllController extends BaseController {
+  useCase: IXmlRssGetAllUseCase;
 
-  constructor(useCase: IRssBlogGetAllUseCase) {
+  constructor(useCase: IXmlRssGetAllUseCase) {
     super();
 
     this.useCase = useCase;
@@ -22,7 +22,7 @@ export class RssBlogGetAllController extends BaseController {
     const tokenJWT = new TokenJWT(JWT_SECRET);
 
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);
-    const rssBlogGetAllRequest: IRssBlogGetAllRequest = { session, language };
+    const rssBlogGetAllRequest: IXmlRssGetAllRequest = { session, language };
 
     const response = await this.useCase.execute(rssBlogGetAllRequest);
 

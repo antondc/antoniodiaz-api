@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS language_get_one;
 
+DELIMITER $$
+
 CREATE PROCEDURE language_get_one(
   IN $SLUG VARCHAR(4)
 )
@@ -12,6 +14,7 @@ BEGIN
     language.name,
     language.isDefault,
     language.slug,
+    language.updatedAt,
     JSON_OBJECT(
       'siteTitle', glossary.siteTitle,
       'siteDescription', glossary.siteDescription,
@@ -35,4 +38,8 @@ BEGIN
   INNER JOIN glossary ON language.id = glossary.id
   WHERE language.slug = $SLUG;
 
-END
+END $$
+
+DELIMITER ;
+
+-- CALL proje

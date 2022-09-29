@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export type IRssBlogGetAllRequest = {
+export type IXmlSitemapGetAllRequest = {
   session: User;
   language: string;
 };

@@ -27,6 +27,7 @@ export class Language {
   isDefault: boolean;
   loading?: boolean;
   glossary: Glossary;
+  updatedAt: Glossary;
 
   constructor(options) {
     this.id = options.id;
@@ -34,6 +35,7 @@ export class Language {
     this.name = options.name;
     this.isDefault = options.isDefault;
     this.loading = options.loading;
+    this.updatedAt = options.updatedAt;
 
     const richContent = new RichContent();
     const { richContentJson, richContentHtml } = richContent.generateHtml(options.glossary?.whoContentJson);

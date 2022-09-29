@@ -1,16 +1,16 @@
 import { IArticleGetAllUseCase } from '@domain/article/useCases/ArticleGetAllUseCase';
 import { ILanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
-import { IRssBlogGetAllRequest } from '@domain/rss/useCases/interfaces/IRssBlogGetAllRequest';
-import { IRssBlogGetAllResponse } from '@domain/rss/useCases/interfaces/IRssBlogGetAllResponse';
+import { IXmlRssGetAllRequest } from '@domain/xml/useCases/interfaces/IXmlRssGetAllRequest';
+import { IXmlRssGetAllResponse } from '@domain/xml/useCases/interfaces/IXmlRssGetAllResponse';
 import { ENDPOINT_CLIENT } from '@shared/constants/env';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import RssService from '@shared/services/RssService';
+import XmlRssService from '@shared/services/XmlRssService';
 
-export interface IRssBlogGetAllUseCase {
-  execute: (getRssRequest: IRssBlogGetAllRequest) => Promise<IRssBlogGetAllResponse>;
+export interface IXmlRssGetAllUseCase {
+  execute: (getRssRequest: IXmlRssGetAllRequest) => Promise<IXmlRssGetAllResponse>;
 }
 
-export class RssBlogGetAllUseCase implements IRssBlogGetAllUseCase {
+export class XmlRssGetAllUseCase implements IXmlRssGetAllUseCase {
   private articleGetAllUseCase: IArticleGetAllUseCase;
   private languageGetOneUseCase: ILanguageGetOneUseCase;
 
@@ -19,7 +19,7 @@ export class RssBlogGetAllUseCase implements IRssBlogGetAllUseCase {
     this.languageGetOneUseCase = languageGetOneUseCase;
   }
 
-  public async execute(getRssRequest: IRssBlogGetAllRequest): Promise<IRssBlogGetAllResponse> {
+  public async execute(getRssRequest: IXmlRssGetAllRequest): Promise<IXmlRssGetAllResponse> {
     const { session, language } = getRssRequest;
     const articles = await this.articleGetAllUseCase.execute({ session, language });
 
@@ -32,8 +32,8 @@ export class RssBlogGetAllUseCase implements IRssBlogGetAllUseCase {
       content: item.contentHtml,
       url: `${ENDPOINT_CLIENT}/${language}/when/${item.id}`,
     }));
-    const feedUrl = `${URL_SERVER}${PATH_API_V1}/${languageRetrieved.slug}/rss/blog`;
-    const rssService = new RssService();
+    const feedUrl = `${URL_SERVER}${PATH_API_V1}/${languageRetrieved.slug}/xml/rss`;
+    const rssService = new XmlRssService();
     const rssFeed = rssService.createFeed({ items: articlesForRss, language: languageRetrieved, feedUrl });
 
     return rssFeed;

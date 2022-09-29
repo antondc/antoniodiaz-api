@@ -15,7 +15,7 @@ interface IFromObjectToRss {
   }[];
 }
 
-class RssService {
+class XmlRssService {
   createFeed(fromObjectToRss: IFromObjectToRss): string {
     const itemsSortedBNyDate = fromObjectToRss.items.sort((first, second) => new Date(second.date).getTime() - new Date(first.date).getTime());
 
@@ -63,4 +63,4 @@ class RssService {
   }
 }
 
-export default RssService;
+export default XmlRssService;
