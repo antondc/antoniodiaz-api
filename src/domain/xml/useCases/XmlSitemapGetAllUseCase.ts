@@ -62,14 +62,14 @@ export class XmlSitemapGetAllUseCase implements IXmlSitemapGetAllUseCase {
     const articlesForSitemapNested = articles.articles.map((item) => {
       const articlesWithSlugs = slugs.map((slug) => {
         return {
-          url: `${ENDPOINT_CLIENT}/${slug}/when/${item.id}`,
+          url: `${ENDPOINT_CLIENT}/${slug}/blog/${item.id}`,
           date: item.updatedAt,
           changeFreq: 'weekly',
           priority: 0.5,
         };
       });
       const articleWithoutSlug = {
-        url: `${ENDPOINT_CLIENT}/when/${item.id}`,
+        url: `${ENDPOINT_CLIENT}/blog/${item.id}`,
         date: item.updatedAt,
         changeFreq: 'weekly',
         priority: 0.5,
