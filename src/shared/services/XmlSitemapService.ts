@@ -19,7 +19,7 @@ class XmlSitemapService {
           loc: item.url,
         },
         { lastmod: new Date(Number(item.date) * 1000).toISOString() },
-        { changeFreq: item.changeFreq },
+        { changefreq: item.changeFreq },
         { priority: item.priority },
       ],
     }));
