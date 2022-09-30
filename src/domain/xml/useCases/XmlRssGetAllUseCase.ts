@@ -30,7 +30,7 @@ export class XmlRssGetAllUseCase implements IXmlRssGetAllUseCase {
       date: new Date(item.createdAt).toDateString(),
       slug: item.id.toString(),
       content: item.contentHtml,
-      url: `${ENDPOINT_CLIENT}/${language}/when/${item.id}`,
+      url: `${ENDPOINT_CLIENT}/${language}/blog/${item.id}`,
     }));
     const feedUrl = `${URL_SERVER}${PATH_API_V1}/${languageRetrieved.slug}/xml/rss`;
     const rssService = new XmlRssService();
