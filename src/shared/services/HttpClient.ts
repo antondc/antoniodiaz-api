@@ -2,6 +2,14 @@ import { QueryStringWrapper } from '@antoniodcorrea/utils';
 import axios, { AxiosInstance } from 'axios';
 import https from 'https';
 
+type ResponseError = {
+  response: {
+    data: {
+      error: Error;
+    };
+  };
+};
+
 interface Options {
   timeout?: number;
   credentials?: boolean;
@@ -34,7 +42,13 @@ export class HttpClient {
 
         return response.data;
       },
-      (err) => Promise.reject(err)
+      (error: ResponseError) => {
+        const errorContent = error?.response?.data?.error;
+
+        // Returns the data body contained by the response error object instead of the custom native error retrieved by the Error code
+        // Requires backend returning ResponseError object
+        return Promise.reject(errorContent);
+      }
     );
 
     HttpClient.staticInstance = axiosInstance;
@@ -50,4 +64,5 @@ export class HttpClient {
   private paramsSerializer = (params) => QueryStringWrapper.stringifyQueryParams(params);
 }
 
+// Export singleton
 export default HttpClient.getInstance();
