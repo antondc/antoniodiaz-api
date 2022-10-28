@@ -6,7 +6,7 @@ import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneU
 import { XmlRssGetAllUseCase } from '@domain/xml/useCases/XmlRssGetAllUseCase';
 import { XmlSitemapGetAllUseCase } from '@domain/xml/useCases/XmlSitemapGetAllUseCase';
 import { XmlRssGetAllController } from '@infrastructure/http/controllers/XmlRssGetAllController';
-import { XmlSitemapGetAllController } from '@infrastructure/http/controllers/XmlSitemapGetAllController copy';
+import { XmlSitemapGetAllController } from '@infrastructure/http/controllers/XmlSitemapGetAllController';
 import { ArticleRepo } from '@infrastructure/persistence/mySQL/repositories/ArticleRepo';
 import { LanguageRepo } from '@infrastructure/persistence/mySQL/repositories/LanguageRepo';
 
