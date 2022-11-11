@@ -7,7 +7,7 @@ import { DEFAULT_LANGUAGE, DEFAULT_PAGE_SIZE } from '@shared/constants/constants
 import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-const DEFAULT_ARTICLE_GET_ALL_SORT = 'order';
+const DEFAULT_ARTICLE_GET_ALL_SORT = '-createdAt';
 
 type ArticleGetAllControllerQueryType = {
   sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
