@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IXmlRssGetAllRequest } from '@domain/xml/useCases/interfaces/IXmlRssGetAllRequest';
 import { IXmlRssGetAllUseCase } from '@domain/xml/useCases/XmlRssGetAllUseCase';
-import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
+import { DEFAULT_LANGUAGE_SLUG } from '@shared/constants/constants';
 import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -18,7 +18,7 @@ export class XmlRssGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { language = DEFAULT_LANGUAGE } = req.params;
+    const { language = DEFAULT_LANGUAGE_SLUG } = req.params;
     const tokenJWT = new TokenJWT(JWT_SECRET);
 
     const session = tokenJWT.decodeToken<User>(req.cookies.sessionToken);

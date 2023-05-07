@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import { IProjectGetAllUseCase } from '@domain/project/useCases/ProjectGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { DEFAULT_LANGUAGE, DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
+import { DEFAULT_LANGUAGE_SLUG, DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -30,7 +30,7 @@ export class ProjectGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { language = DEFAULT_LANGUAGE } = req.params;
+    const { language = DEFAULT_LANGUAGE_SLUG } = req.params;
     const { sort = DEFAULT_ARTICLE_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ProjectGetAllControllerQueryType;
 
     const tokenJWT = new TokenJWT(JWT_SECRET);

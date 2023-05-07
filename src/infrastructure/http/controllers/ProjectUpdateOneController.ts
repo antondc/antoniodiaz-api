@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { IProjectUpdateOneRequest } from '@domain/project/useCases/interfaces/IProjectUpdateOneRequest';
 import { IProjectUpdateOneUseCase } from '@domain/project/useCases/ProjectUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
+import { DEFAULT_LANGUAGE_SLUG } from '@shared/constants/constants';
 import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -17,7 +17,7 @@ export class ProjectUpdateOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { projectId, language = DEFAULT_LANGUAGE } = req.params;
+    const { projectId, language = DEFAULT_LANGUAGE_SLUG } = req.params;
     const { title, contentJson, published, carousel, files } = req.body;
 
     const tokenJWT = new TokenJWT(JWT_SECRET);

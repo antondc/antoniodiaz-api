@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { IProjectCreateOneRequest } from '@domain/project/useCases/interfaces/IProjectCreateOneRequest';
 import { IProjectCreateOneUseCase } from '@domain/project/useCases/ProjectCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
+import { DEFAULT_LANGUAGE_SLUG } from '@shared/constants/constants';
 import { JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -17,7 +17,7 @@ export class ProjectCreateOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { language = DEFAULT_LANGUAGE } = req.params;
+    const { language = DEFAULT_LANGUAGE_SLUG } = req.params;
     const { title, carousel, contentJson } = req.body;
 
     const tokenJWT = new TokenJWT(JWT_SECRET);
