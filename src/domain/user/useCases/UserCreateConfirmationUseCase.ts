@@ -1,4 +1,4 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';

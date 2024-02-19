@@ -1,4 +1,4 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { Request, Response } from 'express';
 
 import { IArticleUpdateOneUseCase } from '@domain/article/useCases/ArticleUpdateOneUseCase';

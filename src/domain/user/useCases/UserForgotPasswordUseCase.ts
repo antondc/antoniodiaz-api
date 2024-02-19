@@ -1,4 +1,4 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS, JWT_SECRET } from '@shared/constants/env';

@@ -1,4 +1,4 @@
-import { PasswordHasher } from '@antoniodcorrea/utils';
+import { PasswordHasher } from '@antoniodcorrea/utils-backend';
 
 import { User } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';

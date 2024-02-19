@@ -1,4 +1,4 @@
-import { PasswordHasher, TokenJWT } from '@antoniodcorrea/utils';
+import { PasswordHasher, TokenJWT } from '@antoniodcorrea/utils-backend';
 
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { JWT_SECRET } from '@shared/constants/env';

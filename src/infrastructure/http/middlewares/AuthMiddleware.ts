@@ -1,4 +1,4 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';

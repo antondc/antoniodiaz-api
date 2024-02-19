@@ -1,4 +1,4 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { Request, Response } from 'express';
 
 import { IFileDeleteOneUseCase } from '@domain/file/useCases/FileDeleteOneUseCase';
