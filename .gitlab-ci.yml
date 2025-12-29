@@ -24,7 +24,6 @@ before_script:
   # Disable strict host key checking
   - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
-
 stages:
   - github_clone
   - install
@@ -41,7 +40,6 @@ github_clone:
   variables:
     GIT_DEPTH: "0"
   script:
-    - git fetch --all --tags
     - git checkout -B "$CI_COMMIT_REF_NAME"
     - git remote remove github || true
     - git remote add github "git@github.com:${GITHUB_ACCOUNT}/${GITHUB_PROJECT}.git"
