@@ -1,25 +1,29 @@
 image: node:latest
 
 before_script:
-  - apt-get update -qq && apt-get install -qq openssh-client
-  - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-  - echo "$GITHUB_KEY" | base64 -d > ~/.ssh/github.key
-  - echo "$SERVER_KEY" | base64 -d > ~/.ssh/server.key
-  - chmod 600 ~/.ssh/*.key
-  - |
-    cat > ~/.ssh/config <<EOF
-    Host github.com
-      User git
-      IdentityFile ~/.ssh/github.key
-      IdentitiesOnly yes
-      StrictHostKeyChecking no
+  - apt-get update -qq
+  - apt-get install -qq git openssh-client
 
-    Host ${SERVER_ADDRESS}
-      IdentityFile ~/.ssh/server.key
-      IdentitiesOnly yes
-      StrictHostKeyChecking no
-    EOF
-  - chmod 600 ~/.ssh/config
+  # Create SSH directory
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+  # Start ssh-agent ONCE
+  - eval $(ssh-agent -s)
+
+  # Add SERVER_KEY (base64)
+  - echo "$SERVER_KEY" | base64 -d > ~/.ssh/id_rsa_server
+  - chmod 600 ~/.ssh/id_rsa_server
+  - ssh-add ~/.ssh/id_rsa_server
+
+  # Add GitHub deploy key (base64)
+  - echo "$GITHUB_KEY" | base64 -d > ~/.ssh/id_rsa_github
+  - chmod 600 ~/.ssh/id_rsa_github
+  - ssh-add ~/.ssh/id_rsa_github
+
+  # Disable strict host key checking
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
 
 stages:
   - github_clone
