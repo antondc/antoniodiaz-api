@@ -13,8 +13,8 @@ before_script:
       IdentityFile ~/.ssh/github.key
       IdentitiesOnly yes
       StrictHostKeyChecking no
+
     Host ${SERVER_ADDRESS}
-      User ${SERVER_USER}
       IdentityFile ~/.ssh/server.key
       IdentitiesOnly yes
       StrictHostKeyChecking no
