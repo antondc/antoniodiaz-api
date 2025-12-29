@@ -12,14 +12,11 @@ before_script:
       User git
       IdentityFile ~/.ssh/github.key
       IdentitiesOnly yes
-      StrictHostKeyChecking no
-
     Host ${SERVER_ADDRESS}
-      User ${SERVER_USER}
       IdentityFile ~/.ssh/server.key
       IdentitiesOnly yes
-      StrictHostKeyChecking no
     EOF
+  - chmod 600 ~/.ssh/config
   - chmod 600 ~/.ssh/config
 
 stages:
