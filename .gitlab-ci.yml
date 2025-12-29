@@ -28,7 +28,6 @@ stages:
   - github_clone
   - install
   - build
-  - deploy_staging
   - deploy_production
 
 cache:
@@ -59,37 +58,6 @@ build:
   script:
     - npm run build
 
-deploy_staging:
-  stage: deploy_staging
-  only:
-    - staging
-  script:
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && rm -rf node_modules dist/* tmp
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && git pull origin staging
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        source ~/.bash_profile
-        && export NPM_TOKEN=${NPM_TOKEN}
-        && cd ${SERVER_PATH_STAGING}
-        && nvm use --delete-prefix
-        && git checkout staging
-        && npm ci --verbose
-        && npm run build
-        && npm run copy:sql
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && pm2 delete api-staging.antoniodiaz.me
-        && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
-        && export DATABASE_PASSWORD=${DATABASE_PASSWORD_STAGING}
-        && export JWT_SECRET=${JWT_SECRET}
-        && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.antoniodiaz.me --update-env
-      "
 
 deploy_production:
   stage: deploy_production
@@ -118,6 +86,8 @@ deploy_production:
         cd ${SERVER_PATH_PRODUCTION}
         && pm2 delete api.antoniodiaz.me
         && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
+        && export DATABASE_USER=${DATABASE_USER_PRODUCTION}
+        && export DATABASE_NAME=${DATABASE_NAME_PRODUCTION}
         && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION}
         && export JWT_SECRET=${JWT_SECRET}
         && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.antoniodiaz.me --update-env

@@ -6,6 +6,8 @@ export const PRODUCTION = ENVIRONMENT === 'production';
 export const STAGING = ENVIRONMENT === 'staging';
 export const DOMAIN = config[process.env.NODE_ENV].HOST_SERVER;
 export const DATABASE_SETTINGS = config[process.env.NODE_ENV].database;
+export const DATABASE_USER = process.env.DATABASE_USER;
+export const DATABASE_NAME = process.env.DATABASE_NAME;
 export const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 export const PROTOCOL_SERVER = config[process.env.NODE_ENV].PROTOCOL_SERVER;
 export const HOST_SERVER = config[process.env.NODE_ENV].HOST_SERVER;

@@ -2,8 +2,6 @@
   "development": {
     "database": {
       "host": "127.0.0.1",
-      "database": "antoniodiaz_local",
-      "user": "mx_76yKr2L81z",
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
@@ -21,39 +19,9 @@
     "RESTORE_PROCEDURES": true,
     "DEFAULT_LOCATION": "Madrid"
   },
-  "staging": {
-    "database": {
-      "host": "127.0.0.1",
-      "database": "antoniodiaz_staging",
-      "user": "u_lK8jMrs"
-    },
-    "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "www.api-staging.antoniodiaz.me",
-    "PORT_SERVER_HTTP": 3009,
-    "PORT_SERVER_HTTPS": 0,
-    "ENDPOINT_CLIENT": "https://www.staging.antoniodiaz.me",
-    "ENDPOINT_CLIENTS": [
-      "https://staging.antoniodiaz.me",
-      "https://www.staging.antoniodiaz.me",
-      "http://0.0.0.0:4000",
-      "http://dev.antoniodiaz.me:4000",
-      "http://dev.antoniodiaz.me",
-      "https://dev.antoniodiaz.me"
-    ],
-    "LOGGING": false,
-    "EMAIL_HOST": "",
-    "EMAIL_PORT": 587,
-    "EMAIL_USER": "hello@antoniodiaz.me",
-    "RESTORE_MODELS": true,
-    "RESTORE_DATA": true,
-    "RESTORE_PROCEDURES": true,
-    "DEFAULT_LOCATION": "Frankfurt"
-  },
   "production": {
     "database": {
-      "host": "127.0.0.1",
-      "database": "antoniodiaz_production",
-      "user": "s_yKrbajobIYhs"
+      "host": "127.0.0.1"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.api.antoniodiaz.me",
