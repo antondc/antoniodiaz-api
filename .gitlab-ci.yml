@@ -83,7 +83,10 @@ deploy_production:
         && npm run copy:sql
       "
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
+        source ~/.bash_profile
+        && export NPM_TOKEN=${NPM_TOKEN}
+        && cd ${SERVER_PATH_PRODUCTION}
+        && nvm use --delete-prefix
         && pm2 delete api.antoniodiaz.me
         && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
         && export DATABASE_USER=${DATABASE_USER_PRODUCTION}
