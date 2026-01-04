@@ -29,6 +29,7 @@ stages:
   - install
   - build
   - deploy_production
+  - deploy_production_container
 
 cache:
   paths:
@@ -65,17 +66,17 @@ deploy_production:
     - master
   script:
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
+        cd ${SERVER_PROJECT_PATH}/${SERVER_SOURCE_CODE_FOLDER}
         && rm -rf node_modules dist/* tmp
       "
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
+        cd ${SERVER_PROJECT_PATH}/${SERVER_SOURCE_CODE_FOLDER}
         && git pull origin master
       "
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
         source ~/.bash_profile
         && export NPM_TOKEN=${NPM_TOKEN}
-        && cd ${SERVER_PATH_PRODUCTION}
+        && cd ${SERVER_PROJECT_PATH}/${SERVER_SOURCE_CODE_FOLDER}
         && nvm use --delete-prefix
         && git checkout master
         && npm ci --verbose
@@ -85,7 +86,7 @@ deploy_production:
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
         source ~/.bash_profile
         && export NPM_TOKEN=${NPM_TOKEN}
-        && cd ${SERVER_PATH_PRODUCTION}
+        && cd ${SERVER_PROJECT_PATH}/${SERVER_SOURCE_CODE_FOLDER}
         && nvm use --delete-prefix
         && pm2 delete api.antoniodiaz.me
         && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
@@ -94,4 +95,32 @@ deploy_production:
         && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION}
         && export JWT_SECRET=${JWT_SECRET}
         && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.antoniodiaz.me --update-env
+      "
+
+
+deploy_production_container:
+  stage: deploy_production_container
+  only:
+    - master
+  script:
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
+      cd ${SERVER_PROJECT_PATH}/${SERVER_SOURCE_CODE_FOLDER}
+      && git checkout master
+      && git pull origin master
+      && mkdir -p ${SERVER_PROJECT_PATH}/mysql ${SERVER_PROJECT_PATH}/media
+      && export JWT_SECRET=${JWT_SECRET}
+      && export SERVER_PROJECT_PATH=${SERVER_PROJECT_PATH}
+      && export SERVER_SOURCE_CODE_FOLDER=${SERVER_SOURCE_CODE_FOLDER}
+      && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      && export DATABASE_HOST=${DATABASE_HOST}
+      && export DATABASE_PORT=${DATABASE_PORT}
+      && export DATABASE_NAME=${DATABASE_NAME_PRODUCTION}
+      && export DATABASE_USER=${DATABASE_USER_PRODUCTION}
+      && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION}
+      && export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      && export NPM_TOKEN=${NPM_TOKEN}
+      && export PORT_SERVER_HTTP=${PORT_SERVER_HTTP}
+      && export PORT_SERVER_HTTPS=${PORT_SERVER_HTTPS}
+      && export NODE_ENV=production
+      && docker compose -p ${PROJECT_NAME} -f docker-compose.base.yml -f docker-compose.prod.yml up -d --build
       "

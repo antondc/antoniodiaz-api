@@ -1,0 +1,16 @@
+services:
+  db:
+    volumes:
+      # Bind-mount so data survives even if Docker volumes are removed.
+      - ./data/mysql:/var/lib/mysql
+    # Port mapping to the db service:
+    ports:
+      - "127.0.0.1:${DATABASE_PORT:-3306}:3306"
+
+  api:
+    environment:
+      NODE_ENV: development
+    env_file:
+      - .env
+    volumes:
+      - ./media:/app/media

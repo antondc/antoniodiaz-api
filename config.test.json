@@ -1,13 +1,7 @@
 {
   "development": {
-    "database": {
-      "host": "127.0.0.1",
-      "port": 3306
-    },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.dev.antoniodiaz.me",
-    "PORT_SERVER_HTTP": 0,
-    "PORT_SERVER_HTTPS": 3000,
     "ENDPOINT_CLIENT": "https://www.dev.antoniodiaz.me",
     "ENDPOINT_CLIENTS": ["https://www.dev.antoniodiaz.me"],
     "LOGGING": true,
@@ -20,13 +14,8 @@
     "DEFAULT_LOCATION": "Madrid"
   },
   "production": {
-    "database": {
-      "host": "127.0.0.1"
-    },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.api.antoniodiaz.me",
-    "PORT_SERVER_HTTP": 3007,
-    "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.antoniodiaz.me",
     "ENDPOINT_CLIENTS": ["https://antoniodiaz.me", "https://www.antoniodiaz.me"],
     "LOGGING": false,

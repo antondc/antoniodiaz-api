@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.idea
+data
+media
+npm-debug.log
+*.log
+Dockerfile
+docker-compose.base.yml
+docker-compose.dev.yml
+docker-compose.prod.yml

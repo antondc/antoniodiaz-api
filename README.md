@@ -4,12 +4,12 @@ API REST service written in Node and TypeScript for www.antoniodiaz.me.
 
 ## Install and run
 
-### Create .env file with environment variables
+### Environment variables
 
-    JWT_SECRET=xxxx
-    DATABASE_PASSWORD=xxxx
-    EMAIL_PASSWORD=xxxx
-    NODE_TLS_REJECT_UNAUTHORIZED=0
+The application can be run via Makefile commands.
+These commands take the proper docker compose configuration files and launch the app.
+- On development, the environment variables come from the .env file. See ./.env-example for reference.
+- On production, the environment variables come from the context of the pipeline runner, which are passed inlined to the Make command.
 
 ### Install dependencies
 
@@ -17,21 +17,11 @@ API REST service written in Node and TypeScript for www.antoniodiaz.me.
     - Install Node
     - Install Nvm
 
-### Set up database
+### Launch
 
-Set database user, database name and host at `config.test.json` for every environment: `local`, `staging` and `production`.
-
-    - Create Database
-    - Create models at `src/infrastructure/persistence/mySQL/sql/models/`
-
-### Install runtime environment, dependencies and run
-
-    - Install Node
-    - Install nvm
-    - Set SSL certificate: see below
-    - `nvm use`
-    - `npm i`
-    - `npm run http:dev`
+    npm install
+    make start-dev # For development
+    make start-prod # For production
 
 ## Create certificate
 

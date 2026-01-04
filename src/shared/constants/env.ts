@@ -6,13 +6,15 @@ export const PRODUCTION = ENVIRONMENT === 'production';
 export const STAGING = ENVIRONMENT === 'staging';
 export const DOMAIN = config[process.env.NODE_ENV].HOST_SERVER;
 export const DATABASE_SETTINGS = config[process.env.NODE_ENV].database;
+export const DATABASE_HOST = process.env.DATABASE_HOST;
+export const DATABASE_PORT = Number(process.env.DATABASE_PORT);
 export const DATABASE_USER = process.env.DATABASE_USER;
 export const DATABASE_NAME = process.env.DATABASE_NAME;
 export const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 export const PROTOCOL_SERVER = config[process.env.NODE_ENV].PROTOCOL_SERVER;
 export const HOST_SERVER = config[process.env.NODE_ENV].HOST_SERVER;
-export const PORT_SERVER_HTTP = config[process.env.NODE_ENV].PORT_SERVER_HTTP; // To be deprecated, currently useful for staging and prod
-export const PORT_SERVER_HTTPS = config[process.env.NODE_ENV].PORT_SERVER_HTTPS;
+export const PORT_SERVER_HTTP = process.env.PORT_SERVER_HTTP;
+export const PORT_SERVER_HTTPS = process.env.PORT_SERVER_HTTPS;
 export const LOGGING = config[process.env.NODE_ENV].LOGGING;
 export const ENDPOINT_CLIENTS = config[process.env.NODE_ENV].ENDPOINT_CLIENTS;
 export const ENDPOINT_CLIENT = config[process.env.NODE_ENV].ENDPOINT_CLIENT;

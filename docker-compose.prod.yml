@@ -1,0 +1,12 @@
+services:
+  db:
+    volumes:
+      # Bind-mount on parent subfolder so data survives even if Docker volumes are removed.
+      - ${SERVER_PROJECT_PATH}/data/mysql:/var/lib/mysql
+
+  api:
+    environment:
+      NODE_ENV: production
+    volumes:
+      # Bind-mount on parent subfolder
+      - ${SERVER_PROJECT_PATH}/media:/app/media
