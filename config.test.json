@@ -1,5 +1,5 @@
 {
-  "development": {
+  "localDevelopment": {
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.dev.antoniodiaz.me",
     "ENDPOINT_CLIENT": "https://www.dev.antoniodiaz.me",
@@ -13,7 +13,7 @@
     "RESTORE_PROCEDURES": true,
     "DEFAULT_LOCATION": "Madrid"
   },
-  "production": {
+  "deployProduction": {
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.api.antoniodiaz.me",
     "ENDPOINT_CLIENT": "https://www.antoniodiaz.me",

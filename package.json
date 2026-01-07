@@ -9,14 +9,12 @@
   ],
   "scripts": {
     "http:dev": "concurrently --raw \"npm run build:dev\" \"npm run copy:sql\" \"npm run run:http:dev\" ",
-    "cli:prod": "concurrently --raw \"npm run build\"  \"npm run copy:sql\" \"npm run run:cli:prod\" ",
     "copy:sql": "rsync -a --prune-empty-dirs --exclude 'dist/*' --include '*/' --include '*.sql' --include 'config.test.json' --exclude '*' ./ ./dist/",
     "build": "tsc",
     "build:dev": "tsc --watch",
     "run:http:dev": "env NODE_ENV=development nodemon -q --inspect dist/src/infrastructure/http/http.js",
     "run:http:stage": "env NODE_ENV=staging node dist/src/infrastructure/http/http.js",
     "run:http:prod": "env NODE_ENV=production node dist/src/infrastructure/http/http.js",
-    "run:cli:prod": "env NODE_ENV=production node --inspect dist/src/infrastructure/cli/cli.js",
     "run:http:resetdb": "env NODE_ENV=staging node dist/src/infrastructure/persistence/mysql/.js"
   },
   "author": "Antonio Díaz",

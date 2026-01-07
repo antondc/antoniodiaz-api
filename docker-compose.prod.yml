@@ -5,8 +5,11 @@ services:
       - ${SERVER_PROJECT_PATH}/data/mysql:/var/lib/mysql
 
   api:
+    build:
+      target: production
     environment:
       NODE_ENV: production
+      APP_ENV: deployProduction
     volumes:
       # Bind-mount on parent subfolder
       - ${SERVER_PROJECT_PATH}/media:/app/media

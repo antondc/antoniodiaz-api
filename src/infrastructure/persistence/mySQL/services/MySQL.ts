@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 import { promisify } from 'util';
 
-import {DATABASE_USER, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT } from '@shared/constants/env';
+import { DATABASE_USER, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT, NODE_ENV_DEVELOPMENT } from '@shared/constants/env';
 
 type Options = {
   multipleStatements?: boolean;
@@ -51,7 +51,7 @@ export class MySQL {
   query(sql: string, args?: undefined | { [key: string]: number | boolean | string } | Array<number | boolean | string>) {
     // If we receive args object, transform it to an array of values; otherwise undefined
     const arrayArgs = args ? Object.values(args) : undefined;
-    if (process.env.NODE_ENV === 'development') console.log(sql, args);
+    if (process.env.NODE_ENV === NODE_ENV_DEVELOPMENT) console.log(sql, args);
 
     return promisify(this.mySQL.query).call(this.mySQL, sql, arrayArgs);
   }

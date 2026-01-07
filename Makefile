@@ -5,7 +5,7 @@ DEV  = docker-compose.dev.yml
 PROD = docker-compose.prod.yml
 
 start-dev:
-	docker compose -p $(PROJECT) -f $(BASE) -f $(DEV) up -d --build
+	docker compose -p $(PROJECT) -f $(BASE) -f $(DEV) up --build
 
 start-prod:
 	docker compose -p $(PROJECT) -f $(BASE) -f $(PROD) up -d --build
