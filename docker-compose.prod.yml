@@ -10,6 +10,8 @@ services:
     environment:
       NODE_ENV: production
       APP_ENV: deployProduction
+      SERVER_PROJECT_PATH: ${SERVER_PROJECT_PATH}
+      SERVER_SOURCE_CODE_FOLDER: ${SERVER_SOURCE_CODE_FOLDER}
     volumes:
       # Bind-mount on parent subfolder
       - ${SERVER_PROJECT_PATH}/media:/app/media
