@@ -1,7 +1,10 @@
 services:
   db:
     image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
+    command:
+      - mysqld
+      - --default-authentication-plugin=mysql_native_password
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME}
