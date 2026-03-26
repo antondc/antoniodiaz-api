@@ -19,7 +19,8 @@ These commands take the proper docker compose configuration files and launch the
 
 ### Launch
 
-    npm install
+    cp .env-example .env
+    # add values to .env
     make start-dev # For development
     make start-prod # For production
 
@@ -126,6 +127,13 @@ E. g.:
 - `ILinkRepo`
 - `StateRepo`
 - `userFollowerGetAll`
+
+
+## Upload a dump
+
+
+- Reset database with ../reset_database.sql
+- docker exec -i urligram-db-1 mysql -u DATABASE_USER -p DATABASE_PASSWORD --max-allowed-packet=512M --net-buffer-length=16384 antoniodiazDatabase < DUMP_FILE_PATH
 
 ## License
 
