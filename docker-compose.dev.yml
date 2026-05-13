@@ -19,3 +19,5 @@ services:
       - ./:/app
       - /app/node_modules
       - ./media:/app/media
+    ports:
+      - "${PORT_SERVER_HTTPS}:${PORT_SERVER_HTTPS}"

@@ -15,3 +15,5 @@ services:
     volumes:
       # Bind-mount on parent subfolder
       - ${SERVER_PROJECT_PATH}/media:/app/media
+    ports:
+      - "${PORT_SERVER_HTTP}:${PORT_SERVER_HTTP}"

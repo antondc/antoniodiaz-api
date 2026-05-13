@@ -36,6 +36,4 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "${PORT_SERVER_HTTP}:${PORT_SERVER_HTTP}"
-      - "${PORT_SERVER_HTTPS}:${PORT_SERVER_HTTPS}"
+
