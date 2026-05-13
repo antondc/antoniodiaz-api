@@ -2,8 +2,8 @@
   "localDevelopment": {
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.dev.antoniodiaz.me",
-    "ENDPOINT_CLIENT": "https://www.dev.antoniodiaz.me",
-    "ENDPOINT_CLIENTS": ["https://www.dev.antoniodiaz.me"],
+    "ENDPOINT_CLIENT": "https://dev.antoniodiaz.me",
+    "ENDPOINT_CLIENTS": ["https://www.dev.antoniodiaz.me", "https://dev.antoniodiaz.me"],
     "LOGGING": true,
     "EMAIL_HOST": "antoniodiaz.me-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
