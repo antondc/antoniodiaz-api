@@ -1,4 +1,4 @@
-PROJECT = urligram
+PROJECT = antoniodiaz_api
 
 BASE = docker-compose.base.yml
 DEV  = docker-compose.dev.yml
