@@ -38,6 +38,7 @@ github_clone:
   stage: github_clone
   variables:
     GIT_DEPTH: "0"
+    GIT_STRATEGY: clone
   script:
     - git checkout -B "$CI_COMMIT_REF_NAME"
     - git remote remove github || true
