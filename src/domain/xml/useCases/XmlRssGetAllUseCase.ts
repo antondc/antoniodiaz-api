@@ -27,7 +27,7 @@ export class XmlRssGetAllUseCase implements IXmlRssGetAllUseCase {
 
     const articlesForRss = articles.articles.map((item) => ({
       title: item.title,
-      date: new Date(item.createdAt).toDateString(),
+      date: new Date(Number(item.createdAt) * 1000).toISOString(),
       slug: item.id.toString(),
       content: item.contentHtml,
       url: `${ENDPOINT_CLIENT}/${language}/blog/${item.id}`,
